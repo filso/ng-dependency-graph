@@ -9,7 +9,6 @@ var fs = require('fs');
 var concat = require('gulp-concat'),
   uglify = require('gulp-uglify'),
   connect = require('gulp-connect'),
-  ngHtml2Js = require("gulp-ng-html2js"),
   minifyHtml = require("gulp-minify-html"),
   minifyCss = require('gulp-minify-css'),
   sass = require('gulp-sass'),
@@ -187,21 +186,6 @@ gulp.task('linker', function() {
     .pipe(gulp.dest('app/'));
 });
 
-
-gulp.task('templates', ['html2js']);
-
-gulp.task('html2js', ['jade'], function() {
-  return gulp.src(paths.templates.html)
-    .pipe(plumber({
-      errorHandler: onError
-    }))
-    .pipe(ngHtml2Js({
-      moduleName: "cinnamon.templates",
-      prefix: "template/"
-    }))
-    .pipe(concat("templates.js"))
-    .pipe(gulp.dest("app/scripts"));
-});
 
 gulp.task('sass', function() {
   return gulp.src('./app/styles/main.scss')
