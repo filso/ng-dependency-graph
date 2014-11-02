@@ -9,53 +9,34 @@ var fs = require('fs');
 var concat = require('gulp-concat'),
   uglify = require('gulp-uglify'),
   connect = require('gulp-connect'),
-  minifyHtml = require("gulp-minify-html"),
-  minifyCss = require('gulp-minify-css'),
   sass = require('gulp-sass'),
   stylish = require('jshint-stylish'),
   jshint = require('gulp-jshint'),
   clean = require('gulp-clean'),
   cache = require('gulp-cached'),
-  shell = require('gulp-shell'),
-  usemin = require('gulp-usemin'),
   livereload = require('gulp-livereload'),
-  rev = require('gulp-rev'),
-  size = require('gulp-size'),
   linker = require('gulp-linker'),
   gulpExec = require('gulp-exec'),
   conventionalChangelog = require('conventional-changelog'),
   bump = require('gulp-bump'),
-  rewriteModule = require('http-rewrite-middleware'),
   runSequence = require('run-sequence'),
-  ngAnnotate = require('gulp-ng-annotate'),
   gutil = require('gulp-util'),
   argv = require('yargs')
     .argv,
-  replace = require('gulp-replace'),
   plumber = require('gulp-plumber'),
-  _ = require('lodash-node'),
-  insert = require('gulp-insert');
+  _ = require('lodash-node');
 
 var paths = {
   scripts: ['app/scripts/**/*.js'],
   scriptsWithoutTests: ['app/scripts/**/*.js', '!app/scripts/**/*_test.js'],
   images: 'app/images/**/*',
-  templates: {
-    index: ['app/index.html'],
-    html: ['app/index.html', 'app/template/**/*.html'],
-    icons: ['app/images/icons/*.svg', '!app/images/icons/SPRITE.svg']
-  },
+
   styles: {
     sass: 'app/styles/**/*.scss',
     css: 'app/styles/*.css'
   },
   notLinted: ['!app/scripts/templates.js', '!app/scripts/services/BusuuPopcorn.js']
 };
-
-var rewriteMiddleware = rewriteModule.getMiddleware([{
-  from: '^/dashboard$',
-  to: '/index.html'
-}]);
 
 // Error-handler for gulp-plumber
 var onError = function(err) {
@@ -67,7 +48,7 @@ var onError = function(err) {
 ////////////////////////////
 /// Development tasks
 ///
-var developTasks = ['connect', 'preprocess', 'watch'];
+var developTasks = ['preprocess', 'watch'];
 gulp.task('develop', developTasks);
 
 gulp.task('no-karma', function() {
@@ -77,10 +58,14 @@ gulp.task('no-karma', function() {
 });
 
 
-gulp.task('preprocess', ['templates', 'all-sass']);
+gulp.task('preprocess', ['jade', 'sass']);
 // The default task (called when you run `gulp` from cli)
 gulp.task('default', ['develop']);
 
+
+gulp.task('jade', function() {
+
+});
 
 /**
  * Version release code
@@ -149,9 +134,7 @@ gulp.task('watch', function() {
       .pipe(connect.reload(file.path));
   });
 
-
   gulp.watch(paths.styles.css, ['reloadStyles']);
-  gulp.watch(paths.templates.html, ['html2js']);
   gulp.watch(paths.styles.sass, ['sass']);
 
   gulp.watch(paths.scriptsWithoutTests, function(event) {
@@ -177,7 +160,7 @@ gulp.task('linker', function() {
       errorHandler: onError
     }))
     .pipe(linker({
-      scripts: ['app/scripts/**/*.js',  '!app/scripts/app.js'],
+      scripts: ['app/scripts/**/*.js',  '!app/scripts/old/**/*.js', '!app/scripts/app.js'],
       startTag: '<!--SCRIPTS-->',
       endTag: '<!--SCRIPTS END-->',
       fileTmpl: '<script src="%s"></script>',
