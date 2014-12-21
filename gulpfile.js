@@ -58,7 +58,7 @@ gulp.task('no-karma', function() {
 });
 
 
-gulp.task('preprocess', ['jade', 'sass']);
+gulp.task('preprocess', ['linker', 'jade', 'sass']);
 // The default task (called when you run `gulp` from cli)
 gulp.task('default', ['develop']);
 
@@ -160,7 +160,7 @@ gulp.task('linker', function() {
       errorHandler: onError
     }))
     .pipe(linker({
-      scripts: ['app/scripts/**/*.js',  '!app/scripts/old/**/*.js', '!app/scripts/app.js'],
+      scripts: ['app/scripts/**/*.js', '!app/scripts/inject/debug.js', '!app/scripts/**/*_test.js', '!app/scripts/old/**/*.js', '!app/scripts/app.js'],
       startTag: '<!--SCRIPTS-->',
       endTag: '<!--SCRIPTS END-->',
       fileTmpl: '<script src="%s"></script>',

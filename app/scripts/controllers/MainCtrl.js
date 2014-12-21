@@ -1,5 +1,5 @@
 angular.module('app')
-  .controller('AppCtrl', function($scope, appDeps, dev) {
+  .controller('MainCtrl', function($scope, appDeps, dev, Component) {
     'use strict';
 
     function clog(val) {
@@ -8,52 +8,50 @@ angular.module('app')
             {"type": "consoleLog", "value": message}); 
     }
 
-    var deps = appDeps.get();
-    console.log(deps);
-    console.log('AA!');
+    var rawData = rawMockData.ngArchitecture;
+    var rawNodes = rawData.modules[0].components;
+    var nodes = Component.createComponents(rawNodes);
 
-    // clog('bleee');
-    // clog(deps);
-    // debugger;
-    window.deps = deps;
+
     window.ble = 'bleee';
     window.dev = dev;
 
-    var links = [{
-      source: 'Microsoft',
-      target: 'Amazonaaa',
-      type: 'licensing'
-    }, {
-      source: 'Microsoft',
-      target: 'HTC',
-      type: 'licensing'
-    }, {
-      source: 'Samsung',
-      target: 'Appleasd',
-      type: 'suit'
-    }, ];
+    var links = [];
 
-    var nodes = {};
+    // var nodes = {};
 
-    // Compute the distinct nodes from the links.
-    links.forEach(function(link) {
-      link.source = nodes[link.source] || (nodes[link.source] = {
-        name: link.source
+    var links = [];
+
+    _.each(nodes, function(node1) {
+
+      _.each(node1.deps, function(node2) {
+        links.push({source: node1, target: node2})
       });
-      link.target = nodes[link.target] || (nodes[link.target] = {
-        name: link.target
-      });
+
     });
 
-    var width = 960,
+    // Compute the distinct nodes from the links.
+    // links.forEach(function(link) {
+    //   link.source = nodes[link.source] || (nodes[link.source] = {
+    //     name: link.source
+    //   });
+    //   link.target = nodes[link.target] || (nodes[link.target] = {
+    //     name: link.target
+    //   });
+    // });
+
+    console.log(links);
+    console.log(nodes);
+
+    var width = 1300,
       height = 500;
 
     var force = d3.layout.force()
       .nodes(d3.values(nodes))
       .links(links)
       .size([width, height])
-      .linkDistance(60)
-      .charge(-300)
+      .linkDistance(80)
+      .charge(-100)
       .on('tick', tick)
       .start();
 

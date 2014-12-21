@@ -1,6 +1,6 @@
 // Service for retrieving and caching application dependencies
 angular.module('app')
-  .factory('appDeps', function(chromeExtension, appContext) {
+  .factory('appDeps', function(appContext, chromeExtension) {
 
     var _depsCache = [];
 
@@ -12,8 +12,9 @@ angular.module('app')
     return {
       get: function(callback) {
         chromeExtension.eval(function(window) {
-            if (window.__ngDebug) {
-              return window.__ngDebug.getDeps();
+            if (window.__ngArchitecture) {
+              return '';
+              return window.__ngArchitecture.getDeps();
             }
           },
           function(data) {
