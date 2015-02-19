@@ -1,6 +1,6 @@
 # AngularJS Architecture view
 
-## Installing from Source
+## Installing from Source - development version
 
 1.  Clone the repository: `git clone git://github.com/filso/ng-architecture`
 2.  Navigate to `chrome://chrome/extensions/` and enable Developer Mode.

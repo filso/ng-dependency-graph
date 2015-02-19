@@ -56,6 +56,7 @@
     "$": true,
     "_": true,
     "angular": true,
-    "d3": true
+    "d3": true,
+    "chrome": true
   }
 }
