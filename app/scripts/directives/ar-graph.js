@@ -17,9 +17,10 @@ angular.module('app')
         // });
         // 
         
+        var currentGraph = scope.currentGraph;
 
-        console.log(links);
-        console.log(nodes);
+        var links = currentGraph.links,
+          nodes = currentGraph.nodes;
 
         var width = 1300,
           height = 500;
