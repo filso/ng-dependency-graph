@@ -7,7 +7,6 @@ var gulp = require('gulp');
 var fs = require('fs');
 
 var concat = require('gulp-concat'),
-  uglify = require('gulp-uglify'),
   connect = require('gulp-connect'),
   sass = require('gulp-sass'),
   stylish = require('jshint-stylish'),
@@ -21,8 +20,6 @@ var concat = require('gulp-concat'),
   bump = require('gulp-bump'),
   runSequence = require('run-sequence'),
   gutil = require('gulp-util'),
-  argv = require('yargs')
-    .argv,
   plumber = require('gulp-plumber'),
   _ = require('lodash-node');
 
@@ -106,7 +103,7 @@ gulp.task('release-tasks', function() {
     }
     fs.writeFile('CHANGELOG.md', log);
   }
-  var ref, repository, version;
+  var repository, version;
   repository = jsonFile.repository, version = jsonFile.version;
   conventionalChangelog({
     // repository: repository.url,
