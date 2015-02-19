@@ -15,6 +15,8 @@ angular.module('app')
         //     name: link.target
         //   });
         // });
+        // 
+        
 
         console.log(links);
         console.log(nodes);
