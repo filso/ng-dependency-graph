@@ -1,11 +1,11 @@
 angular.module('app', [])
   .run(function($rootScope, dev) {
 
-    dev.exposeGlobalObject();
+    // dev.exposeGlobalObject();
 
-    setInterval(function() {
-      $rootScope.$broadcast('poll');
-    }, 500);
+    // setInterval(function() {
+    //   $rootScope.$broadcast('poll');
+    // }, 500);
 
 
   });

@@ -9,8 +9,6 @@ angular.module('app')
 
     _.assign(Module.prototype, {
       isApp: _.property(this, '_isApp'),
-
-
     });
 
   });
