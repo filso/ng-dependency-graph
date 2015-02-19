@@ -13,6 +13,7 @@
 
 
   <!--SCRIPTS-->
+  <script src="scripts/controllers/filter-name-ctrl.js"></script>
   <script src="scripts/controllers/main-ctrl.js"></script>
   <script src="scripts/controllers/stats-ctrl.js"></script>
   <script src="scripts/directives/ar-graph.js"></script>
@@ -40,6 +41,9 @@
 </head>
 <body>
   <div ng-controller="MainCtrl">
+    <div ng-controller="FilterNameCtrl">
+      Filter by name: <input type="text" ng-model="name"></input>
+    </div>
     <div ar-graph></div>
   </div>
 </body>

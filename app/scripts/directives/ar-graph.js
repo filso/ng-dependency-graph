@@ -19,6 +19,7 @@ angular.module('app')
 
         var currentGraph = scope.currentGraph;
 
+
         var width = 1300,
           height = 500;
 
@@ -31,13 +32,14 @@ angular.module('app')
           .on('tick', tick)
           .start();
 
+        var svg = d3.select(elm[0]).append('svg')
+          .attr('width', width)
+          .attr('height', height);
+
         var link, node;
 
         function update() {
-
-          var svg = d3.select(elm[0]).append('svg')
-            .attr('width', width)
-            .attr('height', height);
+          console.log('update!');
 
           link = svg.selectAll('.link')
             .data(currentGraph.links)
@@ -67,6 +69,12 @@ angular.module('app')
         }
 
         update();
+        // setTimeout(update, 1000);
+        // setTimeout(update, 2000);
+        // update();
+
+        // scope.$on('currentGraph:update', update);
+
 
         function tick() {
           link

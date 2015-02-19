@@ -11,7 +11,7 @@ angular.module('app')
       _.each(nodes, function(node1) {
 
         _.each(node1.deps, function(node2) {
-          links.push({source: node1, target: node2})
+          links.push({source: node1, target: node2});
         });
 
       });
@@ -19,6 +19,13 @@ angular.module('app')
       this.links = links;
       this.nodes = nodes;
     }
+
+    Graph.prototype.filterByName = function(name) {
+      var nameLow = name.toLowerCase();
+      _.filter(this.nodes, function(node) {
+        return node.name.toLowerCase().indexOf(nameLow) !== -1;
+      });
+    };
 
     return Graph;
 
