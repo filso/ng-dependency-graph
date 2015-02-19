@@ -28,7 +28,7 @@ angular.module('app')
           .links(currentGraph.links)
           .size([width, height])
           .linkDistance(80)
-          .charge(-100)
+          .charge(-300)
           .on('tick', tick)
           .start();
 
@@ -51,7 +51,11 @@ angular.module('app')
             .data(currentGraph.nodes)
             .enter()
             .append('g')
-            .attr('class', 'node')
+            .attr('class', function(node) {
+              debugger;
+              return node.getClass();
+            })
+            // .attr('class', 'node')
             .on('mouseover', mouseover)
             .on('mouseout', mouseout)
             .call(force.drag);

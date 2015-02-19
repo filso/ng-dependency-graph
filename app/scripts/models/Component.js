@@ -1,5 +1,5 @@
 angular.module('app')
-  .factory('Component', function() {
+  .factory('Component', function(Node) {
 
     function Component(_data) {
       this.name = _data.name;
@@ -47,8 +47,6 @@ angular.module('app')
     }
 
     Component.createComponents = createComponents;
-
-
 
     return Component;
   });
