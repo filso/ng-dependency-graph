@@ -32,38 +32,44 @@ angular.module('app')
           .linkDistance(80)
           .charge(-100)
           .on('tick', tick)
-          .start();        
+          .start();
 
+        var link, node;
 
-          //d3.select(elm[0])
+        function update() {
 
+          var svg = d3.select(elm[0]).append('svg')
+            .attr('width', width)
+            .attr('height', height);
 
-        var svg = d3.select('body').append('svg')
-          .attr('width', width)
-          .attr('height', height);
+          link = svg.selectAll('.link')
+            .data(links)
+            .enter()
+            .append('line')
+            .attr('class', 'link');
 
-        var link = svg.selectAll('.link')
-          .data(force.links())
-          .enter().append('line')
-          .attr('class', 'link');
+          node = svg.selectAll('.node')
+            .data(nodes)
+            .enter()
+            .append('g')
+            .attr('class', 'node')
+            .on('mouseover', mouseover)
+            .on('mouseout', mouseout)
+            .call(force.drag);
 
-        var node = svg.selectAll('.node')
-          .data(force.nodes())
-          .enter().append('g')
-          .attr('class', 'node')
-          .on('mouseover', mouseover)
-          .on('mouseout', mouseout)
-          .call(force.drag);
+          node.append('circle')
+            .attr('r', 8);
 
-        node.append('circle')
-          .attr('r', 8);
+          node.append('text')
+            .attr('x', 12)
+            .attr('dy', '.35em')
+            .text(function(d) {
+              return d.name;
+            });
 
-        node.append('text')
-          .attr('x', 12)
-          .attr('dy', '.35em')
-          .text(function(d) {
-            return d.name;
-          });
+        }
+
+        update();
 
         function tick() {
           link
