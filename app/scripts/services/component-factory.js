@@ -9,9 +9,11 @@ angular.module('app')
       var nodes = _.map(rawNodes, function(rawNode) {
         switch (rawNode.type) {
           case 'service':
-            return new Component(rawNode);
+            return new Service(rawNode);
           case 'controller':
             return new Controller(rawNode);
+          case 'directive':
+            return new Directive(rawNode);
           default:
             return new Component(rawNode);
         }

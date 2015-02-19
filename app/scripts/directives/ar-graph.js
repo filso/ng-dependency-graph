@@ -52,7 +52,7 @@ angular.module('app')
             .enter()
             .append('g')
             .attr('class', function(node) {
-              return node.cssClass;
+              return node._data.type;
             })
             .classed('node', true)
             .on('mouseover', mouseover)

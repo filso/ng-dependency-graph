@@ -1,10 +1,12 @@
 angular.module('app')
   .factory('Service', function(Component) {
-    function Service() { }
+    'use strict';
     
-    Service.prototype = Object.create(Component.prototype);
+    function Service() {
+      Component.apply(this, arguments);
+    }
 
-    Service.prototype.cssClass = 'controller';
+    Service.prototype = Object.create(Component.prototype);
 
     return Service;
   });

@@ -3,11 +3,30 @@
     stroke: #666;
     stroke-width: 1.5px;
 }
-.node circle {
-    fill: #ccc;
-    stroke: #fff;
-    stroke-width: 1.5px;
+.node {
+    circle {
+        fill: #ccc;
+        stroke: #fff;
+        stroke-width: 1.5px;
+    }
 }
+.service {
+    circle {
+        fill: red;
+    }
+}
+.controller {
+    circle {
+        fill: blue;
+    }
+}
+
+.directive {
+    circle {
+        fill: green;
+    }
+}
+
 text {
     font: 10px sans-serif;
     pointer-events: none;

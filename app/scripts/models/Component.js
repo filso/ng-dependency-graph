@@ -1,5 +1,6 @@
 angular.module('app')
   .factory('Component', function(Node) {
+    'use strict';
 
     function Component(_data) {
       this.name = _data.name;

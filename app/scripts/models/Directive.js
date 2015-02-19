@@ -1,9 +1,11 @@
 angular.module('app')
   .factory('Directive', function(Component) {
-    function Directive() {}
-    Directive.prototype = Object.create(Component.prototype);
+    'use strict';
 
-    Directive.prototype.cssClass = 'controller';
+    function Directive() {
+      Component.apply(this, arguments);
+    }
+    Directive.prototype = Object.create(Component.prototype);
 
     return Directive;
   });
