@@ -16,7 +16,7 @@ angular.module('app')
         //   });
         // });
         // 
-        
+
         var currentGraph = scope.currentGraph;
 
         var links = currentGraph.links,
