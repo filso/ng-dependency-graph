@@ -1,12 +1,8 @@
 angular.module('app')
   .factory('Node', function() {
-    function Node() {
-      this.nodble = 'asd';
-    }
+    function Node() {}
 
-    Node.prototype.getClass = function() {
-      return 'node';
-    };
+    Node.prototype.cssClass = 'FIX THIS';
 
     return Node;
   });

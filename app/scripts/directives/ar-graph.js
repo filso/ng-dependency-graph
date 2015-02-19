@@ -52,10 +52,9 @@ angular.module('app')
             .enter()
             .append('g')
             .attr('class', function(node) {
-              debugger;
-              return node.getClass();
+              return node.cssClass;
             })
-            // .attr('class', 'node')
+            .classed('node', true)
             .on('mouseover', mouseover)
             .on('mouseout', mouseout)
             .call(force.drag);

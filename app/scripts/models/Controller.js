@@ -1,9 +1,11 @@
 angular.module('app')
   .factory('Controller', function(Component) {
-    var Controller = Object.create(Component.prototype);
+    function Controller() {
+      Component.apply(this, arguments);
+    }
 
-    
-
+    Controller.prototype = Object.create(Component.prototype);
+    Controller.prototype.cssClass = 'controller';
 
     return Controller;
   });

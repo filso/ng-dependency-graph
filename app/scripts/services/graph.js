@@ -1,10 +1,10 @@
 angular.module('app')
-  .factory('Graph', function(Component) {
+  .factory('Graph', function(componentFactory) {
     'use strict';
 
     function Graph(rawNodes) {
 
-      var nodes = Component.createComponents(rawNodes);
+      var nodes = componentFactory.createComponents(rawNodes);
 
       var links = [];
 
