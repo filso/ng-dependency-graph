@@ -19,15 +19,12 @@ angular.module('app')
 
         var currentGraph = scope.currentGraph;
 
-        var links = currentGraph.links,
-          nodes = currentGraph.nodes;
-
         var width = 1300,
           height = 500;
 
         var force = d3.layout.force()
-          .nodes(d3.values(nodes))
-          .links(links)
+          .nodes(d3.values(currentGraph.nodes))
+          .links(currentGraph.links)
           .size([width, height])
           .linkDistance(80)
           .charge(-100)
@@ -43,13 +40,13 @@ angular.module('app')
             .attr('height', height);
 
           link = svg.selectAll('.link')
-            .data(links)
+            .data(currentGraph.links)
             .enter()
             .append('line')
             .attr('class', 'link');
 
           node = svg.selectAll('.node')
-            .data(nodes)
+            .data(currentGraph.nodes)
             .enter()
             .append('g')
             .attr('class', 'node')
