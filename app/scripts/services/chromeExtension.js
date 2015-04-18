@@ -1,5 +1,5 @@
 // abstraction layer for Chrome Extension APIs
-angular.module('app').value('chromeExtension', {
+angular.module('ngArchitecture').value('chromeExtension', {
   sendRequest: function (requestName, cb) {
     chrome.extension.sendRequest({
       script: requestName,

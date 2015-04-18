@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('ngArchitecture')
   .factory('Graph', function(componentFactory) {
     'use strict';
 

@@ -1,4 +1,4 @@
-angular.module('app', [])
+angular.module('ngArchitecture', [])
   .run(function($rootScope, dev) {
 
     // dev.exposeGlobalObject();

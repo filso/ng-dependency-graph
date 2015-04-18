@@ -1,3 +1,3 @@
-angular.module('app')
+angular.module('ngArchitecture')
   .factory('mediator', function() {
   });

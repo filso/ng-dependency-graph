@@ -6,24 +6,22 @@
 var gulp = require('gulp');
 var fs = require('fs');
 
-var concat = require('gulp-concat'),
-  connect = require('gulp-connect'),
-  sass = require('gulp-sass'),
-  stylish = require('jshint-stylish'),
-  jshint = require('gulp-jshint'),
-  clean = require('gulp-clean'),
-  cache = require('gulp-cached'),
-  livereload = require('gulp-livereload'),
-  linker = require('gulp-linker'),
-  gulpExec = require('gulp-exec'),
-  conventionalChangelog = require('conventional-changelog'),
-  bump = require('gulp-bump'),
-  runSequence = require('run-sequence'),
-  gutil = require('gulp-util'),
-  plumber = require('gulp-plumber'),
-  _ = require('lodash-node');
+var concat = require('gulp-concat');
+var connect = require('gulp-connect');
+var sass = require('gulp-sass');
+var stylish = require('jshint-stylish');
+var jshint = require('gulp-jshint');
+var clean = require('gulp-clean');
+var cache = require('gulp-cached');
+var livereload = require('gulp-livereload');
+var linker = require('gulp-linker');
+var runSequence = require('run-sequence');
+var gutil = require('gulp-util');
+var plumber = require('gulp-plumber');
+var _ = require('lodash-node');
 
 var paths = {
+  testScripts: ['app/scripts/**/*.js', '!app/scripts/inject/debug.js', '!app/scripts/**/*_test.js', '!app/scripts/old/**/*.js', '!app/scripts/app.js'],
   scripts: ['app/scripts/**/*.js'],
   scriptsWithoutTests: ['app/scripts/**/*.js', '!app/scripts/**/*_test.js'],
   images: 'app/images/**/*',
@@ -32,8 +30,11 @@ var paths = {
     sass: 'app/styles/**/*.scss',
     css: 'app/styles/*.css'
   },
-  notLinted: ['!app/scripts/templates.js', '!app/scripts/services/BusuuPopcorn.js']
+  notLinted: ['!app/scripts/templates.js']
 };
+
+require('./gulp-tasks/versioning');
+// require('./gulp-tasks/inject');
 
 // Error-handler for gulp-plumber
 var onError = function(err) {
@@ -49,73 +50,16 @@ var developTasks = ['preprocess', 'watch'];
 gulp.task('develop', developTasks);
 
 gulp.task('no-karma', function() {
-  var index = developTasks.indexOf('karma');
-  developTasks.splice(index, 1);
+  _.remove(developTasks, 'karma');
   gulp.start('develop');
 });
 
 
-gulp.task('preprocess', ['linker', 'jade', 'sass']);
+gulp.task('preprocess', ['linker', 'sass']);
 // The default task (called when you run `gulp` from cli)
 gulp.task('default', ['develop']);
 
 
-gulp.task('jade', function() {
-
-});
-
-/**
- * Version release code
- */
-gulp.task('release', function(callback) {
-  runSequence('bump-minor', 'release-tasks', callback);
-});
-
-gulp.task('patch', function(callback) {
-  runSequence('bump-patch', 'release-tasks', callback);
-});
-
-gulp.task('bump-minor', function() {
-  gulp.src('./package.json')
-    .pipe(bump({
-      type: 'minor'
-    }))
-    .pipe(gulp.dest('./'));
-});
-
-
-gulp.task('bump-patch', function() {
-  gulp.src('./package.json')
-    .pipe(bump({
-      type: 'patch'
-    }))
-    .pipe(gulp.dest('./'));
-});
-
-// https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.we1fxubeuwef
-gulp.task('release-tasks', function() {
-  var jsonFile = require('./package.json'),
-    commitMsg = "chore(release): " + jsonFile.version;
-
-  function changeParsed(err, log) {
-    if (err) {
-      return done(err);
-    }
-    fs.writeFile('CHANGELOG.md', log);
-  }
-  var repository, version;
-  repository = jsonFile.repository, version = jsonFile.version;
-  conventionalChangelog({
-    // repository: repository.url,
-    version: version
-  }, changeParsed);
-
-  return gulp.src(['package.json', 'CHANGELOG.md'])
-    .pipe(gulp.dest('.'))
-    .pipe(gulpExec('git add -A')) // so the following git commands only execute once
-    .pipe(gulpExec("git commit -m '" + commitMsg + "'"))
-    .pipe(gulpExec("git tag -a " + jsonFile.version + " -m '" + commitMsg + "'"));
-});
 
 gulp.task('lint', function() {
   return gulp.src(paths.scripts.concat(paths.notLinted))
@@ -157,7 +101,7 @@ gulp.task('linker', function() {
       errorHandler: onError
     }))
     .pipe(linker({
-      scripts: ['app/scripts/**/*.js', '!app/scripts/inject/debug.js', '!app/scripts/**/*_test.js', '!app/scripts/old/**/*.js', '!app/scripts/app.js'],
+      scripts: paths.testScripts,
       startTag: '<!--SCRIPTS-->',
       endTag: '<!--SCRIPTS END-->',
       fileTmpl: '<script src="%s"></script>',

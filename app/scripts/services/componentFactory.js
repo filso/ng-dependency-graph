@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('ngArchitecture')
   .factory('componentFactory', function(Component, Service, Controller, Directive) {
 
 

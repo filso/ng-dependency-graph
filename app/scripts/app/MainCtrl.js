@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('ngArchitecture')
   .controller('MainCtrl', function($scope, dev, Graph) {
     'use strict';
 

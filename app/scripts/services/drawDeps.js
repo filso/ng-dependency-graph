@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('ngArchitecture')
   .factory('drawDeps', function() {
 
     function draw(svg) {
@@ -6,7 +6,7 @@ angular.module('app')
     }
 
     return {
-
-    }
+      draw: draw
+    };
 
   });

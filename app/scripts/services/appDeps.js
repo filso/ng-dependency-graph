@@ -1,5 +1,5 @@
 // Service for retrieving and caching application dependencies
-angular.module('app')
+angular.module('ngArchitecture')
   .factory('appDeps', function(appContext, chromeExtension) {
 
     var _depsCache = [];

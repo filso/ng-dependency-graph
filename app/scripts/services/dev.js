@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('ngArchitecture')
   .factory('dev', function($rootScope, $window, $q) {
 
     var countWatchers = function() {

@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('ngArchitecture')
   .controller('FilterNameCtrl', function($scope, $rootScope) {
     'use strict';
 

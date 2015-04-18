@@ -1,5 +1,5 @@
 // Service for running code in the context of the application being debugged
-angular.module('app').factory('appContext', function (chromeExtension) {
+angular.module('ngArchitecture').factory('appContext', function (chromeExtension) {
 
   // Public API
   // ==========

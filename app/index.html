@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="app">
+<html ng-app="ng-architecture">
 <head>
   <link rel="stylesheet" href="styles/main.css">
 
@@ -44,6 +44,12 @@
   <div ng-controller="MainCtrl">
     <div ng-controller="FilterNameCtrl">
       Filter by name: <input type="text" ng-model="name"></input>
+    </div>
+    <div class="filters__component-type">
+      <label><input type="checkbox"/> Services</label><br/>
+      <label><input type="checkbox"/> Controllers</label><br/>
+      <label><input type="checkbox"/> Directives</label><br/>
+      <label><input type="checkbox"/> Filters</label>
     </div>
     <div ar-graph></div>
   </div>

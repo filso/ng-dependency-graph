@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('ngArchitecture')
   .factory('chart', function() {
     var nodes;
 
@@ -15,4 +15,6 @@ angular.module('app')
       }
 
     };
-  })
+
+    return service;
+  });

@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('ngArchitecture')
   .factory('ModuleStats', function() {
 
     function ModuleStats(module) {
@@ -6,6 +6,7 @@ angular.module('app')
     }
 
     _.assign(ModuleStats.prototype, {
+      
       mostUsed: function() {
         var nodes = this.module.nodes;
       }
