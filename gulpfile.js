@@ -41,6 +41,7 @@ var options = {
 
 require('./gulp/versioning');
 require('./gulp/styles')(options);
+require('./gulp/inject')(options);
 
 
 ////////////////////////////

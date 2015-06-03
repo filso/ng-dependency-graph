@@ -1,7 +1,7 @@
 {
   "name": "AngularJS architecture",
   "version": "0.1.0",
-  "description": "Prints AngularJS architecture graphs.",
+  "description": "AngularJS architecture graphs.",
   "background": {
     "page": "app/background.html"
   },

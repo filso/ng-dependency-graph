@@ -26,7 +26,6 @@ module.exports = function(options) {
       .pipe(gulp.dest('./'));
   });
 
-
   gulp.task('bump-patch', function() {
     gulp.src('./package.json')
       .pipe(bump({

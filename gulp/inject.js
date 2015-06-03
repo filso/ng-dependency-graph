@@ -5,7 +5,8 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 module.exports = function(options) {
-  gulp.task('inject', ['scripts', 'styles'], function () {
+
+  gulp.task('inject', [], function () {
     var injectStyles = gulp.src([
       options.tmp + '/serve/app/**/*.css',
       '!' + options.tmp + '/serve/app/vendor.css'
@@ -24,10 +25,10 @@ module.exports = function(options) {
       addRootSlash: false
     };
 
-    return gulp.src(options.src + '/*.html')
+    return gulp.src(options.src + '/app/index.html')
       .pipe($.inject(injectStyles, injectOptions))
       .pipe($.inject(injectScripts, injectOptions))
-      .pipe(gulp.dest(options.tmp + '/serve'));
+      .pipe(gulp.dest(options.src + '/app/'));
 
   });
 };
