@@ -1,7 +1,6 @@
 // TODO
 // - set up build (dist/)
 // - set up deployment
-// - add sails-linker (possibly rewrite grunt plugin)
 
 var gulp = require('gulp');
 
@@ -31,6 +30,7 @@ var paths = {
 };
 
 var options = {
+  src: '.',
   errorHandler: function(title) {
     return function(err) {
       gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
@@ -94,19 +94,3 @@ gulp.task('reloadStyles', function() {
   gulp.src(paths.styles.css)
     .pipe(connect.reload());
 });
-
-gulp.task('linker', function() {
-  return gulp.src('app/index.html')
-    .pipe(plumber({
-      errorHandler: options.errorHandler('linker')
-    }))
-    .pipe(linker({
-      scripts: paths.testScripts,
-      startTag: '<!--SCRIPTS-->',
-      endTag: '<!--SCRIPTS END-->',
-      fileTmpl: '<script src="%s"></script>',
-      appRoot: 'app/'
-    }))
-    .pipe(gulp.dest('app/'));
-});
-
