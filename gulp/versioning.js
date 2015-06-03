@@ -3,6 +3,7 @@ var conventionalChangelog = require('conventional-changelog');
 var runSequence = require('run-sequence');
 var bump = require('gulp-bump');
 var gulpExec = require('gulp-exec');
+var fs = require('fs');
 
 
 /**

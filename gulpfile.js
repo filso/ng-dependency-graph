@@ -4,17 +4,14 @@
 // - add sails-linker (possibly rewrite grunt plugin)
 
 var gulp = require('gulp');
-var fs = require('fs');
 
 var concat = require('gulp-concat');
 var connect = require('gulp-connect');
-var sass = require('gulp-sass');
 var stylish = require('jshint-stylish');
 var jshint = require('gulp-jshint');
 var clean = require('gulp-clean');
 var cache = require('gulp-cached');
 var livereload = require('gulp-livereload');
-var linker = require('gulp-linker');
 var runSequence = require('run-sequence');
 var gutil = require('gulp-util');
 var plumber = require('gulp-plumber');
@@ -33,14 +30,17 @@ var paths = {
   notLinted: ['!app/scripts/templates.js']
 };
 
-require('./gulp-tasks/versioning');
-// require('./gulp-tasks/inject');
-
-// Error-handler for gulp-plumber
-var onError = function(err) {
-  gutil.beep();
-  console.log(err);
+var options = {
+  errorHandler: function(title) {
+    return function(err) {
+      gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
+      this.emit('end');
+    };
+  }
 };
+
+require('./gulp/versioning');
+require('./gulp/styles')(options);
 
 
 ////////////////////////////
@@ -98,7 +98,7 @@ gulp.task('reloadStyles', function() {
 gulp.task('linker', function() {
   return gulp.src('app/index.html')
     .pipe(plumber({
-      errorHandler: onError
+      errorHandler: options.errorHandler('linker')
     }))
     .pipe(linker({
       scripts: paths.testScripts,
@@ -110,16 +110,3 @@ gulp.task('linker', function() {
     .pipe(gulp.dest('app/'));
 });
 
-
-gulp.task('sass', function() {
-  return gulp.src('./app/styles/main.scss')
-    .pipe(plumber({
-      errorHandler: onError
-    }))
-    .pipe(sass({
-      outputStyle: "compressed",
-      includePaths: ["./app"]
-    }))
-    .on('error', gutil.log)
-    .pipe(gulp.dest('./app/styles'));
-});
