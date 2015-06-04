@@ -2,6 +2,7 @@
   "name": "ng-dependency-graph",
   "devDependencies": {
     "browser-sync": "^2.7.6",
+    "browser-sync-spa": "^1.0.2",
     "conventional-changelog": "0.0.11",
     "gulp": "~3.8.9",
     "gulp-angular-filesort": "^1.1.1",
