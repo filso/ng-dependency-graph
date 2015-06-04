@@ -11,7 +11,7 @@ angular.module('ngDependencyGraph')
       this.deps = [];
       this.provides = [];
 
-      // Node.apply(this, arguments);
+      Node.apply(this, arguments);
     }
 
     Component.prototype = Object.create(Node.prototype);

@@ -2,9 +2,14 @@
 
 angular.module('ngDependencyGraph')
   .factory('Node', function() {
+
     function Node() {}
 
-    Node.prototype.cssClass = 'FIX THIS';
+    Object.defineProperty('cssClass', {
+      get: function() {
+        return 'FIX THIS';
+      }
+    });
 
     return Node;
   });
