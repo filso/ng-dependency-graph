@@ -8,6 +8,9 @@
   "devtools_page": "app/devtoolsBackground.html",
   "options_page": "app/index.html",
   "manifest_version": 2,
+  "icons": {
+    "500": "app/img/square-500.png"
+  },
   "permissions": [
     "tabs",
     "<all_urls>"
