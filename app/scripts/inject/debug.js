@@ -23,14 +23,13 @@ var inject = function () {
 
       if (!ngLoaded()) {
         (function () {
-          // TODO: var name
-          var areWeThereYet = function (ev) {
+          var checkIfAngularLoaded = function (ev) {
             if (ev.srcElement.tagName === 'SCRIPT') {
               var oldOnload = ev.srcElement.onload;
               ev.srcElement.onload = function () {
                 if (ngLoaded()) {
 
-                  document.removeEventListener('DOMNodeInserted', areWeThereYet);
+                  document.removeEventListener('DOMNodeInserted', checkIfAngularLoaded);
                   bootstrap(window);
                 }
                 if (oldOnload) {
@@ -39,7 +38,7 @@ var inject = function () {
               };
             }
           };
-          document.addEventListener('DOMNodeInserted', areWeThereYet);
+          document.addEventListener('DOMNodeInserted', checkIfAngularLoaded);
         }());
         return;
       }
