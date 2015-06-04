@@ -5,7 +5,7 @@ angular.module('ngDependencyGraph')
 
     function Node() {}
 
-    Object.defineProperty('cssClass', {
+    Object.defineProperty(Node.prototype, 'cssClass', {
       get: function() {
         return 'FIX THIS';
       }
