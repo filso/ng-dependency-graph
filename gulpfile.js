@@ -48,7 +48,7 @@ require('./gulp/server')(options);
 /**
  * Development tasks
  */
-var developTasks = ['preprocess', 'watch'];
+var developTasks = ['preprocess', 'watch', 'serve'];
 gulp.task('develop', developTasks);
 
 gulp.task('no-karma', function() {

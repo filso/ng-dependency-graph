@@ -17,7 +17,8 @@ module.exports = function(options) {
 
     var injectOptions = {
       ignorePath: ['.'],
-      addRootSlash: true
+      addRootSlash: false,
+      relative: true
     };
 
     return gulp.src('./app/index.html')

@@ -34,7 +34,7 @@ module.exports = function(options) {
   }));
 
   gulp.task('serve', ['watch'], function () {
-    browserSyncInit('.');
+    browserSyncInit('./app');
   });
 
   gulp.task('serve:dist', ['build'], function () {
