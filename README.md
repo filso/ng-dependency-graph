@@ -12,3 +12,7 @@
 
 gulp-ng-graph
 Batarang
+
+
+### Other
+This app uses semantic versioning: http://semver.org/
