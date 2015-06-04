@@ -1,4 +1,4 @@
-angular.module('ngArchitecture', [])
+angular.module('ngDependencyGraph', [])
   .run(function($rootScope, dev) {
 
     // dev.exposeGlobalObject();

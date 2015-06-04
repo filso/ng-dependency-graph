@@ -1,4 +1,6 @@
-angular.module('ngArchitecture.controls', [])
+'use strict';
+
+angular.module('ngDependencyGraph.controls', [])
   .run(function($rootScope, dev) {
 
     // dev.exposeGlobalObject();

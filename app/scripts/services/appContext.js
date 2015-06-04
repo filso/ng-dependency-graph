@@ -1,5 +1,7 @@
+'use strict';
+
 // Service for running code in the context of the application being debugged
-angular.module('ngArchitecture').factory('appContext', function (chromeExtension) {
+angular.module('ngDependencyGraph').factory('appContext', function (chromeExtension) {
 
   // Public API
   // ==========

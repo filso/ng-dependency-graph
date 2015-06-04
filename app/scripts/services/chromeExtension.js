@@ -1,5 +1,7 @@
+'use strict';
+
 // abstraction layer for Chrome Extension APIs
-angular.module('ngArchitecture').value('chromeExtension', {
+angular.module('ngDependencyGraph').value('chromeExtension', {
   sendRequest: function (requestName, cb) {
     chrome.extension.sendRequest({
       script: requestName,

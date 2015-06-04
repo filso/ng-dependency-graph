@@ -1,5 +1,7 @@
+'use strict';
+
 // Service for retrieving and caching application dependencies
-angular.module('ngArchitecture')
+angular.module('ngDependencyGraph')
   .factory('appDeps', function(appContext, chromeExtension) {
 
     var _depsCache = [];

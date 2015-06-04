@@ -1,5 +1,7 @@
-angular.module('ngArchitecture')
-  .factory('componentFactory', function(Component, Service, Controller, Directive) {
+'use strict';
+
+angular.module('ngDependencyGraph')
+  .factory('componentFactory', function(Component) {
 
 
     function createComponents(rawNodes) {
@@ -7,16 +9,7 @@ angular.module('ngArchitecture')
       // debugger;
 
       var nodes = _.map(rawNodes, function(rawNode) {
-        switch (rawNode.type) {
-          case 'service':
-            return new Service(rawNode);
-          case 'controller':
-            return new Controller(rawNode);
-          case 'directive':
-            return new Directive(rawNode);
-          default:
-            return new Component(rawNode);
-        }
+        return new Component(rawNode);
       });
 
       _.each(nodes, function(node1) {

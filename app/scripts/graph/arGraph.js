@@ -1,4 +1,6 @@
-angular.module('ngArchitecture')
+'use strict';
+
+angular.module('ngDependencyGraph')
   .directive('arGraph', function(appDeps, dev, Component) {
     'use strict';
 

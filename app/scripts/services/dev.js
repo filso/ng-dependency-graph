@@ -1,4 +1,6 @@
-angular.module('ngArchitecture')
+'use strict';
+
+angular.module('ngDependencyGraph')
   .factory('dev', function($rootScope, $window, $q) {
 
     var countWatchers = function() {

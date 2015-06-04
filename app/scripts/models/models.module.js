@@ -1,1 +1,3 @@
-angular.module('ngArchitecture.models', []);
+'use strict';
+
+angular.module('ngDependencyGraph.models', []);

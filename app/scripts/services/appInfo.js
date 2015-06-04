@@ -1,5 +1,7 @@
+'use strict';
+
 // Service for running code in the context of the application being debugged
-angular.module('ngArchitecture').factory('appInfo', function (chromeExtension, appContext) {
+angular.module('ngDependencyGraph').factory('appInfo', function (chromeExtension, appContext) {
 
   var _versionCache = null,
     _srcCache = null;

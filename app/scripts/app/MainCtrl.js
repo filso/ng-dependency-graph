@@ -1,4 +1,6 @@
-angular.module('ngArchitecture')
+'use strict';
+
+angular.module('ngDependencyGraph')
   .controller('MainCtrl', function($scope, dev, Graph) {
     'use strict';
 

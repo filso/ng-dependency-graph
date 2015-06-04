@@ -1,4 +1,6 @@
-angular.module('ngArchitecture')
+'use strict';
+
+angular.module('ngDependencyGraph')
   .controller('FilterNameCtrl', function($scope, $rootScope) {
     'use strict';
 
