@@ -1,5 +1,5 @@
 {
-  "name": "ng-architecture",
+  "name": "ng-dependency-graph",
   "devDependencies": {
     "browser-sync": "^2.7.6",
     "conventional-changelog": "0.0.11",

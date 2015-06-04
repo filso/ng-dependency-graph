@@ -1,7 +1,7 @@
 {
-  "name": "AngularJS architecture",
+  "name": "AngularJS dependency graph",
   "version": "0.1.0",
-  "description": "AngularJS architecture graphs.",
+  "description": "AngularJS dependency graph.",
   "background": {
     "page": "app/background.html"
   },
