@@ -22,6 +22,7 @@
   <script src="/app/scripts/services/appInfo.js"></script>
   <script src="/app/scripts/services/appDeps.js"></script>
   <script src="/app/scripts/services/appContext.js"></script>
+  <script src="/app/scripts/services/Const.js"></script>
   <script src="/app/scripts/models/models.module.js"></script>
   <script src="/app/scripts/models/Node.js"></script>
   <script src="/app/scripts/models/ModuleStats.js"></script>
@@ -29,7 +30,7 @@
   <script src="/app/scripts/models/Component.js"></script>
   <script src="/app/scripts/models/App.js"></script>
   <script src="/app/scripts/inject/debug.js"></script>
-  <script src="/app/scripts/graph/arGraph.js"></script>
+  <script src="/app/scripts/graph/dgGraph.js"></script>
   <script src="/app/scripts/controls/controls.module.js"></script>
   <script src="/app/scripts/controls/FilterNameCtrl.js"></script>
   <script src="/app/scripts/app/MainCtrl.js"></script>
@@ -40,16 +41,18 @@
 </head>
 <body>
   <div ng-controller="MainCtrl">
-    <div ng-controller="FilterNameCtrl">
-      Search: <input type="text" ng-model="name"></input>
+    <div class="controls">
+      <div ng-controller="FilterNameCtrl">
+        Search: <input type="text" ng-model="name"></input>
+      </div>
     </div>
-    <div class="filters__component-type hidden">
+    <!-- <div class="filters__component-type hidden">
       <label><input type="checkbox"/> Services</label><br/>
       <label><input type="checkbox"/> Controllers</label><br/>
       <label><input type="checkbox"/> Directives</label><br/>
       <label><input type="checkbox"/> Filters</label>
-    </div>
-    <div ar-graph></div>
+    </div> -->
+    <div dg-graph></div>
   </div>
 </body>
 </html>

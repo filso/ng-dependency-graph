@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .directive('arGraph', function(appDeps, dev, Component) {
-    'use strict';
+  .directive('dgGraph', function(appDeps, dev, Component) {
 
     return {
       link: function(scope, elm, attrs) {
@@ -35,8 +34,8 @@ angular.module('ngDependencyGraph')
           .start();
 
         var svg = d3.select(elm[0]).append('svg')
-          .attr('width', width)
-          .attr('height', height);
+          // .attr('width', width)
+          // .attr('height', height);
 
         var link, node;
 

@@ -9,27 +9,20 @@ var appStream = gulp.src([
   '!./app/scripts/**/*.spec.js'
 ]);
 
-
 module.exports = function(options) {
 
   gulp.task('inject', [], function () {
-    var injectStyles = gulp.src([
-      options.tmp + '/serve/app/**/*.css',
-      '!' + options.tmp + '/serve/app/vendor.css'
-    ], { read: false });
-
     var injectScripts = appStream
       .pipe($.angularFilesort()).on('error', options.errorHandler('AngularFilesort'));
 
     var injectOptions = {
-      ignorePath: [options.src, options.tmp + '/serve'],
+      ignorePath: ['.'],
       addRootSlash: true
     };
 
-    return gulp.src(options.src + '/app/index.html')
-      .pipe($.inject(injectStyles, injectOptions))
+    return gulp.src('./app/index.html')
       .pipe($.inject(injectScripts, injectOptions))
-      .pipe(gulp.dest(options.src + '/app/'));
+      .pipe(gulp.dest('./app/'));
 
   });
 };
