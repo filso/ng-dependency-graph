@@ -9,6 +9,7 @@
   <script src="vendor/d3.min.js"></script>
   <script src="vendor/lodash.js"></script>
 
+
   <!-- inject:js -->
   <script src="scripts/app.module.js"></script>
   <script src="scripts/services/mediator.js"></script>
@@ -23,24 +24,23 @@
   <script src="scripts/services/appDeps.js"></script>
   <script src="scripts/services/appContext.js"></script>
   <script src="scripts/services/Const.js"></script>
-  <script src="scripts/inject/debug.js"></script>
+  <script src="scripts/scripts/developmentData.js"></script>
   <script src="scripts/models/models.module.js"></script>
   <script src="scripts/models/Node.js"></script>
   <script src="scripts/models/ModuleStats.js"></script>
   <script src="scripts/models/Module.js"></script>
   <script src="scripts/models/Component.js"></script>
   <script src="scripts/models/App.js"></script>
+  <script src="scripts/inject/debug.js"></script>
   <script src="scripts/graph/dgGraph.js"></script>
   <script src="scripts/controls/controls.module.js"></script>
   <script src="scripts/controls/FilterNameCtrl.js"></script>
   <script src="scripts/app/MainCtrl.js"></script>
   <!-- endinject -->
   
-  <script src="../test/mocks/ngArchitectureData.js"></script>
-
 </head>
 <body>
-  <div ng-controller="MainCtrl">
+  <div ng-controller="MainCtrl" class="main">
     <div class="controls">
       <div ng-controller="FilterNameCtrl">
         Search: <input type="text" ng-model="name"></input>
@@ -52,7 +52,7 @@
       <label><input type="checkbox"/> Directives</label><br/>
       <label><input type="checkbox"/> Filters</label>
     </div> -->
-    <div dg-graph></div>
+    <div dg-graph class="dg-graph"></div>
   </div>
 </body>
 </html>
