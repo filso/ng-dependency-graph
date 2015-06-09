@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .directive('dgGraph', function(appDeps, dev, Component) {
+  .directive('dgGraph', function(appDeps, dev, Component, Const) {
 
     return {
       link: function(scope, elm, attrs) {
-
 
         // Compute the distinct nodes from the links.
         // links.forEach(function(link) {
@@ -33,11 +32,25 @@ angular.module('ngDependencyGraph')
           .on('tick', tick)
           .start();
 
-        var svg = d3.select(elm[0]).append('svg')
+        var svg = d3.select(elm[0]).append('svg');
           // .attr('width', width)
           // .attr('height', height);
 
         var link, node;
+
+        svg.append('svg:defs').selectAll('marker')
+            .data(['end'])      // Different link/path types can be defined here
+          .enter().append('svg:marker')    // This section adds in the arrows
+            .attr('id', String)
+            .attr('viewBox', '0 -5 10 10')
+            .attr('refX', 18)
+            .attr('refY', 0)
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
+            .attr('orient', 'auto')
+          .append('svg:path')
+            .attr('d', 'M0,-5L10,0L0,5');
+
 
         function update() {
           console.log('update!');
@@ -46,7 +59,9 @@ angular.module('ngDependencyGraph')
             .data(currentGraph.links)
             .enter()
             .append('line')
-            .attr('class', 'link');
+            .attr('class', 'link')
+            .attr('marker-end', 'url(#end)');
+
 
           node = svg.selectAll('.node')
             .data(currentGraph.nodes)
@@ -73,9 +88,6 @@ angular.module('ngDependencyGraph')
         }
 
         update();
-        // setTimeout(update, 1000);
-        // setTimeout(update, 2000);
-        // update();
 
         // scope.$on('currentGraph:update', update);
 
@@ -102,22 +114,20 @@ angular.module('ngDependencyGraph')
         }
 
         function mouseover() {
-          d3.select(this).select('circle').transition()
-            .duration(750)
-            .attr('r', 16);
+          d3.select(this).select('circle')
+            .transition()
+            .duration(Const.View.HOVER_TRANSITION_TIME)
+            .attr('r', 12);
         }
 
         function mouseout() {
-          d3.select(this).select('circle').transition()
-            .duration(750)
+          d3.select(this).select('circle')
+            .transition()
+            .duration(Const.View.HOVER_TRANSITION_TIME)
             .attr('r', 8);
         }
 
-
-
       }
-
     };
-
 
   });

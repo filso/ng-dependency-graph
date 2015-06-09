@@ -41,18 +41,26 @@
 </head>
 <body>
   <div ng-controller="MainCtrl" class="main">
-    <div class="controls">
-      <div ng-controller="FilterNameCtrl">
-        Search: <input type="text" ng-model="name"></input>
+    <div class="">
+      <div class="controls">
+        <div ng-controller="FilterNameCtrl">
+          Search: <input type="text" ng-model="name"></input>
+        </div>
       </div>
     </div>
+    <div dg-graph class="dg-graph"></div>
+
+    
     <!-- <div class="filters__component-type hidden">
       <label><input type="checkbox"/> Services</label><br/>
       <label><input type="checkbox"/> Controllers</label><br/>
       <label><input type="checkbox"/> Directives</label><br/>
       <label><input type="checkbox"/> Filters</label>
     </div> -->
-    <div dg-graph class="dg-graph"></div>
+    <div class="info-panel">
+      
+    </div>
+
   </div>
 </body>
 </html>

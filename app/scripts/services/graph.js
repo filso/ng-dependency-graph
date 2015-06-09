@@ -2,7 +2,6 @@
 
 angular.module('ngDependencyGraph')
   .factory('Graph', function(componentFactory) {
-    'use strict';
 
     function Graph(rawNodes) {
 
