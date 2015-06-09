@@ -12,7 +12,7 @@ angular.module('ngDependencyGraph')
       _.each(nodes, function(node1) {
 
         _.each(node1.deps, function(node2) {
-          links.push({source: node1, target: node2});
+          links.push({target: node1, source: node2});
         });
 
       });
