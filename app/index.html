@@ -16,6 +16,7 @@
   <script src="scripts/services/graph.js"></script>
   <script src="scripts/services/drawDeps.js"></script>
   <script src="scripts/services/dev.js"></script>
+  <script src="scripts/services/currentView.js"></script>
   <script src="scripts/services/controls.js"></script>
   <script src="scripts/services/componentFactory.js"></script>
   <script src="scripts/services/chromeExtension.js"></script>
@@ -31,12 +32,12 @@
   <script src="scripts/models/Module.js"></script>
   <script src="scripts/models/Component.js"></script>
   <script src="scripts/models/App.js"></script>
-  <script src="scripts/inject/debug.js"></script>
-  <script src="scripts/graph/dgGraph.js"></script>
   <script src="scripts/infoPanel/infoPanel.module.js"></script>
   <script src="scripts/infoPanel/InfoPanelCtrl.js"></script>
+  <script src="scripts/inject/debug.js"></script>
   <script src="scripts/controls/controls.module.js"></script>
   <script src="scripts/controls/FilterNameCtrl.js"></script>
+  <script src="scripts/graph/dgGraph.js"></script>
   <script src="scripts/app/MainCtrl.js"></script>
   <!-- endinject -->
   
@@ -65,7 +66,7 @@
       <label><input type="checkbox"/> Directives</label><br/>
       <label><input type="checkbox"/> Filters</label>
     </div> -->
-    <div class="info-panel" ng-controller="InfoPanelCtrl" ng-include="'scripts/infoPanel/infoPanel.html'">
+    <div class="info-panel" ng-include="'scripts/infoPanel/infoPanel.html'">
     </div>
 
   </div>

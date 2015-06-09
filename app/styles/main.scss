@@ -31,7 +31,7 @@ $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
 
 .dg-graph {
   margin-right: $info-panel-width;
-  height: calc(100% - 30px);
+  height: 100%;
 
   border: 1px solid #333;
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.55);

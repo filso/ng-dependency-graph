@@ -1,24 +1,12 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .directive('dgGraph', function(appDeps, dev, Component, Const) {
+  .directive('dgGraph', function($rootScope, appDeps, dev, Component, Const, currentView) {
 
     return {
       link: function(scope, elm, attrs) {
 
-        // Compute the distinct nodes from the links.
-        // links.forEach(function(link) {
-        //   link.source = nodes[link.source] || (nodes[link.source] = {
-        //     name: link.source
-        //   });
-        //   link.target = nodes[link.target] || (nodes[link.target] = {
-        //     name: link.target
-        //   });
-        // });
-        // 
-
         var currentGraph = scope.currentGraph;
-
 
         var width = 1300,
           height = 500;
@@ -74,6 +62,7 @@ angular.module('ngDependencyGraph')
             .classed('node', true)
             .on('mouseover', mouseover)
             .on('mouseout', mouseout)
+            .on('click', nodeClick)
             .call(force.drag);
 
           node.append('circle')
@@ -126,6 +115,12 @@ angular.module('ngDependencyGraph')
             .transition()
             .duration(Const.View.HOVER_TRANSITION_TIME)
             .attr('r', 8);
+        }
+
+        function nodeClick(d) {
+          $rootScope.$apply(function() {
+            currentView.chooseNode(d);
+          });
         }
 
       }

@@ -1,9 +1,10 @@
-<div ng-if="true || node">
-  <div class="node-title" ng-bind="node.name">
+
+<div ng-controller="InfoPanelCtrl as infoPanel" ng-show="true || node">
+  <div class="node-title" ng-bind="infoPanel.node.name">
   </div>
   <div class="section">
     <div class="title">Dependencies:</div>
-    <span ng-repeat="item in node.dependencies"></span>
+    <span ng-repeat="item in infoPanel.node.dependencies"></span>
   </div>
   <div class="section">
     <div class="title">Required by:</div>
