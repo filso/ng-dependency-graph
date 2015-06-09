@@ -1,9 +1,13 @@
-<div class="section">
-  <div class="title">Dependencies:</div>
-  <span ng-repeat="item in node.dependencies"></span>
-</div>
-<div class="section">
-  <div class="title">Dependencies:</div>
-Required by:
-  <span ng-repeat="item in node.provides"></span>
+<div ng-if="true || node">
+  <div class="node-title" ng-bind="node.name">
+  </div>
+  <div class="section">
+    <div class="title">Dependencies:</div>
+    <span ng-repeat="item in node.dependencies"></span>
+  </div>
+  <div class="section">
+    <div class="title">Required by:</div>
+    <span ng-repeat="item in node.provides"></span>
+  </div>
+
 </div>

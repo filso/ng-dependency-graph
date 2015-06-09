@@ -2,5 +2,5 @@
 
 angular.module('ngDependencyGraph')
   .controller('InfoPanelCtrl', function() {
-    
+
   });

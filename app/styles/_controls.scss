@@ -1,8 +1,11 @@
 .controls {
-  // border: 1px solid #333;
   margin-bottom: 5px;
   padding: 5px;
-  // box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.55);
+
+  & > div {
+    display: inline-block;
+    margin-right: 10px;
+  }
 }
 
 .choose-scope {
@@ -17,13 +20,15 @@
     display: inline-block;
     padding: 5px;
     cursor: pointer;
+    color: #ddd;
     
     &:first-child {
       border-right: $border;
     }
 
     &.active {
-      border: 1px black;
+      color: #fff;
+      background: lighten($blue, 20%);
     }
 
   }

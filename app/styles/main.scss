@@ -3,7 +3,9 @@
 @import "_controls.scss";
 
 @mixin font-family-mix {
-  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif  ;
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif ;
+  // font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
 }
 
 html {
@@ -28,9 +30,7 @@ $info-panel-width: 300px;
 $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
 
 .dg-graph {
-  display: inline-block;
-
-  width: $dg-graph-width;
+  margin-right: $info-panel-width;
   height: calc(100% - 30px);
 
   border: 1px solid #333;
@@ -72,14 +72,19 @@ $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
 }
 
 .info-panel {
-  display: inline-block;
+  color: #444;
+  position: fixed;
+  right: 0;
+  top: 0;
   width: $info-panel-width;
   .title {
-    background: $gray;
-    border-bottom: 1px solid $black;  
+    background: #eee;
+    border-bottom: 1px solid #ccc;  
   }
-  
   .section {
+    & > div {
+      padding: 3px;
+    }
 
   }
 
