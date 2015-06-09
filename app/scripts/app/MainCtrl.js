@@ -1,24 +1,21 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .controller('MainCtrl', function($scope, dev, Graph, Const) {
+  .controller('MainCtrl', function($scope, dev, Graph, Const, currentView) {
 
-    // TODO(filip): move helper stuff to some reasonsable place, add flags (debugging)
     window.dev = dev;
-    function clog(val) {
-        var message = JSON.stringify(val).replace(/n/g, " ");
-        chrome.tabs.sendRequest(tabId, 
-            {"type": "consoleLog", "value": message}); 
-    }
 
+    $scope.currentView = currentView;
 
     var rawData = rawMockData.ngArchitecture;
+    console.log(rawData);
     var rawNodes = rawData.modules[0].components;
+    rawNodes = rawData.modules;
 
 
     $scope.currentGraph = new Graph(rawNodes);
 
-    $scope.scope = 'components';
+    currentView.scope = 'components';
 
     $scope.chooseScope = function(val) {
 

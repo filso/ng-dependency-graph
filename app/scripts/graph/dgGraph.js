@@ -28,10 +28,18 @@ angular.module('ngDependencyGraph')
         }, 100);
 
         var svg = d3.select(elm[0]).append('svg');
-          // .attr('width', width)
-          // .attr('height', height);
 
-        var link, node;
+        /**
+         * Definitions of markers
+         */
+        svg.append('g')
+          .call(d3.behavior.zoom().scaleExtent([1, 8])).on('zoom', zoom);
+
+        function zoom() {
+          console.log('a!');
+        }
+
+
 
         svg.append('svg:defs').selectAll('marker')
             .data(['end'])      // Different link/path types can be defined here
@@ -45,7 +53,13 @@ angular.module('ngDependencyGraph')
             .attr('fill', '#ddd')
             .attr('orient', 'auto')
           .append('svg:path')
-            .attr('d', 'M0,-5L10,0L0,5');
+            .attr('d', 'M0,-5L10,0L0,5')
+
+          // .attr('width', width)
+          // .attr('height', height);
+
+        var link, node;
+
 
 
         function update() {

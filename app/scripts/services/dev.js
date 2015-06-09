@@ -84,6 +84,11 @@ angular.module('ngDependencyGraph')
       exposeGlobalObject: function() {
         // yes, make it global!
         $window.dev = this;
+      },
+      clog: function(val) {
+          var message = JSON.stringify(val).replace(/n/g, " ");
+          chrome.tabs.sendRequest(tabId, 
+              {"type": "consoleLog", "value": message}); 
       }
     };
 

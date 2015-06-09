@@ -43,15 +43,15 @@
   
 </head>
 <body>
-  <div ng-controller="MainCtrl" class="main">
+  <div ng-controller="MainCtrl as main" class="main">
     <div dg-graph class="dg-graph">
       <div class="controls">
         <div ng-controller="FilterNameCtrl">
           Search: <input type="text" ng-model="name"></input>
         </div>
         <div class="choose-scope">
-          <div ng-click="chooseScope('modules')" ng-class="{active: scope === 'modules'}">Modules
-          </div><div ng-click="chooseScope('components')" ng-class="{active: scope === 'components'}">Components</div>
+          <div ng-click="main.chooseScope('modules')" ng-class="{active: scope === 'modules'}">Modules
+          </div><div ng-click="main.chooseScope('components')" ng-class="{active: scope === 'components'}">Components</div>
         </div>
       </div>
       <div class="legend">
