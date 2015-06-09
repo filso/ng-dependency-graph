@@ -6,10 +6,37 @@ angular.module('ngDependencyGraph')
     return {
       link: function(scope, elm, attrs) {
 
-        var currentGraph = scope.currentGraph;
+        var currentGraph = currentView.graph;
 
         var width = 1300,
           height = 500;
+
+        var svg = d3.select(elm[0]).append('svg');
+
+        /**
+         * Definitions of markers
+         */
+        svg.append('g')
+          .call(d3.behavior.zoom().scaleExtent([1, 8])).on('zoom', zoom);
+
+        function zoom() {
+          console.log('a!');
+        }
+
+
+        svg.append('svg:defs').selectAll('marker')
+            .data(['end'])      // Different link/path types can be defined here
+          .enter().append('svg:marker')    // This section adds in the arrows
+            .attr('id', String)
+            .attr('viewBox', '0 -5 10 10')
+            .attr('refX', 18)
+            .attr('refY', 0)
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
+            .attr('fill', '#ddd')
+            .attr('orient', 'auto')
+          .append('svg:path')
+            .attr('d', 'M0,-5L10,0L0,5')
 
         var force = d3.layout.force()
           .nodes(d3.values(currentGraph.nodes))
@@ -27,43 +54,9 @@ angular.module('ngDependencyGraph')
           currentView.chooseNode(clView);
         }, 100);
 
-        var svg = d3.select(elm[0]).append('svg');
-
-        /**
-         * Definitions of markers
-         */
-        svg.append('g')
-          .call(d3.behavior.zoom().scaleExtent([1, 8])).on('zoom', zoom);
-
-        function zoom() {
-          console.log('a!');
-        }
-
-
-
-        svg.append('svg:defs').selectAll('marker')
-            .data(['end'])      // Different link/path types can be defined here
-          .enter().append('svg:marker')    // This section adds in the arrows
-            .attr('id', String)
-            .attr('viewBox', '0 -5 10 10')
-            .attr('refX', 18)
-            .attr('refY', 0)
-            .attr('markerWidth', 6)
-            .attr('markerHeight', 6)
-            .attr('fill', '#ddd')
-            .attr('orient', 'auto')
-          .append('svg:path')
-            .attr('d', 'M0,-5L10,0L0,5')
-
-          // .attr('width', width)
-          // .attr('height', height);
-
         var link, node;
 
-
-
         function update() {
-          console.log('update!');
 
           link = svg.selectAll('.link')
             .data(currentGraph.links)
@@ -96,12 +89,13 @@ angular.module('ngDependencyGraph')
             .text(function(d) {
               return d.name;
             });
+            console.log('a!');
 
         }
 
         update();
 
-        // scope.$on('currentGraph:update', update);
+        scope.$on('updateGraph', update);
 
 
         function tick() {

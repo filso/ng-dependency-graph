@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .factory('Graph', function(componentFactory) {
+  .factory('Graph', function(nodeFactory) {
 
     function Graph(rawNodes) {
 
-      var nodes = componentFactory.createComponents(rawNodes);
+      var nodes = nodeFactory.createNodes(rawNodes);
 
       var links = [];
 

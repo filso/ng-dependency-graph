@@ -3,7 +3,12 @@
 angular.module('ngDependencyGraph')
   .factory('Node', function() {
 
-    function Node() {}
+    function Node(_data) {
+      this.name = _data.name;
+      this._data = _data;
+      this.deps = [];
+      this.provides = [];
+    }
 
     Object.defineProperty(Node.prototype, 'cssClass', {
       get: function() {

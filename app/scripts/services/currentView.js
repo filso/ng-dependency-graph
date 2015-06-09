@@ -5,9 +5,13 @@ angular.module('ngDependencyGraph')
 
     return {
       node: null,
+      updateGraph: function(scope, graph) {
+        this.graph = graph;
+        this.scope = scope;
+        $rootScope.$broadcast('updateGraph');
+      },
       chooseNode: function(node) {
         this.node = node;
-        console.log('bla!');
         $rootScope.$broadcast('chooseNode');
       }
     };

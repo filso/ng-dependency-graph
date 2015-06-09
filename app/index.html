@@ -12,19 +12,20 @@
 
   <!-- inject:js -->
   <script src="scripts/app.module.js"></script>
+  <script src="scripts/services/nodeFactory.js"></script>
   <script src="scripts/services/mediator.js"></script>
   <script src="scripts/services/graph.js"></script>
   <script src="scripts/services/drawDeps.js"></script>
   <script src="scripts/services/dev.js"></script>
   <script src="scripts/services/currentView.js"></script>
   <script src="scripts/services/controls.js"></script>
-  <script src="scripts/services/componentFactory.js"></script>
   <script src="scripts/services/chromeExtension.js"></script>
   <script src="scripts/services/chart.js"></script>
   <script src="scripts/services/appInfo.js"></script>
   <script src="scripts/services/appDeps.js"></script>
   <script src="scripts/services/appContext.js"></script>
   <script src="scripts/services/Const.js"></script>
+  <script src="scripts/inject/debug.js"></script>
   <script src="scripts/scripts/developmentData.js"></script>
   <script src="scripts/models/models.module.js"></script>
   <script src="scripts/models/Node.js"></script>
@@ -32,26 +33,25 @@
   <script src="scripts/models/Module.js"></script>
   <script src="scripts/models/Component.js"></script>
   <script src="scripts/models/App.js"></script>
+  <script src="scripts/graph/dgGraph.js"></script>
   <script src="scripts/infoPanel/infoPanel.module.js"></script>
   <script src="scripts/infoPanel/InfoPanelCtrl.js"></script>
-  <script src="scripts/inject/debug.js"></script>
   <script src="scripts/controls/controls.module.js"></script>
   <script src="scripts/controls/FilterNameCtrl.js"></script>
-  <script src="scripts/graph/dgGraph.js"></script>
   <script src="scripts/app/MainCtrl.js"></script>
   <!-- endinject -->
   
 </head>
 <body>
   <div ng-controller="MainCtrl as main" class="main">
-    <div dg-graph class="dg-graph">
+    <div dg-graph class="dg-graph" ng-if="currentView.graph">
       <div class="controls">
         <div ng-controller="FilterNameCtrl">
           Search: <input type="text" ng-model="name"></input>
         </div>
         <div class="choose-scope">
-          <div ng-click="main.chooseScope('modules')" ng-class="{active: scope === 'modules'}">Modules
-          </div><div ng-click="main.chooseScope('components')" ng-class="{active: scope === 'components'}">Components</div>
+          <div ng-click="main.chooseScope('modules')" ng-class="{active: currentView.scope === 'modules'}">Modules
+          </div><div ng-click="main.chooseScope('components')" ng-class="{active: currentView.scope === 'components'}">Components</div>
         </div>
       </div>
       <div class="legend">
