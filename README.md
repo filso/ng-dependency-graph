@@ -1,7 +1,9 @@
 ## AngularJS dependency graph
 
+http://filso.github.io/ng-dependency-graph
+
 AngularJS project dependency browser.
-Implemented as Chrome extension. Once you install the extension, you can access the browser in Chrome inspector panel.
+Implemented as a Chrome extension. Once you install the extension, you can access the browser in Chrome inspector panel.
 
 ### Installing from Source - development version
 
