@@ -42,14 +42,12 @@
 </head>
 <body>
   <div ng-controller="MainCtrl" class="main">
-    <div class="">
+    <div dg-graph class="dg-graph">
       <div class="controls">
         <div ng-controller="FilterNameCtrl">
           Search: <input type="text" ng-model="name"></input>
         </div>
       </div>
-    </div>
-    <div dg-graph class="dg-graph">
       <div class="legend">
         <div>Scroll mouse - zoom in/out</div>
         <div>Drag canvas - move around</div>

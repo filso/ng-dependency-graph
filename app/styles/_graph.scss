@@ -1,29 +1,41 @@
+$color-graph-bg: #333;
+
+$color-service: $orange;
+$color-controller: $blue;
+$color-directive: $green;
+$color-filter: $lime;
+
 .link {
-    fill: none;
-    stroke: #666;
+    stroke: #ccc;
     stroke-width: 1.5px;
 }
 .node {
     circle {
-        fill: #ccc;
         stroke: #fff;
         stroke-width: 1.5px;
     }
 }
+
+.filter {
+    & > circle {
+        fill: $color-filter;
+    }
+}
+
 .service {
-    circle {
-        fill: red;
+    & > circle {
+        fill: $color-service;
     }
 }
 .controller {
-    circle {
-        fill: blue;
+    & > circle {
+        fill: $color-controller;
     }
 }
 
 .directive {
-    circle {
-        fill: green;
+    & > circle {
+        fill: $color-directive;
     }
 }
 
