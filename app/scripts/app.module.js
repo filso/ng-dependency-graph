@@ -1,11 +1,7 @@
 angular.module('ngDependencyGraph', [])
-  .run(function($rootScope, dev) {
+  .run(function(dev) {
 
-    // dev.exposeGlobalObject();
-
-    // setInterval(function() {
-    //   $rootScope.$broadcast('poll');
-    // }, 500);
+    dev.exposeGlobalObject();
 
 
   });

@@ -4,7 +4,6 @@ angular.module('ngDependencyGraph')
   .factory('drawDeps', function() {
 
     function draw(svg) {
-
     }
 
     return {

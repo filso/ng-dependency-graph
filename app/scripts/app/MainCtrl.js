@@ -2,7 +2,6 @@
 
 angular.module('ngDependencyGraph')
   .controller('MainCtrl', function($scope, dev, Graph) {
-    'use strict';
 
     // TODO(filip): move helper stuff to some reasonsable place, add flags (debugging)
     window.dev = dev;
