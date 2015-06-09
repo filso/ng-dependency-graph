@@ -43,6 +43,15 @@ $color-filter: $lime;
 text {
     font: 10px sans-serif;
     pointer-events: none;
+    // filter: url(#glow);
+
+    paint-order: stroke;
+    stroke: #000000;
+    stroke-width: 4px;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    font-weight: 800;
+
 }
 
 

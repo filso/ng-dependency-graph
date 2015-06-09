@@ -1,11 +1,15 @@
 .controls {
   margin-bottom: 5px;
   padding: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
 
   & > div {
     display: inline-block;
     margin-right: 10px;
   }
+
 }
 
 .choose-scope {

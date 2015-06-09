@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .directive('dgGraph', function($rootScope, appDeps, dev, Component, Const, currentView) {
+  .directive('dgGraph', function($rootScope, $timeout, appDeps, dev, Component, Const, currentView) {
 
     return {
       link: function(scope, elm, attrs) {
@@ -19,6 +19,13 @@ angular.module('ngDependencyGraph')
           .charge(-300)
           .on('tick', tick)
           .start();
+
+
+        // DEBUG
+        var clView = _.find(currentGraph.nodes, {name: 'clView'});
+        $timeout(function() {
+          currentView.chooseNode(clView);
+        }, 100);
 
         var svg = d3.select(elm[0]).append('svg');
           // .attr('width', width)
@@ -63,6 +70,7 @@ angular.module('ngDependencyGraph')
             .on('mouseover', mouseover)
             .on('mouseout', mouseout)
             .on('click', nodeClick)
+            .on('mousedown', nodeClick)
             .call(force.drag);
 
           node.append('circle')

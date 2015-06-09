@@ -2,14 +2,15 @@
 
 angular.module('ngDependencyGraph')
   .controller('InfoPanelCtrl', function($scope, currentView) {
-    var ctrl = this;
-
-    this.ha = 'bleblbeble';
+    var self = this;
 
     $scope.$on('chooseNode', function() {
-      console.log('asd!');
       console.log(currentView.node);
-      ctrl.node = currentView.node;
+      self.node = currentView.node;
     });
+
+    $scope.chooseNode = function(node) {
+      currentView.chooseNode(node);
+    };
 
   });

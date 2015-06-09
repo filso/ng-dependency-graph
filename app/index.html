@@ -70,5 +70,17 @@
     </div>
 
   </div>
+  <svg style="display: none">
+    <defs>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="0.3 0.3" result="glow"/>
+    <feMerge>
+    <!-- <feMergeNode in="glow"/> -->
+    <feMergeNode in="glow"/>
+    <feMergeNode in="glow"/>
+    </feMerge>
+    </filter>
+    </defs>
+  </svg>
 </body>
 </html>
