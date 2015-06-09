@@ -1,18 +1,27 @@
 @import "_colors.scss";
 @import "_graph.scss";
 
-.font-family-mix {
+@mixin font-family-mix {
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif  ;
 }
 
 html {
   height: calc(100% - 20px);
-  @include .font-family-mix;
+  @include font-family-mix;
+  margin: 0;
+}
+
+body {
+  margin: 0;
 }
 
 body, .main {
   height: 100%;
 }
+
+.main {
+}
+
 
 .controls {
   // border: 1px solid #333;
@@ -27,6 +36,8 @@ body, .main {
   border: 1px solid #333;
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.55);
 
+  padding: 10px;
+
   background: $color-graph-bg;
   color: white;
 
@@ -39,7 +50,7 @@ body, .main {
 
     text {
       fill: white;
-      font-family: Courier;
+      @include font-family-mix;
     }
 
     line {
