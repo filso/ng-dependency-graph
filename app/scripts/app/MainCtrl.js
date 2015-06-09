@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .controller('MainCtrl', function($scope, dev, Graph) {
+  .controller('MainCtrl', function($scope, dev, Graph, Const) {
 
     // TODO(filip): move helper stuff to some reasonsable place, add flags (debugging)
     window.dev = dev;
@@ -17,5 +17,19 @@ angular.module('ngDependencyGraph')
 
 
     $scope.currentGraph = new Graph(rawNodes);
+
+    $scope.scope = 'components';
+
+    $scope.chooseScope = function(val) {
+
+        $scope.scope = val;
+
+        if (val === Const.Scope.MODULES) {
+
+        } else {
+
+        }
+
+    };
 
   });

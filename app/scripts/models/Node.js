@@ -11,5 +11,15 @@ angular.module('ngDependencyGraph')
       }
     });
 
+    _.assign(Node.prototype, {
+      linkDep: function(node) {
+        this.deps.push(node);
+      },
+      linkProvides: function(node) {
+        this.provides.push(node);
+      }
+    });
+
+
     return Node;
   });

@@ -1,0 +1,30 @@
+.controls {
+  // border: 1px solid #333;
+  margin-bottom: 5px;
+  padding: 5px;
+  // box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.55);
+}
+
+.choose-scope {
+  $border: 1px solid $silver;
+
+  border-radius: 5px;
+  background: $blue;
+  border: $border;
+  display: inline-block;
+
+  & > div {
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
+    
+    &:first-child {
+      border-right: $border;
+    }
+
+    &.active {
+      border: 1px black;
+    }
+
+  }
+}

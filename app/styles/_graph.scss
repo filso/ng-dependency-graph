@@ -12,8 +12,8 @@ $color-filter: $lime;
 
 .node {
     circle {
-        stroke: #fff;
-        stroke-width: 1.5px;
+        stroke: $white;
+        stroke-width: 1px;
     }
 }
 

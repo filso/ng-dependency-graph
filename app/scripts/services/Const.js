@@ -9,6 +9,11 @@ angular.module('ngDependencyGraph')
       SERVICE: 'service'
     },
 
+    Scope: {
+      COMPONENTS: 'components',
+      MODULES: 'modules'
+    },
+
     View: {
       HOVER_TRANSITION_TIME: '500'
     }

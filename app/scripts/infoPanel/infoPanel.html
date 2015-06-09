@@ -1,14 +1,9 @@
-<div ng-controller="InfoPanelCtrl">
-  <div>Dependencies:
-    <ul>
-      <li></li>
-    </ul>
-  </div>
-
-  <div>Required by:
-    <ul>
-      <li></li>
-    </ul>
-  </div>
-
+<div class="section">
+  <div class="title">Dependencies:</div>
+  <span ng-repeat="item in node.dependencies"></span>
+</div>
+<div class="section">
+  <div class="title">Dependencies:</div>
+Required by:
+  <span ng-repeat="item in node.provides"></span>
 </div>

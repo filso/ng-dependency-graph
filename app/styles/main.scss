@@ -1,5 +1,6 @@
 @import "_colors.scss";
 @import "_graph.scss";
+@import "_controls.scss";
 
 @mixin font-family-mix {
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif  ;
@@ -9,6 +10,7 @@ html {
   height: calc(100% - 20px);
   @include font-family-mix;
   margin: 0;
+  font-size: 11px;
 }
 
 body {
@@ -22,28 +24,27 @@ body, .main {
 .main {
 }
 
-
-.controls {
-  // border: 1px solid #333;
-  margin-bottom: 5px;
-  padding: 5px;
-  // box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.55);
-}
+$info-panel-width: 300px;
+$dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
 
 .dg-graph {
-  width: 100%;
+  display: inline-block;
+
+  width: $dg-graph-width;
   height: calc(100% - 30px);
+
   border: 1px solid #333;
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.55);
-
   padding: 10px;
 
   background: $color-graph-bg;
   color: white;
 
   svg {
-
+    width: 100%;
+    height: 100%;
     cursor: move;
+
     circle {
 
     }
@@ -72,9 +73,14 @@ body, .main {
 
 .info-panel {
   display: inline-block;
-}
+  width: $info-panel-width;
+  .title {
+    background: $gray;
+    border-bottom: 1px solid $black;  
+  }
+  
+  .section {
 
-svg {
-  width: 100%;
-  height: 100%;
+  }
+
 }

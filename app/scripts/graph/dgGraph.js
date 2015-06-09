@@ -47,6 +47,7 @@ angular.module('ngDependencyGraph')
             .attr('refY', 0)
             .attr('markerWidth', 6)
             .attr('markerHeight', 6)
+            .attr('fill', '#ddd')
             .attr('orient', 'auto')
           .append('svg:path')
             .attr('d', 'M0,-5L10,0L0,5');

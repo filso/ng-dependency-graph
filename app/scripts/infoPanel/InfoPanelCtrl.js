@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ngDependencyGraph.infoPanel')
+angular.module('ngDependencyGraph')
   .controller('InfoPanelCtrl', function() {
     
   });

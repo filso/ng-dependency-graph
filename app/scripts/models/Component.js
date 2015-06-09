@@ -16,15 +16,5 @@ angular.module('ngDependencyGraph')
 
     Component.prototype = Object.create(Node.prototype);
 
-    _.assign(Component.prototype, {
-      linkDep: function(node) {
-        this.deps.push(node);
-      },
-      linkProvides: function(node) {
-        this.provides.push(node);
-      }
-    });
-
-
     return Component;
   });
