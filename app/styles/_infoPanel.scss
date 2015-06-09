@@ -1,0 +1,26 @@
+.info-panel-wrapper {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: $info-panel-width;
+}
+
+.info-panel {
+  color: #444;
+  
+  .title {
+    background: #eee;
+    border-bottom: 1px solid #ccc;  
+  }
+
+  .section {
+    & > div {
+      padding: 3px;
+    }
+  }
+
+  .node-title {
+    padding: 3px;
+  }
+
+}

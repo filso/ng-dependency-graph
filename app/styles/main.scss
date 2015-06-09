@@ -1,6 +1,11 @@
-@import "_colors.scss";
-@import "_graph.scss";
-@import "_controls.scss";
+
+$info-panel-width: 300px;
+
+
+@import "colors";
+@import "graph";
+@import "controls";
+@import "infoPanel";
 
 @mixin font-family-mix {
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif ;
@@ -26,7 +31,6 @@ body, .main {
 .main {
 }
 
-$info-panel-width: 300px;
 $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
 
 .dg-graph {
@@ -71,21 +75,3 @@ $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
 
 }
 
-.info-panel {
-  color: #444;
-  position: fixed;
-  right: 0;
-  top: 0;
-  width: $info-panel-width;
-  .title {
-    background: #eee;
-    border-bottom: 1px solid #ccc;  
-  }
-  .section {
-    & > div {
-      padding: 3px;
-    }
-
-  }
-
-}
