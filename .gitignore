@@ -2,3 +2,5 @@ node_modules/
 npm-debug.log
 tasks.todo
 *.css
+
+chrome_extension.zip
