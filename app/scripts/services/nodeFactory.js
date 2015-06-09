@@ -1,11 +1,14 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .factory('nodeFactory', function(Node) {
-
+  .factory('nodeFactory', function(Component, Module) {
     function createNodes(rawNodes) {
       var nodes = _.map(rawNodes, function(rawNode) {
-        return new Node(rawNode);
+        if (rawNode.type === 'module') {
+          return new Module(rawNode);
+        } else {
+          return new Component(rawNode);
+        }
       });
 
       _.each(nodes, function(node1) {
@@ -20,6 +23,7 @@ angular.module('ngDependencyGraph')
         });
 
       });
+      
       return nodes;
     }
 

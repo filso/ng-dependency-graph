@@ -37,3 +37,28 @@
 
   }
 }
+
+.trigger-components {
+
+  label {
+    cursor: pointer;
+    padding: 3px;
+  }
+
+  & > .services {
+    background: $color-service;
+  }
+
+  & > .controllers {
+    background: $color-controller;
+  }
+
+  & > .directives {
+    background: $color-directive;
+  }
+
+  & > .filters {
+    background: $color-filter;
+  }
+
+}

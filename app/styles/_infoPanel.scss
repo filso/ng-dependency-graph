@@ -19,15 +19,24 @@
     }
   }
 
+  .info {
+    & > span {
+      vertical-align: middle;
+    }
+  }
+
   .node-title {
     font-weight: bold;
     font-size: 1.2em;
     padding: 5px;
   }
 
+  .node-module-title {
+
+  }
 
 
-  .node-list a {
+  .choose-node {
     cursor: pointer;
     color: $blue;
 

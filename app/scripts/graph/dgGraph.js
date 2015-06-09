@@ -11,16 +11,27 @@ angular.module('ngDependencyGraph')
         var width = 1300,
           height = 500;
 
-        var svg = d3.select(elm[0]).append('svg');
+        var zoomListener = d3.behavior.zoom().on('zoom', redraw);
 
+        var svg = d3.select(elm[0]).append('svg')
+          .attr("pointer-events", "all")
+          .call(zoomListener)
+          .append('g');
         /**
          * Definitions of markers
          */
-        svg.append('g')
-          .call(d3.behavior.zoom().scaleExtent([1, 8])).on('zoom', zoom);
+        
+        function redraw() {
+          svg.attr("transform",
+              "translate(" + d3.event.translate + ")"
+              + " scale(" + d3.event.scale + ")");
+        }   
 
-        function zoom() {
-          console.log('a!');
+
+
+
+        function zoom(scale, translate) {
+          console.log('ZOOM CB', scale, translate);
         }
 
 

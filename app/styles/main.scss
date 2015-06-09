@@ -28,9 +28,6 @@ body, .main {
   height: 100%;
 }
 
-.main {
-}
-
 $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
 
 .dg-graph {

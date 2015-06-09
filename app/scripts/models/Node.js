@@ -6,6 +6,7 @@ angular.module('ngDependencyGraph')
     function Node(_data) {
       this.name = _data.name;
       this._data = _data;
+      this.type = _data.type;
       this.deps = [];
       this.provides = [];
     }

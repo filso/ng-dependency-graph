@@ -9,13 +9,12 @@ angular.module('ngDependencyGraph')
     _.each(rawData.modules, function(module) {
         _.each(module.components, function(com) {
             com._module = module;
+            module.type = 'module';
         });
     });
 
-
     var componentsGraph = new Graph(rawData.modules[0].components);
     var modulesGraph = new Graph(rawData.modules);
-
 
 
 
