@@ -1,4 +1,8 @@
-<div class="services"><label><input type="checkbox"></input> Services</label></div>
-<div class="controllers"><label><input type="checkbox"></input> Controllers</label></div>
-<div class="directives"><label><input type="checkbox"></input> Directives</label></div>
-<div class="filters"><label><input type="checkbox"></input> Filters</label></div>
+<div class="services"><label><input type="checkbox" ng-change="change()" ng-model="componentsVisible.service"></input> 
+ Services</label></div>
+<div class="controllers"><label><input type="checkbox" ng-change="change()" ng-model="componentsVisible.controller"></input>
+ Controllers</label></div>
+<div class="directives"><label><input type="checkbox" ng-change="change()" ng-model="componentsVisible.directive"></input>
+ Directives</label></div>
+<div class="filters"><label><input type="checkbox" ng-change="change()" ng-model="componentsVisible.filter"></input>
+ Filters</label></div>

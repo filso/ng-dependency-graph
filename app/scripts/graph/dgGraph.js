@@ -6,7 +6,6 @@ angular.module('ngDependencyGraph')
     return {
       link: function(scope, elm, attrs) {
 
-        var currentGraph = currentView.graph;
 
         var width = 1200,
           height = 800;
@@ -28,12 +27,6 @@ angular.module('ngDependencyGraph')
               ' scale(' + d3.event.scale + ')');
         }   
 
-
-        function zoom(scale, translate) {
-          console.log('ZOOM CB', scale, translate);
-        }
-
-
         svg.append('svg:defs').selectAll('marker')
             .data(['end'])      // Different link/path types can be defined here
           .enter().append('svg:marker')    // This section adds in the arrows
@@ -50,15 +43,10 @@ angular.module('ngDependencyGraph')
 
         var force = d3.layout.force();
           
-        // DEBUG
-        // var clView = _.find(currentGraph.nodes, {name: 'clView'});
-        // $timeout(function() {
-        //   currentView.chooseNode(clView);
-        // }, 100);
-
         var links, nodes, nodesEnter;
 
         function update() {
+          var currentGraph = currentView.graph;
 
           force.nodes(currentGraph.nodes)
             .links(currentGraph.links);

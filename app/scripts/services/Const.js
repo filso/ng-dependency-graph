@@ -6,7 +6,8 @@ angular.module('ngDependencyGraph')
     ComponentType: {
       CONTROLLER: 'controller',
       DIRECTIVE: 'directive',
-      SERVICE: 'service'
+      SERVICE: 'service',
+      FILTER: 'filter'
     },
 
     Scope: {

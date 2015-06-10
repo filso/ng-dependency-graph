@@ -13,6 +13,10 @@ angular.module('ngDependencyGraph')
       chooseNode: function(node) {
         this.node = node;
         $rootScope.$broadcast('chooseNode');
+      },
+      componentsVisible: {
+        service: true,
+        controller: true
       }
     };
 

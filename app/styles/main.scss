@@ -44,14 +44,17 @@ $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
     cursor: move;
 
     circle {
+      z-index: -3;
     }
 
     text {
+      z-index: 0;
       fill: white;
       @include font-family-mix;
     }
 
     line {
+      z-index: 3;
       fill: white;
     }
   }

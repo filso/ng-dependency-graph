@@ -25,7 +25,7 @@ angular.module('ngDependencyGraph')
       return new Graph(nodes, links);
     };
 
-    Graph.prototype.filter = function(fn) {
+    Graph.prototype.filterNodes = function(fn) {
       var nodes = this.nodes = _.filter(this.nodes, fn);
       this.links = _.filter(this.links, function(l) {
         return nodes.indexOf(l.target) !== -1 && nodes.indexOf(l.source) !== -1;
@@ -39,7 +39,7 @@ angular.module('ngDependencyGraph')
 
     Graph.prototype.filterByName = function(name) {
       var nameLow = name.toLowerCase();
-      this.filter(function(node) {
+      this.filterNodes(function(node) {
         return node.name.toLowerCase().indexOf(nameLow) !== -1;
       });
 
