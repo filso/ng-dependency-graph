@@ -6,32 +6,28 @@ angular.module('ngDependencyGraph')
     return {
       link: function(scope, elm, attrs) {
 
-
-        var width = 1200,
-          height = 800;
+        var width = elm.width();
+        var height = elm.height();
 
         var zoom = d3.behavior.zoom()
           .scaleExtent([0.5 ,2])
           .on('zoom', redraw);
 
-        setTimeout(function() {
-          zoom.translate([0, 20]);
-        }, 2000);
-
 
         var svg = d3.select(elm[0]).append('svg')
           .call(zoom)
           .append('g');
-        /**
-         * Definitions of markers
-         */
-        
+
         function redraw() {
+          console.log('redraw!');
           svg.attr('transform',
               'translate(' + d3.event.translate + ')' +
               ' scale(' + d3.event.scale + ')');
         }   
 
+        /**
+         * Definitions of markers
+         */
         svg.append('svg:defs').selectAll('marker')
             .data(['end'])      // Different link/path types can be defined here
           .enter().append('svg:marker')    // This section adds in the arrows
@@ -41,10 +37,10 @@ angular.module('ngDependencyGraph')
             .attr('refY', 0)
             .attr('markerWidth', 6)
             .attr('markerHeight', 6)
-            .attr('fill', '#ddd')
+            .attr('fill', '#eee')
             .attr('orient', 'auto')
           .append('svg:path')
-            .attr('d', 'M0,-5L10,0L0,5');
+            .attr('d', 'M0,-3L10,0L0,3');
 
         var force = d3.layout.force();
           
@@ -97,13 +93,7 @@ angular.module('ngDependencyGraph')
             .start();
         }
 
-        // currentGraph.nodes = currentGraph.nodes.slice(1); 
-        // currentGraph.nodes = currentGraph.nodes.slice(0,30); 
         update();
-        setTimeout(function() {
-        }, 2000);
-
-
         scope.$on('updateGraph', update);
 
 
@@ -143,6 +133,11 @@ angular.module('ngDependencyGraph')
         }
 
         function nodeClick(d) {
+          console.log(d.x, d.y, width, height);
+          var x = width / 2;
+          var y = height / 2;
+          zoom.translate([0, 0]).event(svg);
+
           $rootScope.$apply(function() {
             currentView.chooseNode(d);
           });
