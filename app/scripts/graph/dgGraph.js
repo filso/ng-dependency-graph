@@ -6,7 +6,6 @@ angular.module('ngDependencyGraph')
     return {
       link: function(scope, elm, attrs) {
 
-
         function update() {
           var currentGraph = currentView.graph;
           console.log('updaaete!');
@@ -33,8 +32,6 @@ angular.module('ngDependencyGraph')
             .append('g')
             .attr('class', _.property('type'))
             .classed('node', true)
-            .on('mouseover', mouseover)
-            .on('mouseout', mouseout)
             .on('mousedown', nodeClick)
             .call(force.drag);
 
@@ -52,13 +49,9 @@ angular.module('ngDependencyGraph')
            * Nodes update
            */
           nodes
-            .filter(function(d) {
+            .classed('selected', function(d) {
               return d === currentView.selectedNode;
-            })
-            .classed('selected', true)
-            .transition()
-            .duration(Const.View.HOVER_TRANSITION_TIME)
-            .attr('r', 16);
+            });
 
 
           /**
@@ -102,32 +95,46 @@ angular.module('ngDependencyGraph')
           });
         }
 
+        function zoomListener() {
+          var tmp = svg;
+
+          // add transtion if user is not panning (move) or zooming (wheel)
+          if (['mousemove', 'wheel'].indexOf(d3.event.sourceEvent.type) === -1) {
+            tmp = tmp.transition();
+          }
+          tmp.attr('transform',
+            'translate(' + d3.event.translate + ')' +
+            ' scale(' + d3.event.scale + ')');
+        }   
+
+
         scope.$on('chooseNode', function(event, d) {
-          var x = width/2 - d.x;
-          var y = height/2 - d.y;
+          if (force.nodes().indexOf(d) === -1) { // if d is not present, it's not visible
+            return;
+          }
+          var x = (width/2 - d.x);
+          var y = (height/2 - d.y);
 
           zoom.translate([x, y]).event(svg);
+          update();
+
         });
 
+        var links, nodes, nodesEnter;
 
         var width = elm.width();
         var height = elm.height();
 
+        var force = d3.layout.force();
+
         var zoom = d3.behavior.zoom()
           .scaleExtent([0.5 ,2])
-          .on('zoom', zoomListener);
-
+          .on('zoom.bar', zoomListener);
 
         var svg = d3.select(elm[0]).append('svg')
           .call(zoom)
           .append('g');
 
-        function zoomListener() {
-          svg.transition().attr('transform',
-              'translate(' + d3.event.translate + ')' +
-              ' scale(' + d3.event.scale + ')');
-          update();
-        }   
 
         /**
          * Definitions of markers
@@ -139,17 +146,14 @@ angular.module('ngDependencyGraph')
             .attr('viewBox', '0 -5 10 10')
             .attr('refX', 18)
             .attr('refY', 0)
-            .attr('markerWidth', 6)
-            .attr('markerHeight', 6)
+            .attr('markerWidth', 8)
+            .attr('markerHeight', 8)
             .attr('fill', '#eee')
             .attr('orient', 'auto')
           .append('svg:path')
             .attr('d', 'M0,-3L10,0L0,3');
 
-        var force = d3.layout.force();
           
-        var links, nodes, nodesEnter;
-
         update();
         scope.$on('updateGraph', update);
 
