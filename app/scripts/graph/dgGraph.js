@@ -6,45 +6,6 @@ angular.module('ngDependencyGraph')
     return {
       link: function(scope, elm, attrs) {
 
-        var width = elm.width();
-        var height = elm.height();
-
-        var zoom = d3.behavior.zoom()
-          .scaleExtent([0.5 ,2])
-          .on('zoom', redraw);
-
-
-        var svg = d3.select(elm[0]).append('svg')
-          .call(zoom)
-          .append('g');
-
-        function redraw() {
-          console.log('redraw!');
-          svg.attr('transform',
-              'translate(' + d3.event.translate + ')' +
-              ' scale(' + d3.event.scale + ')');
-        }   
-
-        /**
-         * Definitions of markers
-         */
-        svg.append('svg:defs').selectAll('marker')
-            .data(['end'])      // Different link/path types can be defined here
-          .enter().append('svg:marker')    // This section adds in the arrows
-            .attr('id', String)
-            .attr('viewBox', '0 -5 10 10')
-            .attr('refX', 18)
-            .attr('refY', 0)
-            .attr('markerWidth', 6)
-            .attr('markerHeight', 6)
-            .attr('fill', '#eee')
-            .attr('orient', 'auto')
-          .append('svg:path')
-            .attr('d', 'M0,-3L10,0L0,3');
-
-        var force = d3.layout.force();
-          
-        var links, nodes, nodesEnter;
 
         function update() {
           var currentGraph = currentView.graph;
@@ -93,9 +54,6 @@ angular.module('ngDependencyGraph')
             .start();
         }
 
-        update();
-        scope.$on('updateGraph', update);
-
 
         function tick() {
           links
@@ -133,15 +91,62 @@ angular.module('ngDependencyGraph')
         }
 
         function nodeClick(d) {
-          console.log(d.x, d.y, width, height);
-          var x = width / 2;
-          var y = height / 2;
-          zoom.translate([0, 0]).event(svg);
-
           $rootScope.$apply(function() {
             currentView.chooseNode(d);
           });
         }
+
+        scope.$on('chooseNode', function(event, d) {
+          var x = width/2 - d.x;
+          var y = height/2 - d.y;
+
+          zoom.translate([x, y]).event(svg);
+        });
+
+
+        var width = elm.width();
+        var height = elm.height();
+
+        var zoom = d3.behavior.zoom()
+          .scaleExtent([0.5 ,2])
+          .on('zoom', redraw);
+
+
+        var svg = d3.select(elm[0]).append('svg')
+          .call(zoom)
+          .append('g');
+
+        function redraw() {
+          console.log('redraw!');
+          svg.attr('transform',
+              'translate(' + d3.event.translate + ')' +
+              ' scale(' + d3.event.scale + ')');
+        }   
+
+        /**
+         * Definitions of markers
+         */
+        svg.append('svg:defs').selectAll('marker')
+            .data(['end'])      // Different link/path types can be defined here
+          .enter().append('svg:marker')    // This section adds in the arrows
+            .attr('id', String)
+            .attr('viewBox', '0 -5 10 10')
+            .attr('refX', 18)
+            .attr('refY', 0)
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
+            .attr('fill', '#eee')
+            .attr('orient', 'auto')
+          .append('svg:path')
+            .attr('d', 'M0,-3L10,0L0,3');
+
+        var force = d3.layout.force();
+          
+        var links, nodes, nodesEnter;
+
+        update();
+        scope.$on('updateGraph', update);
+
 
       }
     };

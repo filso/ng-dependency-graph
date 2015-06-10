@@ -12,7 +12,7 @@ angular.module('ngDependencyGraph')
       },
       chooseNode: function(node) {
         this.node = node;
-        $rootScope.$broadcast('chooseNode');
+        $rootScope.$broadcast('chooseNode', node);
       },
       componentsVisible: {
         service: true,

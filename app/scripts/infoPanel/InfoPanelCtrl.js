@@ -5,7 +5,6 @@ angular.module('ngDependencyGraph')
     var self = this;
 
     $scope.$on('chooseNode', function() {
-      console.log(currentView.node);
       self.node = currentView.node;
     });
 
