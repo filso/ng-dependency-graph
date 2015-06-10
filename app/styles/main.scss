@@ -10,11 +10,9 @@ $info-panel-width: 300px;
 @mixin font-family-mix {
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif ;
   // font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
 }
 
 html {
-  height: calc(100% - 20px);
   @include font-family-mix;
   margin: 0;
   font-size: 11px;
@@ -24,7 +22,7 @@ body {
   margin: 0;
 }
 
-body, .main {
+html, body, .main {
   height: 100%;
 }
 
@@ -46,7 +44,6 @@ $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
     cursor: move;
 
     circle {
-
     }
 
     text {
@@ -65,8 +62,8 @@ $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
 
   .legend {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 0px;
+    left: 0px;
   }
 
 }

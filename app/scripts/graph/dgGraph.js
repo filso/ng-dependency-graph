@@ -8,13 +8,14 @@ angular.module('ngDependencyGraph')
 
         var currentGraph = currentView.graph;
 
-        var width = 1300,
-          height = 500;
+        var width = 1200,
+          height = 800;
 
-        var zoomListener = d3.behavior.zoom().on('zoom', redraw);
+        var zoomListener = d3.behavior.zoom()
+          .scaleExtent([0.5 ,2])
+          .on('zoom', redraw);
 
         var svg = d3.select(elm[0]).append('svg')
-          .attr("pointer-events", "all")
           .call(zoomListener)
           .append('g');
         /**
@@ -22,12 +23,10 @@ angular.module('ngDependencyGraph')
          */
         
         function redraw() {
-          svg.attr("transform",
-              "translate(" + d3.event.translate + ")"
-              + " scale(" + d3.event.scale + ")");
+          svg.attr('transform',
+              'translate(' + d3.event.translate + ')' +
+              ' scale(' + d3.event.scale + ')');
         }   
-
-
 
 
         function zoom(scale, translate) {
@@ -50,35 +49,43 @@ angular.module('ngDependencyGraph')
             .attr('d', 'M0,-5L10,0L0,5')
 
         var force = d3.layout.force()
-          .nodes(d3.values(currentGraph.nodes))
-          .links(currentGraph.links)
+          // .nodes(d3.values(currentGraph.nodes))
+          // .links(currentGraph.links)
           .size([width, height])
           .linkDistance(80)
-          .charge(-300)
+          .charge(-400)
           .on('tick', tick)
-          .start();
+          // .start();
 
 
         // DEBUG
-        var clView = _.find(currentGraph.nodes, {name: 'clView'});
-        $timeout(function() {
-          currentView.chooseNode(clView);
-        }, 100);
+        // var clView = _.find(currentGraph.nodes, {name: 'clView'});
+        // $timeout(function() {
+        //   currentView.chooseNode(clView);
+        // }, 100);
 
-        var link, node;
+        var links, nodes, nodesEnter;
 
         function update() {
 
-          link = svg.selectAll('.link')
-            .data(currentGraph.links)
+          force
+            .nodes(d3.values(currentGraph.nodes))
+            .links(currentGraph.links);
+
+          force.stop();
+
+
+          links = svg.selectAll('.link')
+            .data(currentGraph.links, function(d) { return d.source.name + ' ' + d.target.name; })
             .enter()
             .append('line')
             .attr('class', 'link')
             .attr('marker-end', 'url(#end)');
 
+          nodes = svg.selectAll('.node')
+            .data(currentGraph.nodes, function(d) { return d.name; });
 
-          node = svg.selectAll('.node')
-            .data(currentGraph.nodes)
+          nodesEnter = nodes
             .enter()
             .append('g')
             .attr('class', function(node) {
@@ -91,26 +98,43 @@ angular.module('ngDependencyGraph')
             .on('mousedown', nodeClick)
             .call(force.drag);
 
-          node.append('circle')
+          nodesEnter.append('circle')
             .attr('r', 8);
 
-          node.append('text')
+          nodesEnter.append('text')
             .attr('x', 12)
             .attr('dy', '.35em')
             .text(function(d) {
               return d.name;
             });
-            console.log('a!');
+
+
+          nodes.exit().remove();
+
+          force.start();
+
+
 
         }
+          // currentGraph.nodes = currentGraph.nodes.slice(1); 
 
+        // currentGraph.nodes = currentGraph.nodes.slice(0,30); 
+
+
+        // TODO 
         update();
-
+        setTimeout(function() {
+          currentGraph.nodes = _.first(currentGraph.nodes, 30);
+          update();
+        }, 100);
         scope.$on('updateGraph', update);
 
+        // $timeout(function() {
+        //   update();
+        // }, 2000);
 
         function tick() {
-          link
+          links
             .attr('x1', function(d) {
               return d.source.x;
             })
@@ -124,7 +148,7 @@ angular.module('ngDependencyGraph')
               return d.target.y;
             });
 
-          node
+          nodesEnter
             .attr('transform', function(d) {
               return 'translate(' + d.x + ',' + d.y + ')';
             });
