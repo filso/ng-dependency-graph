@@ -10,12 +10,17 @@ angular.module('ngDependencyGraph')
         var width = 1200,
           height = 800;
 
-        var zoomListener = d3.behavior.zoom()
+        var zoom = d3.behavior.zoom()
           .scaleExtent([0.5 ,2])
           .on('zoom', redraw);
 
+        setTimeout(function() {
+          zoom.translate([0, 20]);
+        }, 2000);
+
+
         var svg = d3.select(elm[0]).append('svg')
-          .call(zoomListener)
+          .call(zoom)
           .append('g');
         /**
          * Definitions of markers
@@ -52,10 +57,10 @@ angular.module('ngDependencyGraph')
             .links(currentGraph.links);
 
           links = svg.selectAll('.link')
-            .data(force.links(), _.property('_id')); //, function(d) { return d.source.id + '-' + d.target.id; });
+            .data(force.links(), _.property('_id'));
 
           links.enter()
-            .append('line')
+            .insert("line", ":first-child") // this needs to be rendered first -> prepend
             .attr('class', 'link')
             .attr('marker-end', 'url(#end)');
           links.exit().remove();
@@ -66,9 +71,7 @@ angular.module('ngDependencyGraph')
           nodesEnter = nodes
             .enter()
             .append('g')
-            .attr('class', function(node) {
-              return node._data.type;
-            })
+            .attr('class', _.property('type'))
             .classed('node', true)
             .on('mouseover', mouseover)
             .on('mouseout', mouseout)

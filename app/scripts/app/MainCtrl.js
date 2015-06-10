@@ -7,11 +7,14 @@ angular.module('ngDependencyGraph')
 
     var rawData = rawMockData.ngArchitecture;
     _.each(rawData.modules, function(module) {
+        module.type = 'module';
+      
         _.each(module.components, function(com) {
             com._module = module;
-            module.type = 'module';
         });
     });
+
+
 
     var componentsGraph = Graph.createFromRawNodes(rawData.modules[0].components);
     var modulesGraph = Graph.createFromRawNodes(rawData.modules);

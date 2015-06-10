@@ -1,8 +1,11 @@
 $color-graph-bg: #333;
 
-$color-service: $red;
-$color-controller: $blue;
-$color-directive: $orange;
+$color-module: $maroon;
+
+
+$color-service: $blue;
+$color-controller: $olive;
+$color-directive: $yellow;
 $color-filter: $teal;
 
 .link {
@@ -15,30 +18,41 @@ $color-filter: $teal;
         stroke: $white;
         stroke-width: 1px;
     }
+
+
+    &.module {
+        & > circle {
+            fill: $color-module;
+        }
+    }
+
+
+    &.service {
+        & > circle {
+            fill: $color-service;
+        }
+    }
+    &.controller {
+        & > circle {
+            fill: $color-controller;
+        }
+    }
+
+    &.directive {
+        & > circle {
+            fill: $color-directive;
+        }
+    }
+
+    &.filter {
+        & > circle {
+            fill: $color-filter;
+        }
+    }
+
 }
 
-.filter {
-    & > circle {
-        fill: $color-filter;
-    }
-}
 
-.service {
-    & > circle {
-        fill: $color-service;
-    }
-}
-.controller {
-    & > circle {
-        fill: $color-controller;
-    }
-}
-
-.directive {
-    & > circle {
-        fill: $color-directive;
-    }
-}
 
 text {
     font: 10px sans-serif;
