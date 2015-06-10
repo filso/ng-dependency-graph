@@ -46,17 +46,11 @@ angular.module('ngDependencyGraph')
             .attr('fill', '#ddd')
             .attr('orient', 'auto')
           .append('svg:path')
-            .attr('d', 'M0,-5L10,0L0,5')
+            .attr('d', 'M0,-5L10,0L0,5');
 
         var force = d3.layout.force()
-          // .nodes(d3.values(currentGraph.nodes))
-          // .links(currentGraph.links)
-          .size([width, height])
-          .linkDistance(80)
-          .charge(-400)
-          .on('tick', tick)
-          // .start();
-
+          .nodes(currentGraph.nodes)
+          .links(currentGraph.links);
 
         // DEBUG
         // var clView = _.find(currentGraph.nodes, {name: 'clView'});
@@ -68,22 +62,17 @@ angular.module('ngDependencyGraph')
 
         function update() {
 
-          force
-            .nodes(d3.values(currentGraph.nodes))
-            .links(currentGraph.links);
-
-          force.stop();
-
-
           links = svg.selectAll('.link')
-            .data(currentGraph.links, function(d) { return d.source.name + ' ' + d.target.name; })
-            .enter()
+            .data(force.links(), _.property('_id')); //, function(d) { return d.source.id + '-' + d.target.id; });
+
+          links.enter()
             .append('line')
             .attr('class', 'link')
             .attr('marker-end', 'url(#end)');
+          links.exit().remove();
 
           nodes = svg.selectAll('.node')
-            .data(currentGraph.nodes, function(d) { return d.name; });
+            .data(force.nodes(), _.property('_id'));
 
           nodesEnter = nodes
             .enter()
@@ -94,7 +83,6 @@ angular.module('ngDependencyGraph')
             .classed('node', true)
             .on('mouseover', mouseover)
             .on('mouseout', mouseout)
-            .on('click', nodeClick)
             .on('mousedown', nodeClick)
             .call(force.drag);
 
@@ -107,31 +95,31 @@ angular.module('ngDependencyGraph')
             .text(function(d) {
               return d.name;
             });
-
-
           nodes.exit().remove();
 
-          force.start();
-
-
-
+          force
+            .size([width, height])
+            .linkDistance(80)
+            .charge(-400)
+            .on('tick', tick)
+            .start();
+          console.log('reloaded!!!');
         }
-          // currentGraph.nodes = currentGraph.nodes.slice(1); 
 
+        // currentGraph.nodes = currentGraph.nodes.slice(1); 
         // currentGraph.nodes = currentGraph.nodes.slice(0,30); 
-
-
-        // TODO 
         update();
         setTimeout(function() {
-          currentGraph.nodes = _.first(currentGraph.nodes, 30);
+          var nodes = force.nodes();
+          currentGraph.nodes.splice(0, 50);
+          force.nodes(currentGraph.nodes);
           update();
-        }, 100);
+
+        }, 2000);
+
+
         scope.$on('updateGraph', update);
 
-        // $timeout(function() {
-        //   update();
-        // }, 2000);
 
         function tick() {
           links
@@ -148,7 +136,7 @@ angular.module('ngDependencyGraph')
               return d.target.y;
             });
 
-          nodesEnter
+          nodes
             .attr('transform', function(d) {
               return 'translate(' + d.x + ',' + d.y + ')';
             });

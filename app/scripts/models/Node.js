@@ -4,6 +4,7 @@ angular.module('ngDependencyGraph')
   .factory('Node', function() {
 
     function Node(_data) {
+      this._id = _.uniqueId();
       this.name = _data.name;
       this._data = _data;
       this.type = _data.type;
