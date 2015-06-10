@@ -13,9 +13,6 @@ angular.module('ngDependencyGraph')
       chooseNode: function(node) {
         this.node = node;
         $rootScope.$broadcast('chooseNode');
-      },
-      filterNodes: function(fn) {
-        
       }
     };
 

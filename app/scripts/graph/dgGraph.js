@@ -48,10 +48,8 @@ angular.module('ngDependencyGraph')
           .append('svg:path')
             .attr('d', 'M0,-5L10,0L0,5');
 
-        var force = d3.layout.force()
-          .nodes(currentGraph.nodes)
-          .links(currentGraph.links);
-
+        var force = d3.layout.force();
+          
         // DEBUG
         // var clView = _.find(currentGraph.nodes, {name: 'clView'});
         // $timeout(function() {
@@ -61,6 +59,9 @@ angular.module('ngDependencyGraph')
         var links, nodes, nodesEnter;
 
         function update() {
+
+          force.nodes(currentGraph.nodes)
+            .links(currentGraph.links);
 
           links = svg.selectAll('.link')
             .data(force.links(), _.property('_id')); //, function(d) { return d.source.id + '-' + d.target.id; });
@@ -103,18 +104,12 @@ angular.module('ngDependencyGraph')
             .charge(-400)
             .on('tick', tick)
             .start();
-          console.log('reloaded!!!');
         }
 
         // currentGraph.nodes = currentGraph.nodes.slice(1); 
         // currentGraph.nodes = currentGraph.nodes.slice(0,30); 
         update();
         setTimeout(function() {
-          var nodes = force.nodes();
-          currentGraph.nodes.splice(0, 50);
-          force.nodes(currentGraph.nodes);
-          update();
-
         }, 2000);
 
 

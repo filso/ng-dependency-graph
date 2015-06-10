@@ -12,9 +12,8 @@
 
   <!-- inject:js -->
   <script src="scripts/app.module.js"></script>
+  <script src="scripts/triggerComponents/TriggerComponentsCtrl.js"></script>
   <script src="scripts/services/nodeFactory.js"></script>
-  <script src="scripts/services/mediator.js"></script>
-  <script src="scripts/services/graph.js"></script>
   <script src="scripts/services/drawDeps.js"></script>
   <script src="scripts/services/dev.js"></script>
   <script src="scripts/services/currentView.js"></script>
@@ -24,8 +23,8 @@
   <script src="scripts/services/appInfo.js"></script>
   <script src="scripts/services/appDeps.js"></script>
   <script src="scripts/services/appContext.js"></script>
+  <script src="scripts/services/Graph.js"></script>
   <script src="scripts/services/Const.js"></script>
-  <script src="scripts/inject/debug.js"></script>
   <script src="scripts/scripts/developmentData.js"></script>
   <script src="scripts/models/models.module.js"></script>
   <script src="scripts/models/Node.js"></script>
@@ -33,9 +32,10 @@
   <script src="scripts/models/Module.js"></script>
   <script src="scripts/models/Component.js"></script>
   <script src="scripts/models/App.js"></script>
-  <script src="scripts/graph/dgGraph.js"></script>
+  <script src="scripts/inject/debug.js"></script>
   <script src="scripts/infoPanel/infoPanel.module.js"></script>
   <script src="scripts/infoPanel/InfoPanelCtrl.js"></script>
+  <script src="scripts/graph/dgGraph.js"></script>
   <script src="scripts/controls/controls.module.js"></script>
   <script src="scripts/controls/FilterNameCtrl.js"></script>
   <script src="scripts/app/MainCtrl.js"></script>
@@ -59,11 +59,7 @@
           <div>Scroll mouse - zoom in/out</div>
           <div>Drag canvas - move around</div>
         </div>
-        <div class="trigger-components">
-          <div class="services"><label><input type="checkbox"></input> Services</label></div>
-          <div class="controllers"><label><input type="checkbox"></input> Controllers</label></div>
-          <div class="directives"><label><input type="checkbox"></input> Directives</label></div>
-          <div class="filters"><label><input type="checkbox"></input> Filters</label></div>
+        <div class="trigger-components" ng-controller="TriggerComponentsCtrl" ng-include="'scripts/triggerComponents/triggerComponents.html">
         </div>
       </div>
     </div>

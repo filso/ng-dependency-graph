@@ -13,8 +13,8 @@ angular.module('ngDependencyGraph')
         });
     });
 
-    var componentsGraph = new Graph(rawData.modules[0].components);
-    var modulesGraph = new Graph(rawData.modules);
+    var componentsGraph = Graph.createFromRawNodes(rawData.modules[0].components);
+    var modulesGraph = Graph.createFromRawNodes(rawData.modules);
 
 
 
