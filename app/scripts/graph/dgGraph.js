@@ -9,7 +9,7 @@ angular.module('ngDependencyGraph')
 
         function update() {
           var currentGraph = currentView.graph;
-
+          console.log('updaaete!');
           force.nodes(currentGraph.nodes)
             .links(currentGraph.links);
 
@@ -25,6 +25,9 @@ angular.module('ngDependencyGraph')
           nodes = svg.selectAll('.node')
             .data(force.nodes(), _.property('_id'));
 
+          /**
+           * Nodes enter
+           */
           nodesEnter = nodes
             .enter()
             .append('g')
@@ -35,8 +38,8 @@ angular.module('ngDependencyGraph')
             .on('mousedown', nodeClick)
             .call(force.drag);
 
-          nodesEnter.append('circle')
-            .attr('r', 8);
+          nodesEnter.append('circle');
+            // .attr('r', 8);
 
           nodesEnter.append('text')
             .attr('x', 12)
@@ -44,6 +47,23 @@ angular.module('ngDependencyGraph')
             .text(function(d) {
               return d.name;
             });
+
+          /**
+           * Nodes update
+           */
+          nodes
+            .filter(function(d) {
+              return d === currentView.selectedNode;
+            })
+            .classed('selected', true)
+            .transition()
+            .duration(Const.View.HOVER_TRANSITION_TIME)
+            .attr('r', 16);
+
+
+          /**
+           * Nodes remove
+           */
           nodes.exit().remove();
 
           force
@@ -76,20 +96,6 @@ angular.module('ngDependencyGraph')
             });
         }
 
-        function mouseover() {
-          d3.select(this).select('circle')
-            .transition()
-            .duration(Const.View.HOVER_TRANSITION_TIME)
-            .attr('r', 12);
-        }
-
-        function mouseout() {
-          d3.select(this).select('circle')
-            .transition()
-            .duration(Const.View.HOVER_TRANSITION_TIME)
-            .attr('r', 8);
-        }
-
         function nodeClick(d) {
           $rootScope.$apply(function() {
             currentView.chooseNode(d);
@@ -109,18 +115,18 @@ angular.module('ngDependencyGraph')
 
         var zoom = d3.behavior.zoom()
           .scaleExtent([0.5 ,2])
-          .on('zoom', redraw);
+          .on('zoom', zoomListener);
 
 
         var svg = d3.select(elm[0]).append('svg')
           .call(zoom)
           .append('g');
 
-        function redraw() {
-          console.log('redraw!');
-          svg.attr('transform',
+        function zoomListener() {
+          svg.transition().attr('transform',
               'translate(' + d3.event.translate + ')' +
               ' scale(' + d3.event.scale + ')');
+          update();
         }   
 
         /**

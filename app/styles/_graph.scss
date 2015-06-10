@@ -17,8 +17,17 @@ $color-filter: $teal;
     circle {
         stroke: $white;
         stroke-width: 1px;
+        r: 8;
+        transition: all 0.3s;
+        
+        &:hover {
+            r: 12;
+        }
     }
 
+    &.selected circle {
+        stroke: $black;
+    }
 
     &.module {
         & > circle {
