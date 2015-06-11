@@ -47,7 +47,7 @@ var inject = function() {
           return false;
         }
         return true;
-      };
+      }
 
 
       if (!ngLoaded()) {
@@ -76,7 +76,7 @@ var inject = function() {
       }
 
       // do not patch twice
-      if (window.__ngArchitecture) {
+      if (window.__ngDependencyGraph) {
         return;
       }
 
@@ -143,7 +143,7 @@ var inject = function() {
         }());
       }
 
-      var api = window.__ngArchitecture = {
+      var api = window.__ngDependencyGraph = {
         getMetadata: function() {
           return metadata;
         }
@@ -272,6 +272,6 @@ var inject = function() {
 
 
 // only inject if cookie is set
-// if (document.cookie.indexOf('__ngArchitecture=true') != -1) {
+// if (document.cookie.indexOf('__ngDependencyGraph=true') != -1) {
 document.addEventListener('DOMContentLoaded', inject);
 // }
