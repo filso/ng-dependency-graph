@@ -18,6 +18,15 @@ angular.module('ngDependencyGraph')
     if (angular.version) {
     }
 
+    this.chooseScope = function(val) {
+      if (val === Const.Scope.MODULES) {
+        currentView.updateGraph(modulesGraph);
+
+      } else {
+        currentView.updateGraph(componentsGraph);
+      }
+    };
+
     var self = this;
 
     var allComponents = [];
@@ -28,24 +37,15 @@ angular.module('ngDependencyGraph')
     var modulesGraph = Graph.createFromRawNodes(rawData.modules, Const.Scope.MODULES);
     var componentsGraph = Graph.createFromRawNodes(allComponents, Const.Scope.COMPONENTS);
 
-    console.log(modulesGraph.links.length);
-
     // DEBUG that's for development
     $timeout(function() {
-
-      // var node = _.find(componentsGraph.nodes, {name: 'clView'});
-      // currentView.chooseNode(node);
+      // var node = _.find(currentView.graph.nodes, {name: 'clView'});
+      var node = _.find(currentView.graph.nodes, {name: 'az-ci'});
+      currentView.chooseNode(node);
+      console.log(node);
     }, 300);
 
-    this.chooseScope = function(val) {
-      if (val === Const.Scope.MODULES) {
-        currentView.updateGraph(modulesGraph);
+    this.chooseScope(Const.Scope.MODULES);
 
-      } else {
-        currentView.updateGraph(componentsGraph);
-      }
-    };
-
-    this.chooseScope(Const.Scope.COMPONENTS);
 
   });

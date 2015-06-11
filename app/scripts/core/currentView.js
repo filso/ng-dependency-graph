@@ -7,8 +7,6 @@ angular.module('ngDependencyGraph')
       updateGraph: function(graph) {
         this.graph = graph;
 
-        console.log('ha!', graph);
-
         if (graph.scope === 'components') {
           this.setComponentsVisible(this.componentsVisible);
         }

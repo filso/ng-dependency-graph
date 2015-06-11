@@ -9,10 +9,9 @@ angular.module('ngDependencyGraph')
       this.origLinks = this.links = links;
     }
 
-    Graph.createFromRawNodes = function(rawNodes, isModules) {
+    Graph.createFromRawNodes = function(rawNodes, scope) {
 
       var nodes = nodeFactory.createNodes(rawNodes);
-
       var links = [];
 
       _.each(nodes, function(node1) {
@@ -23,7 +22,7 @@ angular.module('ngDependencyGraph')
 
       });
 
-      return new Graph(nodes, links);
+      return new Graph(nodes, links, scope);
     };
 
     Graph.prototype.filterNodes = function(fn) {
