@@ -19,10 +19,21 @@
     border-bottom: 1px solid #ccc;  
   }
 
-  .section {
+  .info-panel-list {
     & > div {
       padding: 3px;
     }
+
+    @each $type in $components {
+        $i: index($components, $type);
+        &.#{$type} {
+            & > .title {
+                background: lighten(nth($components-colors, $i), 10%);
+                color: white;
+            }
+        }
+    }
+
   }
 
   .info {

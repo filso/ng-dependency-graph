@@ -13,7 +13,7 @@ angular.module('ngDependencyGraph')
       replace: true,
       scope: true,
       link: function(scope, elm, attrs) {
-        scope.list = $parse(attrs.dgInfoPanelList)(scope);
+        scope.list = _.sortBy($parse(attrs.dgInfoPanelList)(scope), 'name');
         scope.title = attrs.title;
         scope.chooseNode = chooseNode;
       }
