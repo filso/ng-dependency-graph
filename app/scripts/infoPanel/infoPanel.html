@@ -1,10 +1,11 @@
 <div ng-controller="InfoPanelCtrl as infoPanel" class="info-panel">
-  <div ng-if="infoPanel.node">
+  <div ng-if="infoPanel.node && infoPanel.node.type !== 'module'">
+    
     <div class="info">
       <span class="node-title" ng-bind="infoPanel.node.name"></span>
       <a class="node-module-name choose-node" ng-bind="infoPanel.node.module.name" ng-click="chooseNode(infoPanel.node.module)"></a>
     </div>
-    </div>
+    
     <div class="section">
       <div class="title">Dependencies ({{infoPanel.node.deps.length}}):</div>
       <div class="node-list">
@@ -12,6 +13,7 @@
         <span ng-repeat="item in infoPanel.node.deps"><a ng-bind="item.name" ng-click="chooseNode(item)" class="choose-node"></a>, </span>
       </div>
     </div>
+
     <div class="section">
       <div class="title">Required by ({{infoPanel.node.provides.length}}):</div>
       <div class="node-list">
@@ -19,6 +21,18 @@
         <span ng-repeat="item in infoPanel.node.provides"><a ng-bind="item.name" ng-click="chooseNode(item)" class="choose-node"></a>, </span>
       </div>
     </div>
+
+  </div>
+
+
+  <div ng-if="infoPanel.node && infoPanel.node.type === 'module'">
+    <div class="info">
+      <span class="node-title" ng-bind="infoPanel.node.name"></span>
+      <a class="node-module-name choose-node" ng-bind="infoPanel.node.module.name" ng-click="chooseNode(infoPanel.node.module)"></a>
+    </div>
+
+    <div dg-info-panel-list></div>
+    
   </div>
 
 

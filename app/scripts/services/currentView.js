@@ -17,7 +17,7 @@ angular.module('ngDependencyGraph')
         service: true,
         controller: true
       },
-      selectedNode: null
+      selectedNode: undefined
     };
 
   });

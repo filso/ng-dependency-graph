@@ -9,7 +9,6 @@ angular.module('ngDependencyGraph')
       if (newVal !== oldVal) {
         // $scope.currentGraph.filterByName(newVal);
         $rootScope.$broadcast('currentGraph:update');
-        console.log('bla!', newVal);
 
       }
     });

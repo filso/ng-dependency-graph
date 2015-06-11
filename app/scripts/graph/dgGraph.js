@@ -8,7 +8,6 @@ angular.module('ngDependencyGraph')
 
         function update() {
           var currentGraph = currentView.graph;
-          console.log('updaaete!');
           force.nodes(currentGraph.nodes)
             .links(currentGraph.links);
 
@@ -99,7 +98,7 @@ angular.module('ngDependencyGraph')
           var tmp = svg;
 
           // add transtion if user is not panning (move) or zooming (wheel)
-          if (['mousemove', 'wheel'].indexOf(d3.event.sourceEvent.type) === -1) {
+          if (!d3.event.sourceEvent || ['mousemove', 'wheel'].indexOf(d3.event.sourceEvent.type) === -1) {
             tmp = tmp.transition();
           }
           tmp.attr('transform',

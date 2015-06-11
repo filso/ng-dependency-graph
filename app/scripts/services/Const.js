@@ -2,6 +2,7 @@
 
 angular.module('ngDependencyGraph')
   .value('Const', {
+    AngularVersionRequired: '1.2.0',
     
     ComponentType: {
       CONTROLLER: 'controller',

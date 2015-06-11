@@ -14,6 +14,9 @@ angular.module('ngDependencyGraph')
         });
     });
 
+    // TODO handle angular not found / wrong version
+    if (angular.version) {
+    }
 
 
     var componentsGraph = Graph.createFromRawNodes(rawData.modules[0].components);
@@ -21,7 +24,6 @@ angular.module('ngDependencyGraph')
 
     this.chooseScope = function(val) {
       if (val === Const.Scope.MODULES) {
-        console.log('HAHA!');
         currentView.updateGraph(val, modulesGraph);
       } else {
         currentView.updateGraph(val, componentsGraph);

@@ -5,7 +5,8 @@ $color-module: $maroon;
 
 $color-service: $blue;
 $color-controller: $olive;
-$color-directive: $yellow;
+$color-directive: $orange;
+$color-directive-controller: $yellow;
 $color-filter: $teal;
 
 .link {
@@ -42,6 +43,12 @@ svg > g {
     &.directive {
         & > circle {
             fill: $color-directive;
+        }
+    }
+
+    &.directive-controller {
+        & > circle {
+            fill: $color-directive-controller;
         }
     }
 

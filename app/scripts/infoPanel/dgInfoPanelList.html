@@ -1,0 +1,7 @@
+<div class="section">
+  <div class="title">Dependencies ({{infoPanel.node.deps.length}}):</div>
+  <div class="node-list">
+    <span ng-if="infoPanel.node.deps.length == 0">none</span>
+    <span ng-repeat="item in infoPanel.node.deps"><a ng-bind="item.name" ng-click="chooseNode(item)" class="choose-node"></a>, </span>
+  </div>
+</div>
