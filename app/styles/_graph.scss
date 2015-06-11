@@ -78,6 +78,12 @@ svg > g {
     }
 
 
+    &.selected.module circle {
+        r: 12;
+        stroke-width: 2px;
+        fill: lighten($color-module, 40%);
+    }
+
 }
 
 

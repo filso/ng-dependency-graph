@@ -1,3 +1,7 @@
+.info-panel-wrapper, .info-panel {
+  height: 100%;
+}
+
 .info-panel-wrapper {
   position: fixed;
   right: 0;
@@ -7,6 +11,8 @@
 
 .info-panel {
   color: #444;
+
+  overflow-y: scroll;
   
   .title {
     background: #eee;
