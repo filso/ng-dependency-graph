@@ -3,6 +3,11 @@
 angular.module('ngDependencyGraph')
   .value('Const', {
     AngularVersionRequired: '1.2.0',
+
+    Events: {
+      UPDATE_GRAPH: 'updateGraph',
+      CHOOSE_NODE: 'chooseNode'
+    },
     
     ComponentType: {
       CONTROLLER: 'controller',

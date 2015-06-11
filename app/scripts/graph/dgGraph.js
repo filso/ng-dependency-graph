@@ -154,7 +154,7 @@ angular.module('ngDependencyGraph')
 
           
         update();
-        scope.$on('updateGraph', update);
+        scope.$on(Const.Events.UPDATE_GRAPH, update);
 
 
       }

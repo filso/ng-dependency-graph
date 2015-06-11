@@ -3,12 +3,13 @@
 angular.module('ngDependencyGraph')
   .factory('Graph', function(nodeFactory) {
 
-    function Graph(nodes, links) {
+    function Graph(nodes, links, scope) {
+      this.scope = scope;
       this.origNodes = this.nodes = nodes;
       this.origLinks = this.links = links;
     }
 
-    Graph.createFromRawNodes = function(rawNodes) {
+    Graph.createFromRawNodes = function(rawNodes, isModules) {
 
       var nodes = nodeFactory.createNodes(rawNodes);
 
