@@ -8,8 +8,5 @@ angular.module('ngDependencyGraph')
       self.node = currentView.selectedNode;
     });
 
-    $scope.chooseNode = function(node) {
-      currentView.chooseNode(node);
-    };
 
   });

@@ -5,22 +5,9 @@
       <span class="node-title" ng-bind="infoPanel.node.name"></span>
       <a class="node-module-name choose-node" ng-bind="infoPanel.node.module.name" ng-click="chooseNode(infoPanel.node.module)"></a>
     </div>
-    
-    <div class="section">
-      <div class="title">Dependencies ({{infoPanel.node.deps.length}}):</div>
-      <div class="node-list">
-        <span ng-if="infoPanel.node.deps.length == 0">none</span>
-        <span ng-repeat="item in infoPanel.node.deps"><a ng-bind="item.name" ng-click="chooseNode(item)" class="choose-node"></a>, </span>
-      </div>
-    </div>
 
-    <div class="section">
-      <div class="title">Required by ({{infoPanel.node.provides.length}}):</div>
-      <div class="node-list">
-        <span ng-if="infoPanel.node.provides.length == 0">none</span>
-        <span ng-repeat="item in infoPanel.node.provides"><a ng-bind="item.name" ng-click="chooseNode(item)" class="choose-node"></a>, </span>
-      </div>
-    </div>
+    <div dg-info-panel-list="infoPanel.node.deps" title="Dependencies"></div>
+    <div dg-info-panel-list="infoPanel.node.provides" title="Required by"></div>
 
   </div>
 
@@ -31,8 +18,17 @@
       <a class="node-module-name choose-node" ng-bind="infoPanel.node.module.name" ng-click="chooseNode(infoPanel.node.module)"></a>
     </div>
 
-    <div dg-info-panel-list></div>
-    
+    <div dg-info-panel-list="infoPanel.node.deps" title="Services"></div>
+    <div dg-info-panel-list="infoPanel.node.deps" title="Controllers"></div>
+    <div dg-info-panel-list="infoPanel.node.deps" title="Directives"></div>
+    <div dg-info-panel-list="infoPanel.node.deps" title="Filters"></div>
+
+
+  </div>
+
+  <div>
+    Ignore modules: <input type="text" value="ng*; ui.bootstrap.*"></input><br/>
+    Filter modules: <input type="text"></input>
   </div>
 
 

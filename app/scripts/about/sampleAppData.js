@@ -1,6 +1,6 @@
-var rawMockData = rawMockData || {};
+var sampleAppData = sampleAppData || {};
 
-rawMockData.ngArchitecture = {
+sampleAppData.ngArchitecture = {
   "angularVersion": null,
   "apps": ["az-ci"],
   "modules": [{

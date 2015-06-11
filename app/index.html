@@ -13,19 +13,6 @@
   <!-- inject:js -->
   <script src="scripts/app.module.js"></script>
   <script src="scripts/triggerComponents/TriggerComponentsCtrl.js"></script>
-  <script src="scripts/services/nodeFactory.js"></script>
-  <script src="scripts/services/drawDeps.js"></script>
-  <script src="scripts/services/dev.js"></script>
-  <script src="scripts/services/currentView.js"></script>
-  <script src="scripts/services/controls.js"></script>
-  <script src="scripts/services/chromeExtension.js"></script>
-  <script src="scripts/services/chart.js"></script>
-  <script src="scripts/services/appInfo.js"></script>
-  <script src="scripts/services/appDeps.js"></script>
-  <script src="scripts/services/appContext.js"></script>
-  <script src="scripts/services/Graph.js"></script>
-  <script src="scripts/services/Const.js"></script>
-  <script src="scripts/scripts/developmentData.js"></script>
   <script src="scripts/models/models.module.js"></script>
   <script src="scripts/models/Node.js"></script>
   <script src="scripts/models/ModuleStats.js"></script>
@@ -34,11 +21,25 @@
   <script src="scripts/models/App.js"></script>
   <script src="scripts/inject/debug.js"></script>
   <script src="scripts/infoPanel/infoPanel.module.js"></script>
+  <script src="scripts/infoPanel/dgInfoPanelList.js"></script>
   <script src="scripts/infoPanel/InfoPanelCtrl.js"></script>
   <script src="scripts/graph/dgGraph.js"></script>
   <script src="scripts/controls/controls.module.js"></script>
-  <script src="scripts/controls/FilterNameCtrl.js"></script>
+  <script src="scripts/controls/SearchCtrl.js"></script>
+  <script src="scripts/core/nodeFactory.js"></script>
+  <script src="scripts/core/drawDeps.js"></script>
+  <script src="scripts/core/dev.js"></script>
+  <script src="scripts/core/currentView.js"></script>
+  <script src="scripts/core/controls.js"></script>
+  <script src="scripts/core/chromeExtension.js"></script>
+  <script src="scripts/core/chart.js"></script>
+  <script src="scripts/core/appInfo.js"></script>
+  <script src="scripts/core/appDeps.js"></script>
+  <script src="scripts/core/appContext.js"></script>
+  <script src="scripts/core/Graph.js"></script>
+  <script src="scripts/core/Const.js"></script>
   <script src="scripts/app/MainCtrl.js"></script>
+  <script src="scripts/about/sampleAppData.js"></script>
   <!-- endinject -->
   
 </head>
@@ -46,7 +47,7 @@
   <div ng-controller="MainCtrl as main" class="main">
     <div dg-graph class="dg-graph" ng-if="currentView.graph">
       <div class="controls">
-        <div ng-controller="FilterNameCtrl">
+        <div ng-controller="SearchCtrl">
           Search: <input type="text" ng-model="name"></input>
         </div>
         <div class="choose-scope">

@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .controller('MainCtrl', function($scope, dev, Graph, Const, currentView) {
+  .controller('MainCtrl', function($scope, $timeout, dev, Graph, Const, currentView) {
 
     $scope.currentView = currentView;
 
-    var rawData = rawMockData.ngArchitecture;
+    var rawData = sampleAppData.ngArchitecture;
     _.each(rawData.modules, function(module) {
         module.type = 'module';
       
@@ -19,8 +19,16 @@ angular.module('ngDependencyGraph')
     }
 
 
+
     var componentsGraph = Graph.createFromRawNodes(rawData.modules[0].components);
     var modulesGraph = Graph.createFromRawNodes(rawData.modules);
+
+
+    // DEBUG that's for development
+    $timeout(function() {
+      var node = _.find(componentsGraph.nodes, {name: 'clView'});
+      currentView.chooseNode(node);
+    }, 300);
 
     this.chooseScope = function(val) {
       if (val === Const.Scope.MODULES) {
