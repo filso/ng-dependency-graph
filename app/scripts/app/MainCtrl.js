@@ -19,8 +19,12 @@ angular.module('ngDependencyGraph')
     }
 
 
+    var allComponents = [];
+    _.each(rawData.modules, function(module) {
+      allComponents = allComponents.concat(module.components);
+    });
 
-    var componentsGraph = Graph.createFromRawNodes(rawData.modules[0].components);
+    var componentsGraph = Graph.createFromRawNodes(allComponents);
     var modulesGraph = Graph.createFromRawNodes(rawData.modules);
 
 
