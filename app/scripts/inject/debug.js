@@ -4,6 +4,7 @@ var inject = function () {
     var fn = function bootstrap (window) {
 
       var angular = window.angular;
+      console.log('ng-dependency-graph injected!');
 
       // Helper to determine if the root 'ng' module has been loaded
       // window.angular may be available if the app is bootstrapped asynchronously, but 'ng' might
@@ -562,7 +563,10 @@ var inject = function () {
   }()));
 };
 
+
+// TODO add checkbox to enable - set cookie __ngDependencyGraph 
+// 
 // only inject if cookie is set
-if (document.cookie.indexOf('__ngDebug=true') != -1) {
+// if (document.cookie.indexOf('__ngDebug=true') != -1) {
   document.addEventListener('DOMContentLoaded', inject);
-}
+// }

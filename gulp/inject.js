@@ -6,6 +6,7 @@ var $ = require('gulp-load-plugins')();
 
 var appStream = gulp.src([
   './app/scripts/**/*.js',
+  '!./app/scripts/inject/debug.js', // TODO move this to gulpfile paths
   '!./app/scripts/**/*.spec.js'
 ]);
 
