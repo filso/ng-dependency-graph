@@ -4,7 +4,7 @@ angular.module('ngDependencyGraph')
   .factory('Component', function(Node) {
 
     function Component(_data) {
-      this.module = _data._module;
+      this.isModule = false;
       Node.apply(this, arguments);
     }
 

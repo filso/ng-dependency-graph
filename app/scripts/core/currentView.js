@@ -4,16 +4,29 @@ angular.module('ngDependencyGraph')
   .factory('currentView', function($rootScope, Const) {
 
     return {
-      updateGraph: function(graph) {
-        this.graph = graph;
+      setGraphs: function(modulesGraph, componentsGraph) {
+        this.modulesGraph = modulesGraph;
+        this.componentsGraph = componentsGraph;
+      },
+      setScope: function(scope) {
+        console.log('set scope', scope);
+        this.scope = scope;
+        this.graph = (scope === Const.Scope.COMPONENTS ? this.componentsGraph : this.modulesGraph);
 
-        if (graph.scope === 'components') {
+        if (scope === 'components') {
           this.setComponentsVisible(this.componentsVisible);
         }
 
         $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
       },
       chooseNode: function(node) {
+        console.log(node);
+        if (node.isModule === true && this.scope !== Const.Scope.MODULES) {
+          this.setScope(Const.Scope.MODULES);
+        } else if (node.isModule === false && this.scope !== Const.Scope.COMPONENTS) {
+          this.setScope(Const.Scope.COMPONENTS);
+        }
+        
         this.selectedNode = node;
         $rootScope.$broadcast(Const.Events.CHOOSE_NODE, node);
       },

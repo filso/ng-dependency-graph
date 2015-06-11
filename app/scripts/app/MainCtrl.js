@@ -19,12 +19,7 @@ angular.module('ngDependencyGraph')
     }
 
     this.chooseScope = function(val) {
-      if (val === Const.Scope.MODULES) {
-        currentView.updateGraph(modulesGraph);
-
-      } else {
-        currentView.updateGraph(componentsGraph);
-      }
+      currentView.setScope(val);
     };
 
     var self = this;
@@ -34,18 +29,35 @@ angular.module('ngDependencyGraph')
       allComponents = allComponents.concat(module.components);
     });
 
-    var modulesGraph = Graph.createFromRawNodes(rawData.modules, Const.Scope.MODULES);
     var componentsGraph = Graph.createFromRawNodes(allComponents, Const.Scope.COMPONENTS);
+    var modulesGraph = Graph.createFromRawNodes(rawData.modules, Const.Scope.MODULES);
+
+    /**
+     * Connect modules with components
+     */
+    _.each(componentsGraph.nodes, function(com) {
+      var module = _.find(modulesGraph.nodes, {name: com._data._module.name});
+      com.module = module;
+
+      module.componentsByType = module.componentsByType || {};
+      if (module.componentsByType[com.type] === undefined) {
+        module.componentsByType[com.type] = [];
+      }
+      module.componentsByType[com.type].push(com);
+
+    });
+
+
+    currentView.setGraphs(modulesGraph, componentsGraph);
 
     // DEBUG that's for development
     $timeout(function() {
-      // var node = _.find(currentView.graph.nodes, {name: 'clView'});
-      var node = _.find(currentView.graph.nodes, {name: 'az-ci'});
+      var node = _.find(componentsGraph.nodes, {name: 'clView'});
+      // var node = _.find(modulesGraph.nodes, {name: 'az-ci'});
       currentView.chooseNode(node);
-      console.log(node);
     }, 300);
 
-    this.chooseScope(Const.Scope.MODULES);
+    // this.chooseScope(Const.Scope.COMPONENTS);
 
 
   });

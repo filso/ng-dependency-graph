@@ -1,7 +1,7 @@
 <div class="info-panel-list">
-  <div class="title">{{ ::title }} ({{ ::list.length }}):</div>
+  <div class="title">{{ ::title }} ({{ list.length }}):</div>
   <div class="node-list">
     <span ng-if="list.length == 0">none</span>
-    <span ng-repeat="item in ::list"><a ng-bind="item.name" ng-click="chooseNode(item)" class="choose-node"></a>, </span>
+    <span ng-repeat="item in list"><a ng-bind="item.name" ng-click="chooseNode(item)" class="choose-node"></a>, </span>
   </div>
 </div>
