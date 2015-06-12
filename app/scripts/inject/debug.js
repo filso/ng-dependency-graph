@@ -150,14 +150,19 @@ var inject = function() {
         modules: []
       };
 
-      angular.forEach(document.querySelectorAll('[ng-app]'),
-        function(elm) {
-          var appName = elm.getAttribute('ng-app');
-          if (metadata.apps.indexOf(appName) === -1) {
-            metadata.apps.push(appName);
-            createModule(appName);
-          }
-        });
+      var appElms = document.querySelectorAll('[ng-app]');
+      if (appElms.length > 0) {
+        angular.forEach(appElms,
+          function(elm) {
+            var appName = elm.getAttribute('ng-app');
+            if (metadata.apps.indexOf(appName) === -1) {
+              metadata.apps.push(appName);
+              createModule(appName);
+            }
+          });
+      } else {
+        metadata.apps.push('app');
+      }
 
       function createModule(name) {
         var exist = metadata.modules.find(function(mod) {
@@ -175,8 +180,6 @@ var inject = function() {
           deps: module.requires,
           components: []
         };
-
-        console.log(moduleData);
 
         processModule(moduleData);
         metadata.modules.push(moduleData);
