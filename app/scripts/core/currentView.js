@@ -9,7 +9,6 @@ angular.module('ngDependencyGraph')
         this.componentsGraph = componentsGraph;
       },
       setScope: function(scope) {
-        console.log('set scope', scope);
         this.scope = scope;
         this.graph = (scope === Const.Scope.COMPONENTS ? this.componentsGraph : this.modulesGraph);
 
@@ -20,7 +19,6 @@ angular.module('ngDependencyGraph')
         $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
       },
       chooseNode: function(node) {
-        console.log(node);
         if (node.isModule === true && this.scope !== Const.Scope.MODULES) {
           this.setScope(Const.Scope.MODULES);
         } else if (node.isModule === false && this.scope !== Const.Scope.COMPONENTS) {
