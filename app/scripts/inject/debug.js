@@ -52,15 +52,14 @@ var inject = function() {
 
       if (!ngLoaded()) {
         (function() {
-          // TODO: var name
-          var areWeThereYet = function(ev) {
+          var isAngularLoaded = function(ev) {
 
             if (ev.srcElement.tagName === 'SCRIPT') {
               var oldOnload = ev.srcElement.onload;
               ev.srcElement.onload = function() {
                 if (ngLoaded()) {
 
-                  document.removeEventListener('DOMNodeInserted', areWeThereYet);
+                  document.removeEventListener('DOMNodeInserted', isAngularLoaded);
                   bootstrap(window);
                 }
                 if (oldOnload) {
@@ -69,7 +68,7 @@ var inject = function() {
               };
             }
           };
-          document.addEventListener('DOMNodeInserted', areWeThereYet);
+          document.addEventListener('DOMNodeInserted', isAngularLoaded);
         }());
         return;
       }
@@ -105,7 +104,7 @@ var inject = function() {
             }
 
             assertArg(angular.isFunction(arg), name, 'not a function, got ' +
-              (arg && typeof arg == 'object' ? arg.constructor.name || 'Object' : typeof arg));
+              (arg && typeof arg === 'object' ? arg.constructor.name || 'Object' : typeof arg));
             return arg;
           }
 
@@ -115,7 +114,7 @@ var inject = function() {
               argDecl,
               last;
 
-            if (typeof fn == 'function') {
+            if (typeof fn === 'function') {
               if (!($inject = fn.$inject)) {
                 $inject = [];
                 fnText = fn.toString().replace(STRIP_COMMENTS, '');
@@ -157,7 +156,6 @@ var inject = function() {
           if (metadata.apps.indexOf(appName) === -1) {
             metadata.apps.push(appName);
             createModule(appName);
-            console.log('oj!');
           }
         });
 
@@ -165,7 +163,10 @@ var inject = function() {
         var exist = metadata.modules.find(function(mod) {
           return mod.name === name;
         });
-        if (exist || name === undefined) return;
+
+        if (exist || name === undefined) {
+          return;
+        }
 
         var module = angular.module(name);
 
