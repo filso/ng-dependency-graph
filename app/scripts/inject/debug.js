@@ -162,6 +162,7 @@ var inject = function() {
           });
       } else {
         metadata.apps.push('app');
+        createModule('app');
       }
 
       function createModule(name) {
