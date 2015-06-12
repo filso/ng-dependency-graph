@@ -23,6 +23,11 @@ angular.module('ngDependencyGraph')
 
     View: {
       HOVER_TRANSITION_TIME: '500'
+    },
+
+    FilterModules: {
+      DEFAULT_FILTER: '',
+      DEFAULT_IGNORE: 'ng.*; .*bootstrap.*'
     }
     
   });

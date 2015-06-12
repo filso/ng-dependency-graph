@@ -35,7 +35,6 @@ angular.module('ngDependencyGraph')
       }
 
 
-
       var allComponents = [];
       _.each(rawData.modules, function(module) {
         allComponents = allComponents.concat(module.components);
