@@ -1,31 +1,31 @@
 var inject = function() {
 
-  if (!Array.prototype.find) {
-    Array.prototype.find = function(predicate) {
-      if (this == null) {
-        throw new TypeError('Array.prototype.find called on null or undefined');
-      }
-      if (typeof predicate !== 'function') {
-        throw new TypeError('predicate must be a function');
-      }
-      var list = Object(this);
-      var length = list.length >>> 0;
-      var thisArg = arguments[1];
-      var value;
-
-      for (var i = 0; i < length; i++) {
-        value = list[i];
-        if (predicate.call(thisArg, value, i, list)) {
-          return value;
-        }
-      }
-      return undefined;
-    };
-  }
-
   document.head.appendChild((function() {
 
     var fn = function bootstrap(window) {
+
+      if (!Array.prototype.find) {
+        Array.prototype.find = function(predicate) {
+          if (this == null) {
+            throw new TypeError('Array.prototype.find called on null or undefined');
+          }
+          if (typeof predicate !== 'function') {
+            throw new TypeError('predicate must be a function');
+          }
+          var list = Object(this);
+          var length = list.length >>> 0;
+          var thisArg = arguments[1];
+          var value;
+
+          for (var i = 0; i < length; i++) {
+            value = list[i];
+            if (predicate.call(thisArg, value, i, list)) {
+              return value;
+            }
+          }
+          return undefined;
+        };
+      }
 
       function disablePlugin(reason) {
         console.log(arguments);
@@ -56,7 +56,6 @@ var inject = function() {
           var areWeThereYet = function(ev) {
 
             if (ev.srcElement.tagName === 'SCRIPT') {
-              console.log(ev.srcElement);
               var oldOnload = ev.srcElement.onload;
               ev.srcElement.onload = function() {
                 if (ngLoaded()) {
@@ -133,9 +132,6 @@ var inject = function() {
               assertArgFn(fn[last], 'fn');
               $inject = fn.slice(0, last);
             } else {
-              console.log('ble!');
-              console.log(fn);
-
               assertArgFn(fn, 'fn', true);
             }
             return $inject;
@@ -143,14 +139,14 @@ var inject = function() {
         }());
       }
 
-      var api = window.__ngDependencyGraph = {
+      window.__ngDependencyGraph = {
         getMetadata: function() {
           return metadata;
         }
       };
 
       var metadata = {
-        angularVersion: null,
+        angularVersion: angular.version,
         apps: [],
         modules: []
       };
@@ -159,14 +155,16 @@ var inject = function() {
         function(elm) {
           var appName = elm.getAttribute('ng-app');
           if (metadata.apps.indexOf(appName) === -1) {
-            console.log(appName);
             metadata.apps.push(appName);
             createModule(appName);
+            console.log('oj!');
           }
         });
 
       function createModule(name) {
-        var exist = _.find(metadata.modules, {name: name});
+        var exist = metadata.modules.find(function(mod) {
+          return mod.name === name;
+        });
         if (exist || name === undefined) return;
 
         var module = angular.module(name);
@@ -176,6 +174,8 @@ var inject = function() {
           deps: module.requires,
           components: []
         };
+
+        console.log(moduleData);
 
         processModule(moduleData);
         metadata.modules.push(moduleData);
@@ -209,9 +209,10 @@ var inject = function() {
 
         angular.forEach(module._invokeQueue, function(item) {
           var compArgs = item[2];
-          if (typeof item[2][1] == 'string') {
-            debugger;
-          }
+          // console.log(item);
+          // if (typeof item[2][1] == 'string') {
+          //   debugger;
+          // }
           switch (item[0]) {
             case '$provide':
               switch (item[1]) {
