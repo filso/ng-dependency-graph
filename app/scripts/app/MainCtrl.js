@@ -66,15 +66,12 @@ angular.module('ngDependencyGraph')
       $timeout(function() {
         var node = _.find(componentsGraph.nodes, {name: 'clView'});
         // var node = _.find(modulesGraph.nodes, {name: 'az-ci'});
-        // currentView.chooseNode(node);
-        // currentView.setScope(Const.Scope.COMPONENTS);
+        if (node) {
+          currentView.chooseNode(node);
+        } else {
+          currentView.setScope(Const.Scope.COMPONENTS);
+        }
       }, 300);
-
-      currentView.setScope(Const.Scope.COMPONENTS);
-      console.log(currentView.graph);
-      console.log('ha!');
-
-      // this.chooseScope(Const.Scope.COMPONENTS);
 
     }
 
