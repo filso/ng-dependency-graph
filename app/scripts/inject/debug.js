@@ -209,7 +209,6 @@ var inject = function() {
 
       function processModule(moduleData) {
         var moduleName = moduleData.name;
-        console.log('Processing: ' + moduleName);
         var module = angular.module(moduleName);
 
         angular.forEach(module._invokeQueue, function(item) {
