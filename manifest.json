@@ -12,6 +12,7 @@
     "500": "app/img/square-500.png"
   },
   "permissions": [
+    "storage",
     "tabs",
     "<all_urls>"
   ],
