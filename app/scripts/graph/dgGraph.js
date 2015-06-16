@@ -102,7 +102,7 @@ angular.module('ngDependencyGraph')
             tmp = tmp.transition();
           }
           tmp.attr('transform',
-            'translate(' + d3.event.translate + ')' +
+            'translate(' + d3.event.translate + ') ' +
             ' scale(' + d3.event.scale + ')');
         }   
 
@@ -111,8 +111,10 @@ angular.module('ngDependencyGraph')
           if (force.nodes().indexOf(d) === -1) { // if d is not present, it's not visible
             return;
           }
-          var x = (width/2 - d.x);
-          var y = (height/2 - d.y);
+          var scale = zoom.scale();
+
+          var x = -(scale * d.x - width/2);
+          var y = -(scale * d.y - height/2);
 
           zoom.translate([x, y]).event(svg);
           update();
