@@ -7,7 +7,6 @@ angular.module('ngDependencyGraph')
     this.ignoreModules = currentView.filters.ignoreModules;
 
     this.change = function(newValue) {
-      console.log(newValue);
       currentView.setIgnoreModules(this.ignoreModules, this.filterModules);
     };
     

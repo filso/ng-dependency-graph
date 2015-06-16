@@ -29,8 +29,10 @@
   </div>
 
   <div ng-controller="FilterModulesCtrl as filterModules">
-    Ignore modules: <input type="text" ng-model="filterModules.ignoreModules" value="ng*; ui.bootstrap.*" ng-change=""></input><br/>
-    Filter modules: <input type="text" ng-model="filterModules.filterModules" ng-change=""></input>
+    Ignore modules:
+    <input type="text" ng-model="filterModules.ignoreModules" ng-change="filterModules.change()"></input><br/>
+    Filter modules:
+    <input type="text" ng-model="filterModules.filterModules" ng-change="filterModules.change()"></input>
   </div>
 
 

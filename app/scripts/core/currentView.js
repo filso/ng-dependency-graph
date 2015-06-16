@@ -40,6 +40,7 @@ angular.module('ngDependencyGraph')
       applyFilters: function() {
         var masks;
         this.componentsGraph.resetFilter();
+        this.modulesGraph.resetFilter();
 
         if (this.filters.componentsVisible) {
           this.componentsGraph.filterNodes(function(node) {
@@ -54,20 +55,20 @@ angular.module('ngDependencyGraph')
 
           masks.forEach(function(mask) {
             service.modulesGraph.filterNodes(function(node) {
-              return mask.test(node.name);
+              return mask.test(node.name) === false;
             });
           });
         }
 
-        if (this.filters.filterModules) {
-          masks = util.extractMasks(this.filters.ignoreModules);
+        // if (this.filters.filterModules) {
+        //   masks = util.extractMasks(this.filters.ignoreModules);
           
-          masks.forEach(function(mask) {
-            service.modulesGraph.filterNodes(function(node) {
-              return mask.test(node.name);
-            });
-          });
-        }
+        //   masks.forEach(function(mask) {
+        //     service.modulesGraph.filterNodes(function(node) {
+        //       return mask.test(node.name);
+        //     });
+        //   });
+        // }
 
         // Now filter all components of excluded modules 
         this.componentsGraph.filterNodes(function(node) {
@@ -78,6 +79,7 @@ angular.module('ngDependencyGraph')
         $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
       },
       setIgnoreModules: function(ignoreModules, filterModules) {
+        console.log(ignoreModules, filterModules);
         this.filters.ignoreModules = ignoreModules;
         this.filters.filterModules = filterModules;
         this.applyFilters();
