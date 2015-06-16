@@ -1,5 +1,12 @@
 'use strict';
 
+/**
+ * TODO this is doing too much: extract filters, serialisation
+ *
+ * Responsibilities:
+ * - singleton holding currentView
+ * - filtering of modules / components
+ */
 angular.module('ngDependencyGraph')
   .factory('currentView', function($rootScope, Const, util) {
 
@@ -65,7 +72,6 @@ angular.module('ngDependencyGraph')
           
           masks.forEach(function(mask) {
             service.modulesGraph.filterNodes(function(node) {
-              console.log(node.name, mask.test(node.name), mask);
               return mask.test(node.name);
             });
           });
@@ -80,7 +86,6 @@ angular.module('ngDependencyGraph')
         $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
       },
       setIgnoreModules: function(ignoreModules, filterModules) {
-        console.log(ignoreModules, filterModules);
         this.filters.ignoreModules = ignoreModules;
         this.filters.filterModules = filterModules;
         this.applyFilters();
