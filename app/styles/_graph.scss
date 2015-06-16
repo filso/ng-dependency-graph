@@ -1,17 +1,5 @@
 $color-graph-bg: #333;
 
-$color-module: $red;
-
-
-$color-service: lighten($blue, 15%);
-$color-controller: lighten($olive, 15%);
-$color-directive: $orange;
-$color-directive-controller: $yellow;
-$color-filter: $teal;
-
-$components: module, service, controller, directive, filter;
-$components-colors: $color-module, $color-service, $color-controller, $color-directive, $color-filter; 
-
 .link {
     stroke: #ccc;
     stroke-width: 1.5px;
@@ -61,7 +49,6 @@ svg > g {
     }
 
 }
-
 
 
 text {

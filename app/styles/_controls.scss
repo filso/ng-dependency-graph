@@ -65,9 +65,6 @@
     background: #ddd;
   }
 
-  $components: module, service, controller, directive, filter;
-  $components-colors: $color-module, $color-service, $color-controller, $color-directive, $color-filter; 
-
   @each $type in $components {
       $i: index($components, $type);
       &.#{$type} {
@@ -98,23 +95,24 @@
 
   label {
     cursor: pointer;
-    padding: 3px;
+    padding: 2px;
+    display: block;
   }
 
-  & > .services {
-    background: $color-service;
-  }
-
-  & > .controllers {
-    background: $color-controller;
-  }
-
-  & > .directives {
-    background: $color-directive;
-  }
-
-  & > .filters {
-    background: $color-filter;
+  /**
+   * Node colors
+   */
+  @each $type in $components {
+      $i: index($components, $type);
+      & > .#{$type} {
+          background: linear-gradient(to right, nth($components-colors, $i), lighten(nth($components-colors, $i), 8%));
+          border-width: 0px;
+          border-style: solid;
+          font-size: 0.9em;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+          font-style: italic;
+      }
   }
 
 }

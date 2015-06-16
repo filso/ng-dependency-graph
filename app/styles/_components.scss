@@ -1,0 +1,11 @@
+$color-module: $red;
+$color-service: lighten($blue, 15%);
+$color-controller: lighten($olive, 15%);
+$color-directive: $orange;
+$color-directive-controller: $yellow;
+$color-filter: $teal;
+$color-value: $gray;
+
+$components: module, service, controller, directive, filter, value;
+$components-colors: $color-module, $color-service,
+    $color-controller, $color-directive, $color-filter, $color-value; 
