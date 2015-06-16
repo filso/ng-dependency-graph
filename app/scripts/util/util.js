@@ -5,7 +5,7 @@ angular.module('ngDependencyGraph')
 
     var util = {
       extractMasks: function(str) {
-        return str.split(',').map(function(s) {
+        return str.split(/[,;]/g).map(function(s) {
           return util.wildcardToRegexp(s.trim());
         });
       },
