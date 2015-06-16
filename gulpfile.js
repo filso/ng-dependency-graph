@@ -17,9 +17,9 @@ var browserSync = require('browser-sync');
 
 
 var paths = {
-  testScripts: ['app/scripts/**/*.js', '!app/scripts/inject/debug.js', '!app/scripts/**/*_test.js', '!app/scripts/app.js'],
+  testScripts: ['app/scripts/**/*.js', '!app/scripts/inject/debug.js', '!app/scripts/**/*.spec.js', '!app/scripts/app.js'],
   scripts: ['app/scripts/**/*.js'],
-  scriptsWithoutTests: ['app/scripts/**/*.js', '!app/scripts/**/*_test.js'],
+  scriptsWithoutTests: ['app/scripts/**/*.js', '!app/scripts/**/*.spec.js'],
   images: 'app/images/**/*',
   html: 'app/**/*.html',
   styles: {
@@ -56,6 +56,8 @@ gulp.task('no-karma', function() {
   gulp.start('develop');
 });
 
+
+gulp.task('scripts', ['preprocess', 'lint']);
 
 gulp.task('preprocess', ['inject', 'sass']);
 
