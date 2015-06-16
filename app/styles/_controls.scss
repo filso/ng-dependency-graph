@@ -65,14 +65,17 @@
     background: #ddd;
   }
 
-  $components: service, controller, directive, filter;
-  $components-colors: $color-service, $color-controller, $color-directive, $color-filter; 
+  $components: module, service, controller, directive, filter;
+  $components-colors: $color-module, $color-service, $color-controller, $color-directive, $color-filter; 
 
   @each $type in $components {
       $i: index($components, $type);
       &.#{$type} {
           .type {
-              fill: nth($components-colors, $i);
+              background: lighten(nth($components-colors, $i), 10%);
+              padding: 3px;
+              border-radius: 3px;
+              color: white;
           }
       }
   }

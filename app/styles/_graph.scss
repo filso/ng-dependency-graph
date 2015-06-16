@@ -3,8 +3,8 @@ $color-graph-bg: #333;
 $color-module: $red;
 
 
-$color-service: $blue;
-$color-controller: $olive;
+$color-service: lighten($blue, 15%);
+$color-controller: lighten($olive, 15%);
 $color-directive: $orange;
 $color-directive-controller: $yellow;
 $color-filter: $teal;
@@ -26,7 +26,6 @@ svg > g {
     /**
      * Node colors
      */
-
     @each $type in $components {
         $i: index($components, $type);
         &.#{$type} {
@@ -35,7 +34,6 @@ svg > g {
             }
         }
     }
-
 
     /**
      * Circle in node
@@ -55,7 +53,6 @@ svg > g {
         r: 12;
         stroke-width: 2px;
     }
-
 
     &.selected.module circle {
         r: 12;
