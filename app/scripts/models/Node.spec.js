@@ -1,5 +1,5 @@
 'use strict';
 
-define('Node', function() {
+describe('Node', function() {
 
 });

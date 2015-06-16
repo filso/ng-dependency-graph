@@ -49,9 +49,7 @@
   }
 
   .node-module-title {
-
   }
-
 
   .choose-node {
     cursor: pointer;
@@ -59,6 +57,29 @@
 
     &:hover {
       color: lighten($blue, 30%);
+    }
+  }
+
+}
+
+.filter-modules {
+  & > div {
+    padding: 3px;
+    label {
+      display: flex;
+      align-items: center;
+    }
+    span {
+      width: 50px;
+    }
+    input {
+      flex: 1;
+      // width: 200px;
+      vertical-align: middle;
+    }
+
+    &:first-child {
+
     }
   }
 

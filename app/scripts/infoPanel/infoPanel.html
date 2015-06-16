@@ -28,11 +28,22 @@
 
   </div>
 
-  <div ng-controller="FilterModulesCtrl as filterModules">
-    Ignore modules:
-    <input type="text" ng-model="filterModules.ignoreModules" ng-change="filterModules.change()"></input><br/>
-    Filter modules:
-    <input type="text" ng-model="filterModules.filterModules" ng-change="filterModules.change()"></input>
+  <div class="filter-modules" ng-controller="FilterModulesCtrl as filterModules">
+    <div class="title">
+      Select modules
+    </div>
+    <div>
+      <label>
+      <span>Ignore:</span>
+      <input type="text" ng-model="filterModules.ignoreModules" ng-change="filterModules.change()"></input>
+      </label>
+    </div>
+    <div>
+      <label>
+      <span>Filter:</span>
+      <input type="text" ng-model="filterModules.filterModules" ng-change="filterModules.change()"></input>
+      </label>
+    </div>
   </div>
 
 
