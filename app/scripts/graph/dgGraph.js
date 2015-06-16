@@ -15,7 +15,7 @@ angular.module('ngDependencyGraph')
             .data(force.links(), _.property('_id'));
 
           links.enter()
-            .insert("line", ":first-child") // this needs to be rendered first -> prepend
+            .insert('line', ':first-child') // this needs to be rendered first -> prepend
             .attr('class', 'link')
             .attr('marker-end', 'url(#end)');
           links.exit().remove();
