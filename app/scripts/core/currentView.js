@@ -60,15 +60,16 @@ angular.module('ngDependencyGraph')
           });
         }
 
-        // if (this.filters.filterModules) {
-        //   masks = util.extractMasks(this.filters.ignoreModules);
+        if (this.filters.filterModules) {
+          masks = util.extractMasks(this.filters.filterModules);
           
-        //   masks.forEach(function(mask) {
-        //     service.modulesGraph.filterNodes(function(node) {
-        //       return mask.test(node.name);
-        //     });
-        //   });
-        // }
+          masks.forEach(function(mask) {
+            service.modulesGraph.filterNodes(function(node) {
+              console.log(node.name, mask.test(node.name), mask);
+              return mask.test(node.name);
+            });
+          });
+        }
 
         // Now filter all components of excluded modules 
         this.componentsGraph.filterNodes(function(node) {
