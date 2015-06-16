@@ -11,12 +11,31 @@
 
 .info-panel {
   color: #444;
-
   overflow-y: scroll;
+
+  .info {
+    margin: 5px 0px;
+    display: flex;
+    align-items: center;
+
+    & > span {
+      vertical-align: middle;
+    }
+    .node-module-name {
+      color: $color-module;
+    }
+  }
+
+  .node-title {
+    font-weight: bold;
+    font-size: 1.4em;
+    padding: 5px;
+  }
   
   .title {
     background: #eee;
     border-bottom: 1px solid #ccc;  
+    border-top: 1px solid #ddd;  
   }
 
   .info-panel-list {
@@ -36,17 +55,6 @@
 
   }
 
-  .info {
-    & > span {
-      vertical-align: middle;
-    }
-  }
-
-  .node-title {
-    font-weight: bold;
-    font-size: 1.2em;
-    padding: 5px;
-  }
 
   .node-module-title {
   }

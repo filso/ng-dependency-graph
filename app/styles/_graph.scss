@@ -1,6 +1,6 @@
 $color-graph-bg: #333;
 
-$color-module: $maroon;
+$color-module: $red;
 
 
 $color-service: $blue;
@@ -65,7 +65,7 @@ svg > g {
     &.selected.module circle {
         r: 12;
         stroke-width: 2px;
-        fill: lighten($color-module, 40%);
+        fill: lighten($color-module, 20%);
     }
 
 }
