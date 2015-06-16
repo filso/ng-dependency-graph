@@ -58,9 +58,29 @@
   padding: 5px;
   border-bottom: 1px solid #aaa;
   cursor: pointer;
+  display: flex;
+  align-items: center;
   
   &.tt-cursor {
     background: #ddd;
+  }
+
+  $components: service, controller, directive, filter;
+  $components-colors: $color-service, $color-controller, $color-directive, $color-filter; 
+
+  @each $type in $components {
+      $i: index($components, $type);
+      &.#{$type} {
+          .type {
+              fill: nth($components-colors, $i);
+          }
+      }
+  }
+
+  .type {
+    margin-left: 5px;
+    font-style: italic;
+    font-size: 0.8em;
   }
 }
 

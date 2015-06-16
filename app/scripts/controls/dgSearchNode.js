@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .directive('dgSearchNode', function(currentView, Const) {
+  .directive('dgSearchNode', function(currentView, Const, $rootScope) {
 
     return {
       scope: true,
       link: function(scope, elm) {
 
         var allNodes;
+        var inputElm = $('input', elm);
 
         function updateNodes() {
           allNodes = currentView.modulesGraph.nodes.concat(currentView.componentsGraph.nodes);
@@ -25,13 +26,16 @@ angular.module('ngDependencyGraph')
           return '<div class="' + node.type + '">' + node.name + '<span class="type">' + node.type + '</span></div>';
         }
 
+        function clearInput() {
+          inputElm.typeahead('val', '');
+        }
+
         scope.$on(Const.Events.UPDATE_GRAPH, function() {
           updateNodes();
         });
 
         updateNodes();
 
-        var inputElm = $('input', elm);
 
         inputElm.typeahead({
           hint: true,
@@ -47,7 +51,14 @@ angular.module('ngDependencyGraph')
         });
 
         inputElm.bind('typeahead:select', function(ev, node) {
-          currentView.chooseNode(node);
+          $rootScope.$apply(function() {
+            currentView.chooseNode(node);
+          });
+          clearInput();
+        });
+
+        inputElm.bind('focus', function() {
+          clearInput();
         });
 
 

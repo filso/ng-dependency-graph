@@ -9,8 +9,8 @@ $color-directive: $orange;
 $color-directive-controller: $yellow;
 $color-filter: $teal;
 
-$components: service, controller, directive, filter;
-$components-colors: $color-service, $color-controller, $color-directive, $color-filter; 
+$components: module, service, controller, directive, filter;
+$components-colors: $color-module, $color-service, $color-controller, $color-directive, $color-filter; 
 
 .link {
     stroke: #ccc;
@@ -26,11 +26,6 @@ svg > g {
     /**
      * Node colors
      */
-    &.module {
-        & > circle {
-            fill: $color-module;
-        }
-    }
 
     @each $type in $components {
         $i: index($components, $type);
