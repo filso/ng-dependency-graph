@@ -4,6 +4,7 @@
   <link rel="stylesheet" href="styles/main.css">
 
   <script src="vendor/jquery-2.1.1.min.js"></script>
+  <script src="vendor/typeahead.jquery.js"></script>
   <script src="vendor/angular.js"></script>
   <script src="vendor/angular-animate.js"></script>
   <script src="vendor/d3.min.js"></script>
@@ -20,10 +21,7 @@
   <script src="scripts/models/Module.js"></script>
   <script src="scripts/models/Component.js"></script>
   <script src="scripts/models/App.js"></script>
-  <script src="scripts/infoPanel/infoPanel.module.js"></script>
-  <script src="scripts/infoPanel/dgInfoPanelList.js"></script>
-  <script src="scripts/infoPanel/InfoPanelCtrl.js"></script>
-  <script src="scripts/infoPanel/FilterModulesCtrl.js"></script>
+  <script src="scripts/core/storage.js"></script>
   <script src="scripts/core/nodeFactory.js"></script>
   <script src="scripts/core/drawDeps.js"></script>
   <script src="scripts/core/dev.js"></script>
@@ -36,9 +34,13 @@
   <script src="scripts/core/appContext.js"></script>
   <script src="scripts/core/Graph.js"></script>
   <script src="scripts/core/Const.js"></script>
+  <script src="scripts/infoPanel/infoPanel.module.js"></script>
+  <script src="scripts/infoPanel/dgInfoPanelList.js"></script>
+  <script src="scripts/infoPanel/InfoPanelCtrl.js"></script>
+  <script src="scripts/infoPanel/FilterModulesCtrl.js"></script>
   <script src="scripts/graph/dgGraph.js"></script>
+  <script src="scripts/controls/dgSearchNode.js"></script>
   <script src="scripts/controls/controls.module.js"></script>
-  <script src="scripts/controls/SearchCtrl.js"></script>
   <script src="scripts/app/MainCtrl.js"></script>
   <script src="scripts/about/sampleAppData.js"></script>
   <!-- endinject -->
@@ -48,8 +50,8 @@
   <div ng-controller="MainCtrl as main" class="main">
     <div dg-graph class="dg-graph" ng-if="currentView.graph">
       <div class="controls">
-        <div ng-controller="SearchCtrl">
-          Search: <input type="text" ng-model="name"></input>
+        <div class="search" dg-search-node="">
+          <label for="search-input">Search:</label> <input id="search-input" type="text" ng-model="text"></input>
         </div>
         <div class="choose-scope">
           <div ng-click="main.chooseScope('modules')" ng-class="{active: currentView.graph.scope === 'modules'}">Modules

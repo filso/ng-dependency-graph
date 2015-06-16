@@ -1,5 +1,8 @@
-.info-panel-wrapper, .info-panel {
+.info-panel-wrapper {
   height: 100%;
+}
+.info-panel {
+  height: calc(100% - 70px); // TODO convert to flex vertical layout
 }
 
 .info-panel-wrapper {
@@ -20,6 +23,7 @@
 
     & > span {
       vertical-align: middle;
+      padding: 5px;
     }
     .node-module-name {
       color: $color-module;
@@ -28,7 +32,7 @@
 
   .node-title {
     font-weight: bold;
-    font-size: 1.4em;
+    font-size: 1.2em;
     padding: 5px;
   }
   
@@ -71,6 +75,13 @@
 }
 
 .filter-modules {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background: white;
+  width: $info-panel-width;
+
+
   & > div {
     padding: 3px;
     label {
