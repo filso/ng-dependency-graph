@@ -43,6 +43,7 @@ require('./gulp/versioning');
 require('./gulp/styles')(options);
 require('./gulp/inject')(options);
 require('./gulp/server')(options);
+require('./gulp/unit-tests')(options);
 
 
 /**

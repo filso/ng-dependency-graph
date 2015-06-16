@@ -4,19 +4,13 @@ var gulp = require('gulp');
 
 var $ = require('gulp-load-plugins')();
 
-var wiredep = require('wiredep');
 var karma = require('karma');
 var concat = require('concat-stream');
 var _ = require('lodash');
 
 module.exports = function(options) {
   function listFiles(callback) {
-    var wiredepOptions = _.extend({}, options.wiredep, {
-      dependencies: true,
-      devDependencies: true
-    });
-    var bowerDeps = wiredep(wiredepOptions);
-
+    
     var specFiles = [
       'app/**/*.spec.js',
       'app/**/*.mock.js'
@@ -35,8 +29,7 @@ module.exports = function(options) {
 
     gulp.src(srcFiles)
       .pipe(concat(function(files) {
-        callback(bowerDeps.js
-          .concat(_.pluck(files, 'path'))
+        callback(_.pluck(files, 'path')
           .concat(htmlFiles)
           .concat(specFiles));
       }));

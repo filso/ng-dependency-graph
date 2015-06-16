@@ -27,7 +27,8 @@ angular.module('ngDependencyGraph')
 
     FilterModules: {
       DEFAULT_FILTER: '',
-      DEFAULT_IGNORE: 'ng.*; .*bootstrap.*'
+      DEFAULT_IGNORE: 'ng*, ui.*, template*',
+      DELIMITER: ','
     }
     
   });

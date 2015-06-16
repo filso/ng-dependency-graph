@@ -3,18 +3,18 @@
 angular.module('ngDependencyGraph')
   .factory('util', function() {
 
-    var service = {
+    var util = {
       extractMasks: function(str) {
-        return str.split(';').map(function(s) {
-          return new RegExp(s.trim());
+        return str.split(',').map(function(s) {
+          return util.simpleToJSregexp(s.trim());
         });
       },
       simpleToJSregexp: function(str) {
-        // TODO
-        return new RegExp();
+        var newStr = str.replace(/[*]/g, '.*');
+        return new RegExp('^' + newStr + '$');
       }
     };
 
-    return service;
+    return util;
 
   });
