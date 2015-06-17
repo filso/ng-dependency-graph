@@ -107,16 +107,18 @@ angular.module('ngDependencyGraph')
         }   
 
 
-        scope.$on('chooseNode', function(event, d) {
+        scope.$on('chooseNode', function(event, d, translate) {
           if (force.nodes().indexOf(d) === -1) { // if d is not present, it's not visible
             return;
           }
-          var scale = zoom.scale();
 
-          var x = -(scale * d.x - width/2);
-          var y = -(scale * d.y - height/2);
+          if (translate) {
+            var scale = zoom.scale();
+            var x = -(scale * d.x - width/2);
+            var y = -(scale * d.y - height/2);
 
-          zoom.translate([x, y]).event(svg);
+            zoom.translate([x, y]).event(svg);
+          }
           update();
 
         });
@@ -130,7 +132,7 @@ angular.module('ngDependencyGraph')
 
         var zoom = d3.behavior.zoom()
           .scaleExtent([0.5 ,2])
-          .on('zoom.bar', zoomListener);
+          .on('zoom', zoomListener);
 
         var svg = d3.select(elm[0]).append('svg')
           .call(zoom)

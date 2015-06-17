@@ -16,6 +16,7 @@ angular.module('ngDependencyGraph')
       init();
     });
 
+
     self.chooseScope = function(val) {
       currentView.setScope(val);
     };
@@ -63,8 +64,10 @@ angular.module('ngDependencyGraph')
 
       // DEBUG that's for development
       $timeout(function() {
-        var node = _.find(componentsGraph.nodes, {name: 'clView'});
+        // var node = _.find(componentsGraph.nodes, {name: 'clView'});
         // var node = _.find(modulesGraph.nodes, {name: 'az-ci'});
+        var node = _.find(modulesGraph.nodes, {name: rawData.apps[0]});
+        
         if (node) {
           currentView.chooseNode(node);
         } else {

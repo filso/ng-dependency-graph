@@ -23,6 +23,7 @@ angular.module('ngDependencyGraph')
       setGraphs: function(modulesGraph, componentsGraph) {
         this.modulesGraph = modulesGraph;
         this.componentsGraph = componentsGraph;
+        this.applyFilters();
       },
       setScope: function(scope) {
         this.scope = scope;
@@ -34,7 +35,7 @@ angular.module('ngDependencyGraph')
 
         $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
       },
-      chooseNode: function(node) {
+      chooseNode: function(node, translate) {
         if (node.isModule === true && this.scope !== Const.Scope.MODULES) {
           this.setScope(Const.Scope.MODULES);
         } else if (node.isModule === false && this.scope !== Const.Scope.COMPONENTS) {
@@ -42,7 +43,7 @@ angular.module('ngDependencyGraph')
         }
         
         this.selectedNode = node;
-        $rootScope.$broadcast(Const.Events.CHOOSE_NODE, node);
+        $rootScope.$broadcast(Const.Events.CHOOSE_NODE, node, translate);
       },
       applyFilters: function() {
         var masks;

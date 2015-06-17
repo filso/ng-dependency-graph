@@ -52,7 +52,7 @@ angular.module('ngDependencyGraph')
 
         inputElm.bind('typeahead:select', function(ev, node) {
           $rootScope.$apply(function() {
-            currentView.chooseNode(node);
+            currentView.chooseNode(node, true);
           });
           clearInput();
         });
