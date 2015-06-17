@@ -35,7 +35,6 @@ angular.module('ngDependencyGraph')
             .call(force.drag);
 
           nodesEnter.append('circle');
-            // .attr('r', 8);
 
           nodesEnter.append('text')
             .attr('x', 12)
@@ -135,6 +134,13 @@ angular.module('ngDependencyGraph')
           .on('zoom', zoomListener);
 
         var svg = d3.select(elm[0]).append('svg')
+          .on('mousedown', function() {
+            // Allow moving only on svg element,
+            // otherwise stop propagation to zoom behaviour
+            if (d3.event.target.tagName !== 'svg') {
+              d3.event.stopImmediatePropagation();
+            }
+          })
           .call(zoom)
           .append('g');
 
