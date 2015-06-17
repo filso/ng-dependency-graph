@@ -8,7 +8,7 @@ module.exports = function(options) {
 
 
   gulp.task('sass', function() {
-    return gulp.src('./app/styles/main.scss')
+    return gulp.src('./app/styles/app.scss')
       .pipe(sass({
         outputStyle: "compressed",
         includePaths: ["./app"]

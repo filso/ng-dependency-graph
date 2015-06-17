@@ -1,10 +1,12 @@
-<div>
-  <div>To run, open in tab with AngularJS app version.</div>
-  <div>This extension requires AngularJS version or higher. You seem to be using {{ angular.version }}.</div>
+<div class="about">
+  <div>
+    <h3>AngularJS Dependency Graph browser</h3>
+    <div ng-if="app.angularAppDetected === false">No AngularJS app detected. Open in a tab with AngularJS app.</div>
+    <div ng-if="app.angularAppDetected === true"><a class="open-current-graph">Open graph</a></div>
+    <div><a class="sample">Open graph of sample project</a></div>
+  </div>
 
-  To see how this extension works, <a>click here to open sample project</a>.
-</div>
-
-<div>
-  AngularJS dependency graph browser <a href="http://filso.github.io/ng-dependency-graph/">http://filso.github.io/ng-dependency-graph/</a>
+  <div>
+    AngularJS Dependency Graph browser <a href="http://filso.github.io/ng-dependency-graph/" target="_new">http://filso.github.io/ng-dependency-graph/</a>
+  </div>
 </div>

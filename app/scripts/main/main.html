@@ -1,0 +1,25 @@
+<div ng-controller="MainCtrl as main" class="main">
+  <div dg-graph class="dg-graph" ng-if="currentView.graph">
+    <div class="controls">
+      <div class="search" dg-search-node="">
+        <label for="search-input">Search:</label>
+        <input id="search-input" type="text" ng-model="text"></input>
+      </div>
+      <div class="choose-scope">
+        <div ng-click="main.chooseScope('modules')" ng-class="{active: currentView.graph.scope === 'modules'}">Modules
+        </div>
+        <div ng-click="main.chooseScope('components')" ng-class="{active: currentView.graph.scope === 'components'}">Components</div>
+      </div>
+    </div>
+    <div class="legend">
+      <div class="mouse-instructions">
+        <div>Mouse wheel - zoom</div>
+        <div>Mouse drag - move</div>
+      </div>
+      <div class="trigger-components" ng-controller="TriggerComponentsCtrl" ng-include="'scripts/triggerComponents/triggerComponents.html'">
+      </div>
+    </div>
+  </div>
+  <div class="info-panel-wrapper" ng-include="'scripts/infoPanel/infoPanel.html'">
+  </div>
+</div>

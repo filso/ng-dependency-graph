@@ -2,7 +2,8 @@
 
 angular.module('ngDependencyGraph')
   .value('Const', {
-    AngularVersionRequired: '1.2.0',
+    // loader.js required, first introduced in 1.0
+    AngularVersionRequired: '1.0.0',
 
     Events: {
       UPDATE_GRAPH: 'updateGraph',

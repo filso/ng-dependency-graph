@@ -46,3 +46,6 @@ $color-value: lighten($purple, 20%);
 $components: module, service, controller, directive, filter, value;
 $components-colors: $color-module, $color-service,
     $color-controller, $color-directive, $color-filter, $color-value; 
+
+$color-graph-bg: #333;
+

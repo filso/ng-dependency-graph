@@ -7,7 +7,7 @@ angular.module('ngDependencyGraph')
 
     var rawData;
 
-    appDeps.get(function(deps) {
+    appDeps.loadFromInspectedWindow(function(deps) {
       if (deps) {
         rawData = deps;
       } else {
@@ -30,11 +30,6 @@ angular.module('ngDependencyGraph')
               com._module = module;
           });
       });
-
-      // TODO handle angular not found / wrong version
-      if (angular.version) {
-      }
-
 
       var allComponents = [];
       _.each(rawData.modules, function(module) {
