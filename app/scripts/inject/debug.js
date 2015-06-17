@@ -213,10 +213,6 @@ var inject = function() {
 
         angular.forEach(module._invokeQueue, function(item) {
           var compArgs = item[2];
-          // console.log(item);
-          // if (typeof item[2][1] == 'string') {
-          //   debugger;
-          // }
           switch (item[0]) {
             case '$provide':
               switch (item[1]) {

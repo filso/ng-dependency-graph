@@ -1,11 +1,10 @@
-
-$info-panel-width: 300px;
-
-
 @import "colors";
 @import "graph";
 @import "controls";
 @import "infoPanel";
+@import "about";
+
+$info-panel-width: 300px;
 
 @mixin font-family-mix {
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif ;

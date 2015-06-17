@@ -23,5 +23,5 @@
       "run_at": "document_start"
     }
   ],
-  "minimum_chrome_version": "21.0.1180.57"
+  "minimum_chrome_version": "22"
 }
