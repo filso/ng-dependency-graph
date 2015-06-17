@@ -268,11 +268,7 @@ var inject = function() {
   }()));
 };
 
-// first sniff out 
-// inject();
-
-
 // only inject if cookie is set
-// if (document.cookie.indexOf('__ngDependencyGraph=true') != -1) {
-document.addEventListener('DOMContentLoaded', inject);
-// }
+if (document.cookie.indexOf('__ngDependencyGraph=true') !== -1) {
+  document.addEventListener('DOMContentLoaded', inject);
+}

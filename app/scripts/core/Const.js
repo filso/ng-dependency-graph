@@ -5,6 +5,8 @@ angular.module('ngDependencyGraph')
     // loader.js required, first introduced in 1.0
     AngularVersionRequired: '1.0.0',
 
+    COOKIE_NAME: '__ngDependencyGraph',
+    
     Events: {
       UPDATE_GRAPH: 'updateGraph',
       CHOOSE_NODE: 'chooseNode'

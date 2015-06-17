@@ -2,7 +2,7 @@
 
 // Service for running code in the context of the application being debugged
 angular.module('ngDependencyGraph')
-  .factory('appContext', function(chromeExtension) {
+  .factory('appContext', function(chromeExtension, Const) {
 
     // Public API
     // ==========
@@ -12,27 +12,23 @@ angular.module('ngDependencyGraph')
           window.document.location.reload();
         }, cb);
       },
-      // Settings
-      // --------
-
       // takes a bool
       setDebug: function(setting) {
-        if (setting) {
+        if (setting === true) {
           chromeExtension.eval(function(window) {
-            window.document.cookie = '__ngDebug=true;';
+            window.document.cookie = '__ngDependencyGraph=true;';
             window.document.location.reload();
           });
         } else {
           chromeExtension.eval(function(window) {
-            window.document.cookie = '__ngDebug=false;';
+            window.document.cookie = '__ngDependencyGraph=false;';
             window.document.location.reload();
           });
         }
       },
-
       getDebug: function(cb) {
         chromeExtension.eval(function(window) {
-          return document.cookie.indexOf('__ngDebug=true') !== -1;
+          return document.cookie.indexOf('__ngDependencyGraph=true') !== -1;
         }, cb);
       },
 
@@ -40,7 +36,7 @@ angular.module('ngDependencyGraph')
       setLog: function(setting) {
         setting = !!setting;
         chromeExtension.eval('function (window) {' +
-          'window.__ngDebug.log = ' + setting.toString() + ';' +
+          'window.__ngDependencyGraph.log = ' + setting.toString() + ';' +
           '}');
       },
 

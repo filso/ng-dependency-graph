@@ -1,23 +1,17 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .controller('MainCtrl', function($scope, $timeout, dev, Graph, Const, currentView, appDeps) {
-    var self = this;
+  .controller('MainCtrl', function($scope, $timeout, dev, Graph, Const, currentView, inspectedApp) {
+    var ctrl = this;
     $scope.currentView = currentView;
 
-    var rawData;
+    var rawData = inspectedApp.getData();
 
-    appDeps.loadFromInspectedWindow(function(deps) {
-      if (deps) {
-        rawData = deps;
-      } else {
-        rawData = sampleAppData.ngArchitecture;
-      }
-      init();
-    });
+    init();
 
 
-    self.chooseScope = function(val) {
+
+    ctrl.chooseScope = function(val) {
       currentView.setScope(val);
     };
 

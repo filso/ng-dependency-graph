@@ -1,15 +1,40 @@
 .about {
   margin: 10px;
-  height: 100%;
   color: #ddd;
+  display: flex;
+
+  img {
+    width: 128px;
+    height: 128px;
+  }
+  h3 {
+    color: white;
+    margin: 0;
+  }
+
+  & > div {
+    margin-top: 25px;
+  }
+
+  a.open-graph {
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px;
+    margin: 8px 0px;
+    border-radius: 5px;
+    background: linear-gradient(to right, $angular-light-red, $angular-dark-red);
+
+    border: 2px solid $angular-gray;
+
+    &.current {
+      padding: 10px;
+      font-size: 1.2em;
+    }
+
+  }
 
   a {
-    display: inline-block;
-    padding: 20px;
-    border-radius: 3px;
     color: white;
   }
 
-  a.open-current-graph {
-  }
 }

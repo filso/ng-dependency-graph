@@ -34,8 +34,12 @@ $gray:   #aaa;
 $black:  #111;
 
 
+$angular-gray: #B6B6B6;
+$angular-light-red: #DD1B16;
+$angular-dark-red: #A6120D;
 
 $color-module: $red;
+
 $color-service: lighten($blue, 15%);
 $color-controller: lighten($olive, 15%);
 $color-directive: $orange;

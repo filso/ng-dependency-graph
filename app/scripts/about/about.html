@@ -1,12 +1,13 @@
 <div class="about">
+  <img src="img/webstore-icon.png"/>
   <div>
     <h3>AngularJS Dependency Graph browser</h3>
-    <div ng-if="app.angularAppDetected === false">No AngularJS app detected. Open in a tab with AngularJS app.</div>
-    <div ng-if="app.angularAppDetected === true"><a class="open-current-graph">Open graph</a></div>
-    <div><a class="sample">Open graph of sample project</a></div>
+    <div ng-if="app.angularAppDetected === false">No AngularJS app detected. Please open in a tab with AngularJS app. <a class="open-graph sample">Open sample project</a></div>
+    <div ng-if="app.angularAppDetected === true"><a class="open-graph current" ng-click="">Open graph</a></div>
+
+    <div>
+      Project site: <a href="http://filso.github.io/ng-dependency-graph/" target="_new">http://filso.github.io/ng-dependency-graph/</a>
+    </div>
   </div>
 
-  <div>
-    AngularJS Dependency Graph browser <a href="http://filso.github.io/ng-dependency-graph/" target="_new">http://filso.github.io/ng-dependency-graph/</a>
-  </div>
 </div>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .directive('dgGraph', function($rootScope, $timeout, appDeps, dev, Component, Const, currentView) {
+  .directive('dgGraph', function($rootScope, $timeout, dev, Component, Const, currentView) {
 
     return {
       link: function(scope, elm, attrs) {
