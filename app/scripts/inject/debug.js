@@ -211,7 +211,10 @@ var inject = function() {
         var moduleName = moduleData.name;
         var module = angular.module(moduleName);
 
-        angular.forEach(module._invokeQueue, function(item) {
+        // Old versions of AngularJS
+        var invokeQueue = module._invokeQueue || module.invokeQueue;
+
+        angular.forEach(invokeQueue, function(item) {
           var compArgs = item[2];
           switch (item[0]) {
             case '$provide':
