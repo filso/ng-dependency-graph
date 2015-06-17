@@ -16,6 +16,7 @@ angular.module('ngDependencyGraph')
 
       saveCurrentView: function() {
         // chrome.storage.sync
+        debugger;
         // TODO
         throw 'not implemented';
       },

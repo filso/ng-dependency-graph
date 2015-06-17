@@ -34,7 +34,7 @@ angular.module('ngDependencyGraph')
       loadSampleData: function() {
         _data = sampleAppData.ngArchitecture;
       },
-      loadData: function(callback) {
+      loadInspectedAppData: function(callback) {
         if (!chrome.extension) { // TODO do sth smarter... maybe load sample app?
           callback(false);
           return;

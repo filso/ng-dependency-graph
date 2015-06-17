@@ -106,7 +106,7 @@ angular.module('ngDependencyGraph')
         }   
 
 
-        scope.$on('chooseNode', function(event, d, translate) {
+        scope.$on(Const.Events.CHOOSE_NODE, function(event, d, translate) {
           if (force.nodes().indexOf(d) === -1) { // if d is not present, it's not visible
             return;
           }

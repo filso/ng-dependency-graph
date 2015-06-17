@@ -1,15 +1,13 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .controller('MainCtrl', function($scope, $timeout, dev, Graph, Const, currentView, inspectedApp) {
+  .controller('MainCtrl', function($scope, $timeout, dev, Graph, Const, currentView, inspectedApp, storage) {
     var ctrl = this;
     $scope.currentView = currentView;
 
     var rawData = inspectedApp.getData();
 
     init();
-
-
 
     ctrl.chooseScope = function(val) {
       currentView.setScope(val);
@@ -53,8 +51,6 @@ angular.module('ngDependencyGraph')
 
       // DEBUG that's for development
       $timeout(function() {
-        // var node = _.find(componentsGraph.nodes, {name: 'clView'});
-        // var node = _.find(modulesGraph.nodes, {name: 'az-ci'});
         var node = _.find(modulesGraph.nodes, {name: rawData.apps[0]});
         
         if (node) {
@@ -66,5 +62,9 @@ angular.module('ngDependencyGraph')
 
     }
 
+    // TODO this seems architecturaly lame
+    $scope.$on(Const.Events.UPDATE_GRAPH, function() {
+      storage.saveCurrentView();
+    });
 
   });

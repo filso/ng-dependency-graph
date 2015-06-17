@@ -94,13 +94,6 @@ angular.module('ngDependencyGraph')
       setComponentsVisible: function(componentsVisible) {
         this.filters.componentsVisible = componentsVisible;
         this.applyFilters();
-      },
-
-      saveState: function() {
-        throw 'not implemented';
-      },
-      loadState: function() {
-        throw 'not implemented';
       }
     };
 
