@@ -12,17 +12,24 @@
  */
 angular.module('ngDependencyGraph')
   .factory('storage', function(currentView) {
+
+    var serializedProps = [''];
+
     var service = {
 
       saveCurrentView: function() {
         // chrome.storage.sync
-        debugger;
-        // TODO
-        throw 'not implemented';
+        console.log(currentView);
+        window.ble = currentView;
+        window.ble2 = _.pick(currentView, serializedProps);
+        // TODO pick these props, save to chrome.storage.sync
+        // throw 'not implemented';
       },
 
       loadCurrentView: function() {
         // TODO
+        // 
+        // load saved props, just before loading Main
         throw 'not implemented';
       }
 

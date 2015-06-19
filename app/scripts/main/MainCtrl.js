@@ -55,6 +55,7 @@ angular.module('ngDependencyGraph')
         
         if (node) {
           currentView.chooseNode(node);
+          storage.loadCurrentView();
         } else {
           currentView.setScope(Const.Scope.COMPONENTS);
         }
