@@ -51,16 +51,6 @@ angular.module('ngDependencyGraph')
       currentView.setGraphs(modulesGraph, componentsGraph);
       currentView.apps = rawData.apps; // TODO create API for this
 
-
-      // TODO refactor lifecycle of storage
-      // storage.saveCurrentView();
-      // setTimeout(function() {
-      //   storage.loadCurrentView();
-      // }, 1000);
-      // return;
-
-
-      // DEBUG that's for development
       $timeout(function() {
         var node = _.find(modulesGraph.nodes, {name: rawData.apps[0]});
         
@@ -69,7 +59,7 @@ angular.module('ngDependencyGraph')
         } else {
           currentView.setScope(Const.Scope.COMPONENTS);
         }
-      }, 300);
+      });
 
     }
 

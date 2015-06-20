@@ -2,6 +2,7 @@ var sampleAppData = sampleAppData || {};
 
 sampleAppData.ngArchitecture = {
   "angularVersion": null,
+  "host": 'localhost',
   "apps": ["az-ci"],
   "modules": [{
     "name": "az-ci",

@@ -13,11 +13,10 @@
 angular.module('ngDependencyGraph')
   .factory('storage', function($q, $rootScope, currentView, inspectedApp) {
 
-    var serializedProps = [''];
+    var serializedProps = ['filters', 'componentsVisible'];
 
     var getKey = function() {
-      return 'mykey';
-      return currentView.apps[0] + inspectedApp.getData().host;
+      return inspectedApp.getData().host + '__' + currentView.apps[0];
     };
 
 
@@ -42,8 +41,6 @@ angular.module('ngDependencyGraph')
       chromeSync = chrome.storage.sync;
     }
 
-
-
     var service = {
 
       saveCurrentView: function() {
@@ -52,15 +49,13 @@ angular.module('ngDependencyGraph')
         var key = getKey();
 
         console.log('key', key);
-
+    
         window.ble = currentView;
-        window.ble2 = _.pick(currentView, serializedProps);
+        var obj = _.pick(currentView, serializedProps);
+        obj.selectedNode = currentView.selectedNode.name;
+        window.ble2 = obj;
 
-
-        debugger;
-        
-
-        var data = angular.toJson({ble: 4});
+        var data = angular.toJson(obj);
         var items = {}; items[key] = data;
         chromeSync.set(items, function() {
           defer.resolve();
@@ -74,11 +69,14 @@ angular.module('ngDependencyGraph')
         var defer = $q.defer();
         var key = getKey();
         chromeSync.get(key, function(serialized) {
+          if (serialized) {
+            var obj = angular.fromJson(serialized);
 
-          var obj = angular.fromJson(serialized);
+            _.each(serializedProps, function(key) {
+              currentView[key] = obj[key];
+            });
+          }
 
-
-          console.log(obj);
           defer.resolve();
           $rootScope.$apply();
 
