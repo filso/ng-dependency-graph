@@ -32,7 +32,7 @@ angular.module('ngDependencyGraph')
             .attr('class', _.property('type'))
             .classed('node', true)
             .on('mousedown', nodeClick)
-            .call(force.drag);
+            .call(drag);
 
           nodesEnter.append('circle');
 
@@ -133,6 +133,21 @@ angular.module('ngDependencyGraph')
           // .linkDistance(120)
           // .charge(-800)
           .on('tick', tick);
+
+        var drag = force.drag()
+          .on("dragstart", dragstart);
+
+
+        // TODO implement sticky dragging functionality
+        function dblclick(d) {
+          // d3.select(this).classed("fixed", d.fixed = false);
+        }
+
+        function dragstart(d) {
+          // d3.select(this).classed("fixed", d.fixed = true);
+        }
+
+
 
         var zoom = d3.behavior.zoom()
           .scaleExtent([0.5 ,2])
