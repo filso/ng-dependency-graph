@@ -7,6 +7,7 @@ angular.module('ngDependencyGraph')
 
     var rawData = inspectedApp.getData();
 
+
     init();
 
     ctrl.chooseScope = function(val) {
@@ -48,6 +49,16 @@ angular.module('ngDependencyGraph')
 
 
       currentView.setGraphs(modulesGraph, componentsGraph);
+      currentView.apps = rawData.apps; // TODO create API for this
+
+
+      // TODO refactor lifecycle of storage
+      // storage.saveCurrentView();
+      // setTimeout(function() {
+      //   storage.loadCurrentView();
+      // }, 1000);
+      // return;
+
 
       // DEBUG that's for development
       $timeout(function() {
@@ -55,7 +66,6 @@ angular.module('ngDependencyGraph')
         
         if (node) {
           currentView.chooseNode(node);
-          storage.loadCurrentView();
         } else {
           currentView.setScope(Const.Scope.COMPONENTS);
         }
@@ -64,7 +74,11 @@ angular.module('ngDependencyGraph')
     }
 
     // TODO this seems architecturaly lame
-    $scope.$on(Const.Events.UPDATE_GRAPH, function() {
+    // $scope.$on(Const.Events.UPDATE_GRAPH, function() {
+    //   storage.saveCurrentView();
+    // });
+
+    $scope.$on(Const.Events.CHOOSE_NODE, function() {
       storage.saveCurrentView();
     });
 

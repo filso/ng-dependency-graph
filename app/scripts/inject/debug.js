@@ -147,7 +147,8 @@ var inject = function() {
       var metadata = {
         angularVersion: angular.version,
         apps: [],
-        modules: []
+        modules: [],
+        host: window.location.host
       };
 
       var appElms = document.querySelectorAll('[ng-app]');

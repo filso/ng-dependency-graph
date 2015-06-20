@@ -1,5 +1,6 @@
 'use strict';
 
+// TODO refactor this mess ;)
 angular.module('ngDependencyGraph')
   .controller('AppCtrl', function($scope, inspectedApp, storage, appContext) {
     var ctrl = this;
@@ -16,12 +17,15 @@ angular.module('ngDependencyGraph')
       ctrl.appTemplate = templates.MAIN;
     };
 
+    ctrl.insertCookieAndRefresh = function() {
+      appContext.setDebug(true);
+    };
+
     ctrl.loadInspectedApp = function() {
       // TODO in this place ADD COOKIE and RESTART... then getDebug again???
     };
 
-    if (chrome.extension) {
-
+    function init() {
       appContext.getDebug(function(enabled) {
         if (enabled) {
           // app enabled for this page
@@ -36,22 +40,13 @@ angular.module('ngDependencyGraph')
             $scope.$apply();
           });
         }
-
       });
-
+    }
+    if (chrome.extension) {
+      init();
     } else {
-      // just load sample app, not in a tab
+      // just load sample app, not in a tab, development / test
       ctrl.loadSampleApp();
     }
-
-    // inspectedApp.loadData(function(deps) {
-    //   if (deps) {
-    //     // AngularJS app detected, check if user already opened graph on this page
-    //     ctrl.angularAppDetected = true;
-    //     ctrl.appTemplate = 'scripts/about/about.html';
-    //   } else {
-    //     ctrl.angularAppDetected = false;
-    //   }
-    // });
 
   });
