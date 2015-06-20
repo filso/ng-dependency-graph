@@ -3,16 +3,11 @@
 angular.module('ngDependencyGraph')
   .controller('MainCtrl', function($scope, $timeout, dev, Graph, Const, currentView, inspectedApp, storage) {
     var ctrl = this;
+    var rawData = inspectedApp.getData();
+    
     $scope.currentView = currentView;
 
-    var rawData = inspectedApp.getData();
-
-
     init();
-
-    ctrl.chooseScope = function(val) {
-      currentView.setScope(val);
-    };
 
     function init() {
 
