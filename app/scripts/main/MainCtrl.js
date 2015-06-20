@@ -47,11 +47,13 @@ angular.module('ngDependencyGraph')
 
       });
 
-
       currentView.setGraphs(modulesGraph, componentsGraph);
-      currentView.apps = rawData.apps; // TODO create API for this
+      currentView.apps = rawData.apps; // TODO create accessor for this in currentView
 
-      $timeout(function() {
+      storage.loadCurrentView().then(function() {
+        console.log('ha!');
+
+      }, function() {
         var node = _.find(modulesGraph.nodes, {name: rawData.apps[0]});
         
         if (node) {
@@ -69,7 +71,7 @@ angular.module('ngDependencyGraph')
     // });
 
     $scope.$on(Const.Events.CHOOSE_NODE, function() {
-      storage.saveCurrentView();
+      // storage.saveCurrentView();
     });
 
   });

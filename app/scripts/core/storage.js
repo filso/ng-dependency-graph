@@ -23,20 +23,23 @@ angular.module('ngDependencyGraph')
     // this has the same API as StorageArea chrome.sync
     var localStorageAdapter = {
       get: function(key, cb) {
-        cb(localStorage.getItem(key));
+        // Note: run cb outside AngularJS context to mimic chrome.sync behaviour
+        setTimeout(function() {
+          cb(localStorage.getItem(key));
+        });
       },
       set: function(obj, cb) {
-        _.each(obj, function(key, val) {
-          console.log('setkey', key, val);
+        _.each(obj, function(val, key) {
+          localStorage.setItem(key, val);
         });
+        // Note: run cb outside AngularJS context to mimic chrome.sync behaviour
+        setTimeout(cb);
       }
     };
 
     var chromeSync;
-
     if (!chrome.storage) {
       chromeSync = localStorageAdapter;
-      console.log('no storage');
     } else {
       chromeSync = chrome.storage.sync;
     }
@@ -47,10 +50,6 @@ angular.module('ngDependencyGraph')
         var defer = $q.defer();
 
         var key = getKey();
-
-        console.log('key', key);
-    
-        window.ble = currentView;
         var obj = _.pick(currentView, serializedProps);
         obj.selectedNode = currentView.selectedNode.name;
         window.ble2 = obj;
@@ -75,9 +74,15 @@ angular.module('ngDependencyGraph')
             _.each(serializedProps, function(key) {
               currentView[key] = obj[key];
             });
+            defer.resolve();
+            console.log(obj);
+
+            // TODO set previously selected node
+          } else {
+            console.log('nothing saved!');
+            defer.reject();
           }
 
-          defer.resolve();
           $rootScope.$apply();
 
         });
