@@ -12,26 +12,26 @@
 }
 
 .choose-scope {
-  $border: 1px solid $silver;
 
-  border-radius: 5px;
-  background: $blue;
-  border: $border;
+  border-radius: 3px;
+
   display: inline-block;
+  background: black;
+  background-image: linear-gradient(to bottom, darken(#3498db, 10%), #2c84ba);
+
+
 
   & > div {
     display: inline-block;
-    padding: 5px;
+    padding: 8px;
     cursor: pointer;
-    color: #ddd;
+    color: #fff;
     
-    &:first-child {
-      border-right: $border;
-    }
 
-    &.active {
-      color: #fff;
-      background: lighten($blue, 20%);
+    &.active, &:hover {
+      border-radius: 3px;
+
+      background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
     }
 
   }

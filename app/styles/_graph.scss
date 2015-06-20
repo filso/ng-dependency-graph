@@ -50,7 +50,8 @@ svg > g {
 
 
 text {
-    font: 10px sans-serif;
+    cursor: pointer;
+    font: 12px sans-serif;
     pointer-events: none;
 
     paint-order: stroke;

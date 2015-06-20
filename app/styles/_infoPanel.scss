@@ -16,6 +16,7 @@
 .info-panel {
   color: #444;
   overflow-y: scroll;
+  font-size: 13px;
 
   .info {
     margin: 5px 0px;
@@ -46,6 +47,7 @@
   .info-panel-list {
     & > div {
       padding: 3px;
+      margin-bottom: 3px;
     }
 
     @each $type in $components {
@@ -81,10 +83,13 @@
   right: 0px;
   background: white;
   width: $info-panel-width;
-
+  .title {
+    padding: 5px;
+    font-weight: bold;
+  }
 
   & > div {
-    padding: 3px;
+    padding: 5px;
     label {
       display: flex;
       align-items: center;
@@ -93,6 +98,7 @@
       width: 50px;
     }
     input {
+      font-size: 12px;
       flex: 1;
       // width: 200px;
       vertical-align: middle;

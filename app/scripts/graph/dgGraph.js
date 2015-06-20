@@ -58,10 +58,6 @@ angular.module('ngDependencyGraph')
           nodes.exit().remove();
 
           force
-            .size([width, height])
-            .linkDistance(80)
-            .charge(-400)
-            .on('tick', tick)
             .start();
         }
 
@@ -127,7 +123,16 @@ angular.module('ngDependencyGraph')
         var width = elm.width();
         var height = elm.height();
 
-        var force = d3.layout.force();
+        var force = d3.layout.force()
+          .size([width, height])
+          .linkStrength(0.5)
+          .friction(0.85)
+          .linkDistance(100)
+          .charge(-400)
+          .gravity(0.05)
+          // .linkDistance(120)
+          // .charge(-800)
+          .on('tick', tick);
 
         var zoom = d3.behavior.zoom()
           .scaleExtent([0.5 ,2])
