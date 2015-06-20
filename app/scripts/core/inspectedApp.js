@@ -35,6 +35,8 @@ angular.module('ngDependencyGraph')
         _data = sampleAppData.ngArchitecture;
       },
       loadInspectedAppData: function(callback) {
+        // TODO add polling here
+
         if (!chrome.extension) { // TODO do sth smarter... maybe load sample app?
           callback(false);
           return;

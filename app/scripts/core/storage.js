@@ -13,7 +13,7 @@
 angular.module('ngDependencyGraph')
   .factory('storage', function($q, $rootScope, currentView, inspectedApp) {
 
-    var serializedProps = ['filters', 'componentsVisible'];
+    var serializedProps = ['filters', 'componentsVisible', 'scope'];
 
     var getKey = function() {
       return inspectedApp.getData().host + '__' + currentView.apps[0];
@@ -25,7 +25,8 @@ angular.module('ngDependencyGraph')
       get: function(key, cb) {
         // Note: run cb outside AngularJS context to mimic chrome.sync behaviour
         setTimeout(function() {
-          cb(localStorage.getItem(key));
+          var items = {}; items[key] = localStorage.getItem(key);
+          cb(items);
         });
       },
       set: function(obj, cb) {
@@ -51,7 +52,9 @@ angular.module('ngDependencyGraph')
 
         var key = getKey();
         var obj = _.pick(currentView, serializedProps);
-        obj.selectedNode = currentView.selectedNode.name;
+        if (currentView.selectedNode) {
+          obj.selectedNode = currentView.selectedNode.name;
+        }
         window.ble2 = obj;
 
         var data = angular.toJson(obj);
@@ -67,19 +70,22 @@ angular.module('ngDependencyGraph')
       loadCurrentView: function() {
         var defer = $q.defer();
         var key = getKey();
-        chromeSync.get(key, function(serialized) {
+        chromeSync.get(key, function(items) {
+          var serialized = items[key];
+
           if (serialized) {
             var obj = angular.fromJson(serialized);
+            console.log(obj);
 
             _.each(serializedProps, function(key) {
-              currentView[key] = obj[key];
+              if (obj[key]) {
+                currentView[key] = obj[key];
+              }
             });
             defer.resolve();
-            console.log(obj);
 
             // TODO set previously selected node
           } else {
-            console.log('nothing saved!');
             defer.reject();
           }
 

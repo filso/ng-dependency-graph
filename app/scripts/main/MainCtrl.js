@@ -50,28 +50,33 @@ angular.module('ngDependencyGraph')
       currentView.setGraphs(modulesGraph, componentsGraph);
       currentView.apps = rawData.apps; // TODO create accessor for this in currentView
 
+      var appNode = _.find(modulesGraph.nodes, {name: rawData.apps[0]});
+
       storage.loadCurrentView().then(function() {
-        console.log('ha!');
+        currentView.chooseNode(appNode);
+
+        currentView.setScope(currentView.scope);
+        // TODO meeeh not .setScope here... REFACTOR, setScope should just set scope, not initialise graph
+        currentView.applyFilters();
 
       }, function() {
-        var node = _.find(modulesGraph.nodes, {name: rawData.apps[0]});
-        
-        if (node) {
-          currentView.chooseNode(node);
-        } else {
-          currentView.setScope(Const.Scope.COMPONENTS);
-        }
+        currentView.chooseNode(appNode);
       });
+
+      // TODO possible racecondition with saveCurrentView !!!
+      // $timeout(function() {
+      //   currentView.chooseNode(appNode);
+      // });
 
     }
 
     // TODO this seems architecturaly lame
-    // $scope.$on(Const.Events.UPDATE_GRAPH, function() {
-    //   storage.saveCurrentView();
-    // });
+    $scope.$on(Const.Events.UPDATE_GRAPH, function() {
+      storage.saveCurrentView();
+    });
 
     $scope.$on(Const.Events.CHOOSE_NODE, function() {
-      // storage.saveCurrentView();
+      storage.saveCurrentView();
     });
 
   });

@@ -2,8 +2,10 @@
 
 // TODO refactor this mess ;)
 angular.module('ngDependencyGraph')
-  .controller('AppCtrl', function($scope, inspectedApp, storage, appContext) {
+  .controller('AppCtrl', function($scope, inspectedApp, storage, appContext, currentView) {
     var ctrl = this;
+
+    $scope.currentView = currentView;
 
     var templates = {
       ABOUT: 'scripts/about/about.html',
@@ -21,9 +23,9 @@ angular.module('ngDependencyGraph')
       appContext.setDebug(true);
     };
 
-    ctrl.loadInspectedApp = function() {
-      // TODO in this place ADD COOKIE and RESTART... then getDebug again???
-    };
+    // ctrl.loadInspectedApp = function() {
+    //   // TODO in this place ADD COOKIE and RESTART... then getDebug again???
+    // };
 
     function init() {
       appContext.getDebug(function(enabled) {
@@ -42,7 +44,15 @@ angular.module('ngDependencyGraph')
         }
       });
     }
+
     if (chrome.extension) {
+      appContext.watchRefresh(function() {
+        console.log('refreshed!!!!');
+        setTimeout(function() {
+          init();
+
+        }, 4000);
+      });
       init();
     } else {
       // just load sample app, not in a tab, development / test

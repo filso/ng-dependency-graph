@@ -1,32 +1,32 @@
 <div ng-controller="InfoPanelCtrl as infoPanel" class="info-panel">
-  <div ng-if="infoPanel.node && infoPanel.node.type !== 'module'">
+  <div ng-if="currentView.selectedNode && currentView.selectedNode.type !== 'module'">
     
     <div class="info">
-      <span class="node-title" ng-bind="infoPanel.node.name"></span>
+      <span class="node-title" ng-bind="currentView.selectedNode.name"></span>
       <span>&#10142;</span>
 
-      <a class="node-module-name choose-node" ng-bind="infoPanel.node.module.name" ng-click="chooseNode(infoPanel.node.module)"></a>
+      <a class="node-module-name choose-node" ng-bind="currentView.selectedNode.module.name" ng-click="currentView.chooseNode(currentView.selectedNode.module, true)"></a>
     </div>
 
-    <div dg-info-panel-list="infoPanel.node.deps" title="Dependencies"></div>
-    <div dg-info-panel-list="infoPanel.node.provides" title="Required by"></div>
+    <div dg-info-panel-list="currentView.selectedNode.deps" title="Dependencies"></div>
+    <div dg-info-panel-list="currentView.selectedNode.provides" title="Required by"></div>
 
   </div>
 
 
-  <div ng-if="infoPanel.node && infoPanel.node.type === 'module'">
+  <div ng-if="currentView.selectedNode && currentView.selectedNode.type === 'module'">
     <div class="info">
-      <span class="node-title" ng-bind="infoPanel.node.name"></span>
-      <a class="node-module-name choose-node" ng-bind="infoPanel.node.module.name" ng-click="chooseNode(infoPanel.node.module)"></a>
+      <span class="node-title" ng-bind="currentView.selectedNode.name"></span>
+      <a class="node-module-name choose-node" ng-bind="currentView.selectedNode.module.name" ng-click="currentView.chooseNode(currentView.selectedNode.module, true)"></a>
     </div>
 
-    <div dg-info-panel-list="infoPanel.node.deps" title="Dependencies"></div>
-    <div dg-info-panel-list="infoPanel.node.provides" title="Required by"></div>
+    <div dg-info-panel-list="currentView.selectedNode.deps" title="Dependencies"></div>
+    <div dg-info-panel-list="currentView.selectedNode.provides" title="Required by"></div>
 
-    <div class="service" dg-info-panel-list="infoPanel.node.componentsByType['service']" title="Services"></div>
-    <div class="controller" dg-info-panel-list="infoPanel.node.componentsByType['controller']" title="Controllers"></div>
-    <div class="directive" dg-info-panel-list="infoPanel.node.componentsByType['directive']" title="Directives"></div>
-    <div class="filter" dg-info-panel-list="infoPanel.node.componentsByType['filter']" title="Filters"></div>
+    <div class="service" dg-info-panel-list="currentView.selectedNode.componentsByType['service']" title="Services"></div>
+    <div class="controller" dg-info-panel-list="currentView.selectedNode.componentsByType['controller']" title="Controllers"></div>
+    <div class="directive" dg-info-panel-list="currentView.selectedNode.componentsByType['directive']" title="Directives"></div>
+    <div class="filter" dg-info-panel-list="currentView.selectedNode.componentsByType['filter']" title="Filters"></div>
 
   </div>
 
