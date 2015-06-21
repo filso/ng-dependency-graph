@@ -221,8 +221,8 @@ var inject = function() {
             case '$provide':
               switch (item[1]) {
                 case 'value':
+                case 'constant':
                   addDeps(moduleData, compArgs[0], compArgs[1], 'value');
-                  addDeps(moduleData, compArgs[0], compArgs[1], 'constant');
                   break;
 
                 default:
