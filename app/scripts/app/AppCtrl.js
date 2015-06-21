@@ -49,9 +49,10 @@ angular.module('ngDependencyGraph')
     if (chrome.extension) {
       appContext.watchRefresh(function() {
         // TODO use some polling to check if AngularJS is loaded
+        // in reality the inspected app should always be prioritised, but this is asking for trouble
         setTimeout(function() {
           init();
-        }, 2000);
+        }, 500);
       });
       init();
     } else {
