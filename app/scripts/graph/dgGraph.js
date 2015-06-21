@@ -7,6 +7,7 @@ angular.module('ngDependencyGraph')
       link: function(scope, elm, attrs) {
 
         function update() {
+          console.log('update graph!');
           var currentGraph = currentView.graph;
           force.nodes(currentGraph.nodes)
             .links(currentGraph.links);
@@ -184,10 +185,7 @@ angular.module('ngDependencyGraph')
           .append('svg:path')
             .attr('d', 'M0,-3L10,0L0,3');
 
-          
-        update();
-        scope.$on(Const.Events.UPDATE_GRAPH, update);
-
+        scope.$on(Const.Events.UPDATE_GRAPH, _.debounce(update, 100));
 
       }
     };

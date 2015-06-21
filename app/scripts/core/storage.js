@@ -13,7 +13,7 @@
 angular.module('ngDependencyGraph')
   .factory('storage', function($q, $rootScope, currentView, inspectedApp) {
 
-    var serializedProps = ['filters', 'componentsVisible', 'scope'];
+    var serializedProps = ['filters', 'componentsVisible', 'scope', 'stickyNodesEnabled'];
 
     var getKey = function() {
       return inspectedApp.getData().host + '__' + currentView.apps[0];
@@ -55,7 +55,6 @@ angular.module('ngDependencyGraph')
         if (currentView.selectedNode) {
           obj.selectedNode = currentView.selectedNode.name;
         }
-        window.ble2 = obj;
 
         var data = angular.toJson(obj);
         var items = {}; items[key] = data;
@@ -75,7 +74,6 @@ angular.module('ngDependencyGraph')
 
           if (serialized) {
             var obj = angular.fromJson(serialized);
-            // console.log(obj);
 
             _.each(serializedProps, function(key) {
               if (obj[key]) {

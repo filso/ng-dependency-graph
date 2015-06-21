@@ -7,8 +7,8 @@ angular.module('ngDependencyGraph')
     
     $scope.currentView = currentView;
 
-    function init() {
-      console.log('MainCtrl.init()');
+    function init(isSameApp) {
+      console.log('MainCtrl.init()', isSameApp);
 
       _.each(rawData.modules, function(module) {
           module.type = 'module';
@@ -64,9 +64,13 @@ angular.module('ngDependencyGraph')
 
     }
 
-    init();
+    init(false);
 
-    $scope.$on('initMain', init);
+    $scope.$on('initMain', function() {
+      // TODO check if domain + app is matched -> same key as in storage
+      // for now assume on every refresh we're dealing with the same app
+      init(false);
+    });
 
     // TODO this seems architecturaly lame
     $scope.$on(Const.Events.UPDATE_GRAPH, function() {

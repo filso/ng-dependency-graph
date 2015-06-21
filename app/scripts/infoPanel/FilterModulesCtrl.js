@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .controller('FilterModulesCtrl', function($scope, currentView) {
+  .controller('OptionsCtrl', function($scope, currentView) {
 
     this.filterModules = currentView.filters.filterModules;
     this.ignoreModules = currentView.filters.ignoreModules;
 
-    this.change = function(newValue) {
+    this.changeFilters = function(newValue) {
       currentView.setIgnoreModules(this.ignoreModules, this.filterModules);
     };
     

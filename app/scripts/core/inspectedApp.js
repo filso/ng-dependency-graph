@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .factory('inspectedApp', function(appContext, chromeExtension) {
+  .factory('inspectedApp', function(appContext, chromeExtension, sampleAppData) {
 
     var _data;
     var _versionCache = null;
@@ -32,7 +32,7 @@ angular.module('ngDependencyGraph')
         return _data;
       },
       loadSampleData: function() {
-        _data = sampleAppData.ngArchitecture;
+        _data = sampleAppData;
       },
       loadInspectedAppData: function(callback) {
         // TODO add polling here

@@ -30,24 +30,30 @@
 
   </div>
 
-  <div class="filter-modules" ng-controller="FilterModulesCtrl as filterModules">
-    <label><input type="checkbox" ng-model="currentView.stickyNodesEnabled"></input>
-    Sticky nodes</label>
+  <div class="options" ng-controller="OptionsCtrl as options">
+    <div class="title">
+      Options
+    </div>
+    <div>
+      <label><input type="checkbox" ng-model="currentView.stickyNodesEnabled"></input>
+      Sticky nodes</label>
+    </div>
     <div class="title">
       Select modules
     </div>
     <div>
       <label>
       <span>Ignore:</span>
-      <input type="text" ng-model="filterModules.ignoreModules" ng-change="filterModules.change()"></input>
+      <input type="text" ng-model="options.ignoreModules" ng-change="options.changeFilters()"></input>
       </label>
     </div>
     <div>
       <label>
       <span>Filter:</span>
-      <input type="text" ng-model="filterModules.filterModules" ng-change="filterModules.change()"></input>
+      <input type="text" ng-model="options.filterModules" ng-change="options.changeFilters()"></input>
       </label>
     </div>
+
   </div>
 
 

@@ -16,7 +16,7 @@ angular.module('ngDependencyGraph')
         filterModules: Const.FilterModules.DEFAULT_FILTER,
         ignoreModules: Const.FilterModules.DEFAULT_IGNORE
       },
-      stickyNodesEnabled: true,
+      stickyNodesEnabled: false,
       componentsVisible: {
         service: true,
         controller: true
@@ -33,6 +33,7 @@ angular.module('ngDependencyGraph')
         if (scope === 'components') {
           this.setComponentsVisible(this.componentsVisible);
         }
+        this.applyFilters();
 
         $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
       },
@@ -46,12 +47,15 @@ angular.module('ngDependencyGraph')
         this.selectedNode = node;
         $rootScope.$broadcast(Const.Events.CHOOSE_NODE, node, translate);
       },
-      applyFilters: function() {
+      applyFilters: _.throttle(function() {
+        service._applyFilters();
+      }, 200),
+      _applyFilters: function() {
         var masks;
         this.componentsGraph.resetFilter();
         this.modulesGraph.resetFilter();
 
-        if (this.filters.componentsVisible) {
+        if (this.filters.componentsVisible && this.scope === 'components') {
           this.componentsGraph.filterNodes(function(node) {
             var val = service.filters.componentsVisible[node.type];
             return val === true;
@@ -83,7 +87,6 @@ angular.module('ngDependencyGraph')
         this.componentsGraph.filterNodes(function(node) {
           return (service.modulesGraph.nodes.indexOf(node.module) !== -1);
         });
-
 
         $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
       },
