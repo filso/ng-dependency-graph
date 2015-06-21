@@ -46,11 +46,9 @@ angular.module('ngDependencyGraph')
 
       storage.loadCurrentView().then(function() {
         currentView.chooseNode(appNode);
-
         currentView.setScope(currentView.scope);
         // TODO meeeh not .setScope here... REFACTOR, setScope should just set scope, not initialise graph
         currentView.applyFilters();
-
       }, function() {
         currentView.chooseNode(appNode);
       });
@@ -59,7 +57,6 @@ angular.module('ngDependencyGraph')
       // $timeout(function() {
       //   currentView.chooseNode(appNode);
       // });
-
     }
 
     init(false);
