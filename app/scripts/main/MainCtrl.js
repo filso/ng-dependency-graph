@@ -3,12 +3,11 @@
 angular.module('ngDependencyGraph')
   .controller('MainCtrl', function($scope, $timeout, dev, Graph, Const, currentView, inspectedApp, storage) {
     var ctrl = this;
-    var rawData = inspectedApp.getData();
     
     $scope.currentView = currentView;
 
-    function init(isSameApp) {
-      console.log('MainCtrl.init()', isSameApp);
+    function init(isTheSameApp) {
+      var rawData = inspectedApp.getData();
 
       _.each(rawData.modules, function(module) {
           module.type = 'module';

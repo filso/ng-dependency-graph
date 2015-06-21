@@ -54,7 +54,7 @@ angular.module('ngDependencyGraph')
             }
           },
           function(data) {
-            this._setData(data);
+            service._setData(data);
             callback(_data);
           });
       }

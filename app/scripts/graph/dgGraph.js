@@ -48,6 +48,11 @@ angular.module('ngDependencyGraph')
           /**
            * Nodes update
            */
+          if (currentView.options.stickyNodesEnabled === false) {
+            _.each(force.nodes(), function(node) {
+                node.fixed = false;
+            });
+          }
           nodes
             .classed('selected', function(d) {
               return d === currentView.selectedNode;
@@ -157,9 +162,6 @@ angular.module('ngDependencyGraph')
         scope.$watch('currentView.options.stickyNodesEnabled', function(newVal, oldVal) {
           if (newVal !== oldVal) {
             if (newVal === false) {
-              _.each(force.nodes(), function(node) {
-                node.fixed = false;
-              });
               update();
             }
           }

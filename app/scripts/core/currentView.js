@@ -26,7 +26,6 @@ angular.module('ngDependencyGraph')
       setGraphs: function(modulesGraph, componentsGraph) {
         this.modulesGraph = modulesGraph;
         this.componentsGraph = componentsGraph;
-        this.applyFilters();
       },
       setScope: function(scope) {
         this.scope = scope;

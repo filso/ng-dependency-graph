@@ -55,7 +55,6 @@ angular.module('ngDependencyGraph')
           inspectedTabId: chrome.devtools.inspectedWindow.tabId
         });
         port.onMessage.addListener(function(msg) {
-          console.log(msg);
           if (msg.action === 'refresh' && msg.changeInfo.status === 'complete') {
             cb(msg.changeInfo);
           }

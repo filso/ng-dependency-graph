@@ -50,6 +50,7 @@
       margin-bottom: 3px;
     }
 
+
     @each $type in $components {
         $i: index($components, $type);
         &.#{$type} {
