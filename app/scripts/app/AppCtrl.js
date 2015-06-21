@@ -2,10 +2,8 @@
 
 // TODO refactor this mess ;)
 angular.module('ngDependencyGraph')
-  .controller('AppCtrl', function($scope, inspectedApp, storage, appContext, currentView) {
+  .controller('AppCtrl', function($rootScope, $scope, inspectedApp, storage, appContext, currentView) {
     var ctrl = this;
-
-    $scope.currentView = currentView;
 
     var templates = {
       ABOUT: 'scripts/about/about.html',

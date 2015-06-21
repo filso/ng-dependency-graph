@@ -12,14 +12,14 @@ angular.module('ngDependencyGraph')
 
     var service = {
       selectedNode: undefined,
+      stickyNodesEnabled: false,
       filters: {
         filterModules: Const.FilterModules.DEFAULT_FILTER,
-        ignoreModules: Const.FilterModules.DEFAULT_IGNORE
-      },
-      stickyNodesEnabled: false,
-      componentsVisible: {
-        service: true,
-        controller: true
+        ignoreModules: Const.FilterModules.DEFAULT_IGNORE,
+        componentsVisible: {
+          service: true,
+          controller: true
+        }
       },
       setGraphs: function(modulesGraph, componentsGraph) {
         this.modulesGraph = modulesGraph;
@@ -29,10 +29,6 @@ angular.module('ngDependencyGraph')
       setScope: function(scope) {
         this.scope = scope;
         this.graph = (scope === Const.Scope.COMPONENTS ? this.componentsGraph : this.modulesGraph);
-
-        if (scope === 'components') {
-          this.setComponentsVisible(this.componentsVisible);
-        }
         this.applyFilters();
 
         $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
@@ -51,6 +47,9 @@ angular.module('ngDependencyGraph')
         service._applyFilters();
       }, 200),
       _applyFilters: function() {
+        if (!this.componentsGraph || !this.modulesGraph) {
+          return; // not initialised
+        }
         var masks;
         this.componentsGraph.resetFilter();
         this.modulesGraph.resetFilter();
@@ -89,17 +88,15 @@ angular.module('ngDependencyGraph')
         });
 
         $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
-      },
-      setIgnoreModules: function(ignoreModules, filterModules) {
-        this.filters.ignoreModules = ignoreModules;
-        this.filters.filterModules = filterModules;
-        this.applyFilters();
-      },
-      setComponentsVisible: function(componentsVisible) {
-        this.filters.componentsVisible = componentsVisible;
-        this.applyFilters();
       }
     };
+
+    function updateView(newVal, oldVal) {
+      service.applyFilters();
+    }
+
+    $rootScope.$watch('currentView.filters', updateView, true);
+    $rootScope.$watch('currentView.componentsVisible', updateView, true);
 
     return service;
 
