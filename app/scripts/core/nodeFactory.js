@@ -2,14 +2,39 @@
 
 angular.module('ngDependencyGraph')
   .factory('nodeFactory', function(Component, Module) {
-    function createNodes(rawNodes) {
-      var nodes = _.map(rawNodes, function(rawNode) {
-        if (rawNode.type === 'module') {
-          return new Module(rawNode);
-        } else {
-          return new Component(rawNode);
+
+    /**
+     * Create, optionally reusing nodes from oldGraph
+     * Algorithm to update nodes and links is the same:
+     * - check if oldGraph contains node / link
+     * - if it does, reuse, otherwise create new one
+     * - drop otherwise
+     * D3 identifies nodes / links by `_id` field;
+     * TODO(filip): make sure that memory for old, unused nodes + links doesn't leak 
+     */
+    function createNodes(rawNodes, oldGraph) {
+      var nodes = [];
+      var links = [];
+
+      _.each(rawNodes, function(rawNode) {
+        var node;
+        if (oldGraph) {
+          node = _.find(oldGraph.nodes, {name: rawNode.name});
+          if (node) {
+            console.log('reused', node.name);
+          } 
+        } 
+
+        if (node === undefined) {
+          if (rawNode.type === 'module') {
+            node = new Module(rawNode);
+          } else {
+            node = new Component(rawNode);
+          }  
         }
+        nodes.push(node);
       });
+
 
       _.each(nodes, function(node1) {
 
@@ -20,11 +45,15 @@ angular.module('ngDependencyGraph')
         _.each(node1Deps, function(node2) {
           node1.linkDep(node2);
           node2.linkProvides(node1);
+          links.push({target: node1, source: node2, _id: _.uniqueId()});
         });
 
       });
       
-      return nodes;
+      return {
+        nodes: nodes,
+        links: links
+      };
     }
 
     return {

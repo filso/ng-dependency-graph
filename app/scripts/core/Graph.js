@@ -9,18 +9,11 @@ angular.module('ngDependencyGraph')
       this.origLinks = this.links = links;
     }
 
-    Graph.createFromRawNodes = function(rawNodes, scope) {
+    Graph.createFromRawNodes = function(rawNodes, scope, oldGraph) {
 
-      var nodes = nodeFactory.createNodes(rawNodes);
-      var links = [];
-
-      _.each(nodes, function(node1) {
-
-        _.each(node1.deps, function(node2) {
-          links.push({target: node1, source: node2, _id: _.uniqueId()});
-        });
-
-      });
+      var obj = nodeFactory.createNodes(rawNodes, oldGraph);
+      var nodes = obj.nodes;
+      var links = obj.links;
 
       return new Graph(nodes, links, scope);
     };

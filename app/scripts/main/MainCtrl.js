@@ -4,6 +4,8 @@ angular.module('ngDependencyGraph')
   .controller('MainCtrl', function($scope, $timeout, dev, Graph, Const, currentView, inspectedApp, storage) {
     var ctrl = this;
     var lastAppKey;
+    var componentsGraph;
+    var modulesGraph;
     
     $scope.currentView = currentView;
 
@@ -24,12 +26,10 @@ angular.module('ngDependencyGraph')
       _.each(rawData.modules, function(module) {
         allComponents = allComponents.concat(module.components);
       });
-      var componentsGraph;
-      var modulesGraph;
-      if (!isTheSameApp) {
-        componentsGraph = Graph.createFromRawNodes(allComponents, Const.Scope.COMPONENTS);
-        modulesGraph = Graph.createFromRawNodes(rawData.modules, Const.Scope.MODULES);
-      }
+
+      // Note: if it's the same app, then just update old graph
+      componentsGraph = Graph.createFromRawNodes(allComponents, Const.Scope.COMPONENTS, isTheSameApp ? componentsGraph : undefined);
+      modulesGraph = Graph.createFromRawNodes(rawData.modules, Const.Scope.MODULES, isTheSameApp ? modulesGraph : undefined);
 
       /**
        * Connect modules with components
