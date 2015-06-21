@@ -13,7 +13,7 @@
 angular.module('ngDependencyGraph')
   .factory('storage', function($q, $rootScope, currentView, inspectedApp) {
 
-    var serializedProps = ['filters', 'componentsVisible', 'scope', 'stickyNodesEnabled'];
+    var serializedProps = ['filters', 'options', 'scope'];
 
 
     // this has the same API as StorageArea chrome.sync

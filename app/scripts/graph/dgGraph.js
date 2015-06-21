@@ -7,6 +7,7 @@ angular.module('ngDependencyGraph')
       link: function(scope, elm, attrs) {
 
         function update() {
+          // TODO(filip): profile this, this is run on every node select
           var currentGraph = currentView.graph;
           force.nodes(currentGraph.nodes)
             .links(currentGraph.links);
@@ -50,16 +51,16 @@ angular.module('ngDependencyGraph')
           nodes
             .classed('selected', function(d) {
               return d === currentView.selectedNode;
+            })
+            .classed('fixed', function(d) {
+              return d.fixed;
             });
-
 
           /**
            * Nodes remove
            */
           nodes.exit().remove();
-
-          force
-            .start();
+          force.start();
         }
 
 
@@ -148,22 +149,21 @@ angular.module('ngDependencyGraph')
         }
 
         function dragstart(d) {
-          if (currentView.stickyNodesEnabled) {
+          if (currentView.options.stickyNodesEnabled) {
             d3.select(this).classed("fixed", d.fixed = true);
           }
         }
 
-        scope.$watch('currentView.stickyNodesEnabled', function(newVal, oldVal) {
+        scope.$watch('currentView.options.stickyNodesEnabled', function(newVal, oldVal) {
           if (newVal !== oldVal) {
             if (newVal === false) {
-
-            } else {
-
+              _.each(force.nodes(), function(node) {
+                node.fixed = false;
+              });
+              update();
             }
-            update();
           }
         });
-
 
 
         var zoom = d3.behavior.zoom()

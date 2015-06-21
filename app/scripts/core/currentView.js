@@ -12,7 +12,6 @@ angular.module('ngDependencyGraph')
 
     var service = {
       selectedNode: undefined,
-      stickyNodesEnabled: false,
       filters: {
         filterModules: Const.FilterModules.DEFAULT_FILTER,
         ignoreModules: Const.FilterModules.DEFAULT_IGNORE,
@@ -20,6 +19,9 @@ angular.module('ngDependencyGraph')
           service: true,
           controller: true
         }
+      },
+      options: {
+        stickyNodesEnabled: false
       },
       setGraphs: function(modulesGraph, componentsGraph) {
         this.modulesGraph = modulesGraph;
@@ -96,7 +98,6 @@ angular.module('ngDependencyGraph')
     }
 
     $rootScope.$watch('currentView.filters', updateView, true);
-    $rootScope.$watch('currentView.componentsVisible', updateView, true);
 
     return service;
 
