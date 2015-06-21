@@ -3,10 +3,12 @@
 angular.module('ngDependencyGraph')
   .controller('MainCtrl', function($scope, $timeout, dev, Graph, Const, currentView, inspectedApp, storage) {
     var ctrl = this;
+    var lastAppKey;
     
     $scope.currentView = currentView;
 
     function init(isTheSameApp) {
+      lastAppKey = inspectedApp.getKey();
       var rawData = inspectedApp.getData();
 
       _.each(rawData.modules, function(module) {
@@ -44,27 +46,26 @@ angular.module('ngDependencyGraph')
 
       var appNode = _.find(modulesGraph.nodes, {name: rawData.apps[0]});
 
-      storage.loadCurrentView().then(function() {
-        currentView.chooseNode(appNode);
-        currentView.setScope(currentView.scope);
-        // TODO meeeh not .setScope here... REFACTOR, setScope should just set scope, not initialise graph
-        currentView.applyFilters();
-      }, function() {
-        currentView.chooseNode(appNode);
-      });
-
-      // TODO possible racecondition with saveCurrentView !!!
-      // $timeout(function() {
-      //   currentView.chooseNode(appNode);
-      // });
+      if (isTheSameApp === false) {
+        storage.loadCurrentView().then(function() {
+          currentView.chooseNode(appNode);
+          currentView.setScope(currentView.scope);
+          // TODO meeeh not .setScope here... REFACTOR, setScope should just set scope, not initialise graph
+          currentView.applyFilters();
+        }, function() {
+          currentView.chooseNode(appNode);
+        });
+      }
     }
 
     init(false);
 
     $scope.$on('initMain', function() {
-      // TODO check if domain + app is matched -> same key as in storage
-      // for now assume on every refresh we're dealing with the same app
-      init(false);
+      if (inspectedApp.getKey() === lastAppKey) {
+        init(true);
+      } else {
+        init(false);
+      }
     });
 
     // TODO this seems architecturaly lame
