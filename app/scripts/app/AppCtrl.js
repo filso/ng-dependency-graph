@@ -1,6 +1,6 @@
 'use strict';
 
-// TODO refactor this mess ;)
+// TODO(filip): refactor this mess ;)
 angular.module('ngDependencyGraph')
   .controller('AppCtrl', function($rootScope, $scope, inspectedApp, storage, appContext, currentView) {
     var ctrl = this;
@@ -21,10 +21,6 @@ angular.module('ngDependencyGraph')
     ctrl.insertCookieAndRefresh = function() {
       appContext.setDebug(true);
     };
-
-    // ctrl.loadInspectedApp = function() {
-    //   // TODO in this place ADD COOKIE and RESTART... then getDebug again???
-    // };
 
     function init() {
       appContext.getDebug(function(enabled) {

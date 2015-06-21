@@ -10,12 +10,6 @@ angular.module('ngDependencyGraph')
 
     Module.prototype = Object.create(Node.prototype);
 
-
-    // TODO: do I need this property?
-    _.assign(Module.prototype, {
-      isApp: _.property(this, '_isApp'),
-    });
-
     return Module;
 
   });
