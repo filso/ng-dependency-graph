@@ -7,7 +7,7 @@ Implemented as a Chrome extension. Once you install the extension, you can acces
 
 ## Installing from the Web Store
 
-TODO
+TODO - not in store yet
 
 ### Installing from Source - development version
 
@@ -16,6 +16,11 @@ TODO
 3.  Choose "Load unpacked extension"
 4.  Open the directory you just cloned (should open with Chrome, otherwise try dragging/dropping the file into Chrome) and follow the prompts to install.
 
+### Features
+- update graph on development cycle
+- sticky nodes
+
+### Todo
 
 ### Alternatives
 
