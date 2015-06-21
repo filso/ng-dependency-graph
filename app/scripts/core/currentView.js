@@ -16,6 +16,7 @@ angular.module('ngDependencyGraph')
         filterModules: Const.FilterModules.DEFAULT_FILTER,
         ignoreModules: Const.FilterModules.DEFAULT_IGNORE
       },
+      stickyNodesEnabled: true,
       componentsVisible: {
         service: true,
         controller: true

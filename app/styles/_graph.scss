@@ -30,6 +30,11 @@ svg > g {
         r: 8;
         transition: all 0.3s;
     }
+
+    &.fixed circle {
+        r: 11;
+        // stroke: #ccc;
+    }
     
     &:hover circle {
         r: 10;
@@ -38,6 +43,7 @@ svg > g {
     &.selected circle {
         r: 12;
         stroke-width: 2px;
+        stroke: $white;
     }
 
     &.selected.module circle {

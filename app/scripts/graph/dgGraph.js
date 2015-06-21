@@ -140,11 +140,13 @@ angular.module('ngDependencyGraph')
 
         // TODO implement sticky dragging functionality
         function dblclick(d) {
-          // d3.select(this).classed("fixed", d.fixed = false);
+          d3.select(this).classed("fixed", d.fixed = false);
         }
 
         function dragstart(d) {
-          // d3.select(this).classed("fixed", d.fixed = true);
+          if (currentView.stickyNodesEnabled) {
+            d3.select(this).classed("fixed", d.fixed = true);
+          }
         }
 
 
