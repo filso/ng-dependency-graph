@@ -20,9 +20,6 @@ angular.module('ngDependencyGraph')
         var node;
         if (oldGraph) {
           node = _.find(oldGraph.nodes, {name: rawNode.name});
-          if (node) {
-            console.log('reused', node.name);
-          } 
         } 
 
         if (node === undefined) {
@@ -35,6 +32,10 @@ angular.module('ngDependencyGraph')
         nodes.push(node);
       });
 
+      // TODO(filip): Not reusing links at this time... Do I need to do that? D3 force layout doesn't seem to care
+      _.each(nodes, function(node) {
+        node.resetLinks();
+      });
 
       _.each(nodes, function(node1) {
 

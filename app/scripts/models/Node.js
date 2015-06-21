@@ -24,6 +24,10 @@ angular.module('ngDependencyGraph')
       },
       linkProvides: function(node) {
         this.provides.push(node);
+      },
+      resetLinks: function() {
+        this.deps = [];
+        this.provides = [];
       }
     });
 
