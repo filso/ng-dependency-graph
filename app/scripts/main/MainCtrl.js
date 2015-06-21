@@ -7,9 +7,8 @@ angular.module('ngDependencyGraph')
     
     $scope.currentView = currentView;
 
-    init();
-
     function init() {
+      console.log('MainCtrl.init()');
 
       _.each(rawData.modules, function(module) {
           module.type = 'module';
@@ -64,6 +63,10 @@ angular.module('ngDependencyGraph')
       // });
 
     }
+
+    init();
+
+    $scope.$on('initMain', init);
 
     // TODO this seems architecturaly lame
     $scope.$on(Const.Events.UPDATE_GRAPH, function() {

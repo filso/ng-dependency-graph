@@ -7,7 +7,7 @@ chrome.extension.onConnect.addListener(function(port) {
         if (tabId !== msg.inspectedTabId) {
           return;
         }
-        port.postMessage('refresh');
+        port.postMessage({action: 'refresh', changeInfo: changeInfo});
       };
 
       chrome.tabs.onUpdated.addListener(respond);

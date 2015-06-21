@@ -75,7 +75,7 @@ angular.module('ngDependencyGraph')
 
           if (serialized) {
             var obj = angular.fromJson(serialized);
-            console.log(obj);
+            // console.log(obj);
 
             _.each(serializedProps, function(key) {
               if (obj[key]) {
