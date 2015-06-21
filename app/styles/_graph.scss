@@ -18,6 +18,9 @@ svg > g {
             & > circle {
                 fill: nth($components-colors, $i);
             }
+            &.fixed > circle {
+                fill: lighten(nth($components-colors, $i), 20%);
+            }
         }
     }
 
