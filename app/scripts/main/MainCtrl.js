@@ -10,6 +10,7 @@ angular.module('ngDependencyGraph')
     function init(isTheSameApp) {
       lastAppKey = inspectedApp.getKey();
       var rawData = inspectedApp.getData();
+      console.log(isTheSameApp);
 
       _.each(rawData.modules, function(module) {
           module.type = 'module';
@@ -23,9 +24,12 @@ angular.module('ngDependencyGraph')
       _.each(rawData.modules, function(module) {
         allComponents = allComponents.concat(module.components);
       });
-
-      var componentsGraph = Graph.createFromRawNodes(allComponents, Const.Scope.COMPONENTS);
-      var modulesGraph = Graph.createFromRawNodes(rawData.modules, Const.Scope.MODULES);
+      var componentsGraph;
+      var modulesGraph;
+      if (!isTheSameApp) {
+        componentsGraph = Graph.createFromRawNodes(allComponents, Const.Scope.COMPONENTS);
+        modulesGraph = Graph.createFromRawNodes(rawData.modules, Const.Scope.MODULES);
+      }
 
       /**
        * Connect modules with components
@@ -48,13 +52,16 @@ angular.module('ngDependencyGraph')
 
       if (isTheSameApp === false) {
         storage.loadCurrentView().then(function() {
+          // currentView.setScope(currentView.scope);
           currentView.chooseNode(appNode);
-          currentView.setScope(currentView.scope);
           // TODO meeeh not .setScope here... REFACTOR, setScope should just set scope, not initialise graph
+          console.log('bla2');
           currentView.applyFilters();
         }, function() {
           currentView.chooseNode(appNode);
         });
+      } else {
+        currentView.applyFilters();
       }
     }
 

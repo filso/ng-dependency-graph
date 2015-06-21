@@ -201,7 +201,9 @@ angular.module('ngDependencyGraph')
           .append('svg:path')
             .attr('d', 'M0,-3L10,0L0,3');
 
-        scope.$on(Const.Events.UPDATE_GRAPH, _.debounce(update, 100));
+        var debouncedUpdate = _.debounce(update, 100);
+        scope.$on(Const.Events.UPDATE_GRAPH, debouncedUpdate);
+        debouncedUpdate();
 
       }
     };

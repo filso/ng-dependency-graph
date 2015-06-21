@@ -6,9 +6,9 @@
         <input id="search-input" type="text" ng-model="text"></input>
       </div>
       <div class="choose-scope">
-        <div ng-click="currentView.setScope('modules')" ng-class="{active: currentView.graph.scope === 'modules'}">Modules
+        <div ng-click="currentView.scope = 'modules'" ng-class="{active: currentView.scope === 'modules'}">Modules
         </div>
-        <div ng-click="currentView.setScope('components')" ng-class="{active: currentView.graph.scope === 'components'}">Components</div>
+        <div ng-click="currentView.scope = 'components'" ng-class="{active: currentView.scope === 'components'}">Components</div>
       </div>
     </div>
     <div class="legend">

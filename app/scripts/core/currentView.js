@@ -12,6 +12,7 @@ angular.module('ngDependencyGraph')
 
     var service = {
       selectedNode: undefined,
+      scope: Const.Scope.MODULES,
       filters: {
         filterModules: Const.FilterModules.DEFAULT_FILTER,
         ignoreModules: Const.FilterModules.DEFAULT_IGNORE,
@@ -29,10 +30,6 @@ angular.module('ngDependencyGraph')
       },
       setScope: function(scope) {
         this.scope = scope;
-        this.graph = (scope === Const.Scope.COMPONENTS ? this.componentsGraph : this.modulesGraph);
-        this.applyFilters();
-
-        $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
       },
       chooseNode: function(node, translate) {
         if (node.isModule === true && this.scope !== Const.Scope.MODULES) {
@@ -51,6 +48,9 @@ angular.module('ngDependencyGraph')
         if (!this.componentsGraph || !this.modulesGraph) {
           return; // not initialised
         }
+
+        this.graph = (this.scope === Const.Scope.COMPONENTS ? this.componentsGraph : this.modulesGraph);
+
         var masks;
         this.componentsGraph.resetFilter();
         this.modulesGraph.resetFilter();
@@ -97,6 +97,7 @@ angular.module('ngDependencyGraph')
     }
 
     $rootScope.$watch('currentView.filters', updateView, true);
+    $rootScope.$watch('currentView.scope', updateView, true);
 
     return service;
 

@@ -24,7 +24,6 @@ angular.module('ngDependencyGraph')
 
     function init() {
       appContext.getDebug(function(enabled) {
-        console.log('cookie enabled', enabled);
         if (enabled) {
           // app enabled for this page
           inspectedApp.loadInspectedAppData(function() {
