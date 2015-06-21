@@ -7,7 +7,6 @@ angular.module('ngDependencyGraph')
       link: function(scope, elm, attrs) {
 
         function update() {
-          console.log('update graph!');
           var currentGraph = currentView.graph;
           force.nodes(currentGraph.nodes)
             .links(currentGraph.links);
@@ -33,6 +32,7 @@ angular.module('ngDependencyGraph')
             .attr('class', _.property('type'))
             .classed('node', true)
             .on('mousedown', nodeClick)
+            .on('dblclick', dblclick)
             .call(drag);
 
           nodesEnter.append('circle');
@@ -139,9 +139,12 @@ angular.module('ngDependencyGraph')
           .on("dragstart", dragstart);
 
 
-        // TODO implement sticky dragging functionality
+        /**
+         * Sticky nodes callbacks
+         */
         function dblclick(d) {
           d3.select(this).classed("fixed", d.fixed = false);
+          d3.event.stopImmediatePropagation();
         }
 
         function dragstart(d) {
@@ -149,6 +152,17 @@ angular.module('ngDependencyGraph')
             d3.select(this).classed("fixed", d.fixed = true);
           }
         }
+
+        scope.$watch('currentView.stickyNodesEnabled', function(newVal, oldVal) {
+          if (newVal !== oldVal) {
+            if (newVal === false) {
+
+            } else {
+
+            }
+            update();
+          }
+        });
 
 
 

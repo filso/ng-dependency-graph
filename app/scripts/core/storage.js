@@ -15,10 +15,6 @@ angular.module('ngDependencyGraph')
 
     var serializedProps = ['filters', 'componentsVisible', 'scope', 'stickyNodesEnabled'];
 
-    var getKey = function() {
-      return inspectedApp.getData().host + '__' + currentView.apps[0];
-    };
-
 
     // this has the same API as StorageArea chrome.sync
     var localStorageAdapter = {
@@ -50,7 +46,7 @@ angular.module('ngDependencyGraph')
       saveCurrentView: function() {
         var defer = $q.defer();
 
-        var key = getKey();
+        var key = inspectedApp.getKey();
         var obj = _.pick(currentView, serializedProps);
         if (currentView.selectedNode) {
           obj.selectedNode = currentView.selectedNode.name;
@@ -68,7 +64,7 @@ angular.module('ngDependencyGraph')
 
       loadCurrentView: function() {
         var defer = $q.defer();
-        var key = getKey();
+        var key = inspectedApp.getKey();
         chromeSync.get(key, function(items) {
           var serialized = items[key];
 

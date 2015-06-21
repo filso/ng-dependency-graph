@@ -42,7 +42,6 @@ angular.module('ngDependencyGraph')
       });
 
       currentView.setGraphs(modulesGraph, componentsGraph);
-      currentView.apps = rawData.apps; // TODO create accessor for this in currentView
 
       var appNode = _.find(modulesGraph.nodes, {name: rawData.apps[0]});
 
