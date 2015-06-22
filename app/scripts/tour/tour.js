@@ -43,7 +43,7 @@ angular.module('ngDependencyGraph')
       },
 
       stickyNodes: {
-        text: 'If you’d like your nodes to stay where you drag them - make nodes sticky.',
+        text: 'If you’d like your nodes to stay where you drag them - make nodes sticky.<br/>Double click to free node.',
         attachTo: '.options__sticky-nodes left',
         buttons: stepButtons
       },
