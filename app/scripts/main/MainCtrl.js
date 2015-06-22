@@ -64,7 +64,7 @@ angular.module('ngDependencyGraph')
 
     init(false);
 
-    $scope.$on('initMain', function() {
+    $scope.$on(Const.Events.INIT_MAIN, function() {
       if (inspectedApp.getKey() === lastAppKey) {
         init(true);
       } else {

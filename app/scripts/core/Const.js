@@ -9,7 +9,8 @@ angular.module('ngDependencyGraph')
     
     Events: {
       UPDATE_GRAPH: 'updateGraph',
-      CHOOSE_NODE: 'chooseNode'
+      CHOOSE_NODE: 'chooseNode',
+      INIT_MAIN: 'initMain'
     },
     
     ComponentType: {

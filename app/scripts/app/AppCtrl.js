@@ -2,7 +2,7 @@
 
 // TODO(filip): refactor this mess ;)
 angular.module('ngDependencyGraph')
-  .controller('AppCtrl', function($rootScope, $scope, inspectedApp, storage, appContext, currentView) {
+  .controller('AppCtrl', function($rootScope, $scope, inspectedApp, Const, storage, appContext, currentView) {
     var ctrl = this;
 
     var templates = {
@@ -30,7 +30,8 @@ angular.module('ngDependencyGraph')
             if (ctrl.appTemplate !== templates.MAIN) {
               ctrl.appTemplate = templates.MAIN;
             } else {
-              $scope.$broadcast('initMain');
+              console.log(inspectedApp.getData());
+              $scope.$broadcast(Const.Events.INIT_MAIN);
             }
             $scope.$apply();
           });
