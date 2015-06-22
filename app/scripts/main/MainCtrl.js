@@ -1,13 +1,21 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .controller('MainCtrl', function($scope, $timeout, dev, Graph, Const, currentView, inspectedApp, storage) {
+  .controller('MainCtrl', function($scope, $timeout, dev, Graph, Const, currentView, inspectedApp, storage, tour) {
     var ctrl = this;
     var lastAppKey;
     var componentsGraph;
     var modulesGraph;
     
     $scope.currentView = currentView;
+
+    $scope.resetTour = function() {
+      tour.start();
+    };
+
+    $timeout(function() {
+      $scope.resetTour();
+    }, 1000);
 
     function init(isTheSameApp) {
       lastAppKey = inspectedApp.getKey();

@@ -31,6 +31,7 @@ $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
 
 .dg-graph {
   margin-right: $info-panel-width;
+  position: relative;
   height: 100%;
 
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.55);
@@ -67,6 +68,16 @@ $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
     position: absolute;
     bottom: 0px;
     left: 0px;
+  }
+
+  .reset-tour {
+    cursor: pointer;
+    text-decoration: underline;
+    color: white;
+    position: absolute;
+    display: inline-block;
+    bottom: 10px;
+    right: 10px;
   }
 
 }
