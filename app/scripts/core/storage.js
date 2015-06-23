@@ -11,7 +11,7 @@
  * - component types visibility (filters)
  */
 angular.module('ngDependencyGraph')
-  .factory('storage', function($q, $rootScope, currentView, inspectedApp) {
+  .factory('storage', function($q, $rootScope, currentView, inspectedApp, Const) {
 
     var serializedProps = ['filters', 'options', 'scope'];
 
@@ -41,7 +41,35 @@ angular.module('ngDependencyGraph')
       chromeSync = chrome.storage.sync;
     }
 
+    var singleValueAccessor = {
+      get: function(key) {
+        var defer = $q.defer();
+        chromeSync.get(key, function(items) {
+          defer.resolve(items[key]);
+          $rootScope.$apply();
+        })
+        return defer.promise;
+      },
+      set: function(key, val) {
+        var defer = $q.defer();
+        var items = {}; items[key] = val;
+        chromeSync.set(items, function() {
+          defer.resolve();
+          $rootScope.$apply();
+        });
+        return defer.promise;
+      }
+    };
+
     var service = {
+
+      saveTourDone: function() {
+        singleValueAccessor.set(Const.TOUR_KEY, true);
+      },
+
+      getTourDone: function() {
+        return singleValueAccessor.get(Const.TOUR_KEY);
+      },
 
       saveCurrentView: function() {
         var defer = $q.defer();

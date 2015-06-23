@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .factory('tour', function() {
+  .factory('tour', function(storage) {
     var tour = new Shepherd.Tour({
       defaults: {
         classes: 'shepherd-theme-default shepherd-element shepherd-open',
@@ -10,56 +10,71 @@ angular.module('ngDependencyGraph')
       }
     });
 
-    var stepButtons = [{
-          text: 'Next',
-          action: tour.next
-    }];
+    tour.on('complete', function() {
+      storage.saveTourDone();
+    });
+
+    var buttons = {
+      step: [{
+        text: 'Next',
+        action: tour.next
+      }],
+      finish: [{
+        text: 'Finish',
+        action: tour.next
+      }]
+    };
+
 
     var steps = {
 
       welcome: {
         text: 'Welcome to AngularJS depedency graph browser.',
-        buttons: stepButtons
+        buttons: buttons.step
       },
 
       chooseScope: {
-        text: 'Switch between modules and components view...',
+        text: 'Switch between modules and components view here.',
         attachTo: '.choose-scope bottom',
-        buttons: stepButtons
+        buttons: buttons.step
       },
 
-
       ignoreModules: {
-        text: 'Use ‘Ignore’ field to hide modules you don’t want to see..',
+        text: 'Use ‘Ignore’ field to hide modules you don’t want to see...',
         attachTo: '.options__ignore left',
-        buttons: stepButtons
+        buttons: buttons.step
       },
 
 
       filterModules: {
-        text: '…or ‘Filter’ field to specify which modules you want to see.',
+        text: '...and/or ‘Filter’ field to specify which modules you want to see.',
         attachTo: '.options__filter left',
-        buttons: stepButtons
+        buttons: buttons.step
       },
 
       stickyNodes: {
-        text: 'If you’d like your nodes to stay where you drag them - make nodes sticky.<br/>Double click to free node.',
+        text: 'If you’d like your nodes to stay where you drag them - make nodes sticky.<br/><br/>Double click node to unstick.',
         attachTo: '.options__sticky-nodes left',
-        buttons: stepButtons
+        buttons: buttons.step
       },
 
-      stickyNodes: {
-        text: 'You can filter components view by type.',
+      triggerComponents: {
+        text: 'You can filter components nodes by component type.',
         attachTo: '.trigger-components right',
-        buttons: stepButtons
+        buttons: buttons.step
       },
 
       search: {
         text: 'To focus on particular component or module, use search field.',
         attachTo: '.search right',
-        buttons: stepButtons
+        buttons: buttons.step
       },
 
+      finish: {
+        text: 'That\'s it! Hope you enjoy this plugin.<br/><br/>You can restart this tour by clicking ‘Tutorial’ in bottom right corner.',
+        attachTo: '.search right',
+        buttons: buttons.finish
+      }
 
     };
 

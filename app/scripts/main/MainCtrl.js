@@ -9,13 +9,16 @@ angular.module('ngDependencyGraph')
     
     $scope.currentView = currentView;
 
-    $scope.resetTour = function() {
+    ctrl.startTour = function() {
       tour.start();
     };
 
-    $timeout(function() {
-      $scope.resetTour();
-    }, 1000);
+    // Run this after DOM initialised... post-link directive???
+    storage.getTourDone().then(function(done) {
+      if (!done) {
+        ctrl.startTour();
+      }
+    });
 
     function init(isTheSameApp) {
       lastAppKey = inspectedApp.getKey();

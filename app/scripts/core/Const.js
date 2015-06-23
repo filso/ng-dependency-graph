@@ -6,6 +6,7 @@ angular.module('ngDependencyGraph')
     AngularVersionRequired: '1.0.0',
 
     COOKIE_NAME: '__ngDependencyGraph',
+    TOUR_KEY: 'tour_done',
     
     Events: {
       UPDATE_GRAPH: 'updateGraph',
