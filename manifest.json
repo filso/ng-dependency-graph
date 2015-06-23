@@ -1,7 +1,7 @@
 {
-  "name": "AngularJS dependency graph (beta)",
-  "version": "0.1.0",
-  "description": "AngularJS dependency graph (beta).",
+  "name": "AngularJS dependency graph",
+  "version": "0.2.0",
+  "description": "AngularJS dependency graph.",
   "background": {
     "page": "app/background.html"
   },
