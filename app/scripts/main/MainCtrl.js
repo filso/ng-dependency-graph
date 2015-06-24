@@ -63,6 +63,7 @@ angular.module('ngDependencyGraph')
       if (isTheSameApp === false) {
         storage.loadCurrentView().then(function() {
           currentView.chooseNode(appNode);
+          currentView.setScope(Const.Scope.COMPONENTS);
           // TODO meeeh not .setScope here... REFACTOR, setScope should just set scope, not initialise graph
           currentView.applyFilters();
         }, function() {

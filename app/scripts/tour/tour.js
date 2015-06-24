@@ -40,20 +40,20 @@ angular.module('ngDependencyGraph')
       },
 
       ignoreModules: {
-        text: 'Use ‘Ignore’ field to hide modules you don’t want to see...',
+        text: 'Use \'Ignore\' field to hide modules you don\'t want to see...',
         attachTo: '.options__ignore left',
         buttons: buttons.step
       },
 
 
       filterModules: {
-        text: '...and/or ‘Filter’ field to specify which modules you want to see.',
+        text: '...and/or \'Filter\' field to specify which modules you want to see.',
         attachTo: '.options__filter left',
         buttons: buttons.step
       },
 
       stickyNodes: {
-        text: 'If you’d like your nodes to stay where you drag them - make nodes sticky.<br/><br/>Double click node to unstick.',
+        text: 'If you\'d like your nodes to stay where you drag them - make nodes sticky.<br/><br/>Double click node to unstick.',
         attachTo: '.options__sticky-nodes left',
         buttons: buttons.step
       },
@@ -71,7 +71,7 @@ angular.module('ngDependencyGraph')
       },
 
       finish: {
-        text: 'That\'s it! Hope you enjoy this plugin.<br/><br/>You can restart this tour by clicking ‘Tutorial’ in bottom right corner.',
+        text: 'That\'s it! Hope you enjoy this plugin.<br/><br/>You can restart this tour by clicking \'Tutorial\' in bottom right corner.',
         attachTo: '.search right',
         buttons: buttons.finish
       }
