@@ -1,7 +1,7 @@
 var panels = chrome.devtools.panels;
 
 panels.create(
-  "ng-dependency-graph",
+  "AngularJS Graph",
   "app/img/angular.png",
   "app/index.html"
 );

@@ -32,9 +32,9 @@ angular.module('ngDependencyGraph')
         this.scope = scope;
       },
       chooseNode: function(node, translate) {
-        if (node.isModule === true && this.scope !== Const.Scope.MODULES) {
+        if (node.isModule === true) {
           this.setScope(Const.Scope.MODULES);
-        } else if (node.isModule === false && this.scope !== Const.Scope.COMPONENTS) {
+        } else {
           this.setScope(Const.Scope.COMPONENTS);
         }
         

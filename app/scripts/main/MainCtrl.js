@@ -13,12 +13,17 @@ angular.module('ngDependencyGraph')
       tour.start();
     };
 
+    ctrl.isTourActive = function() {
+      return Shepherd.activeTour !== null && Shepherd.activeTour !== undefined;
+    };
+
     // Run this after DOM initialised... post-link directive???
     storage.getTourDone().then(function(done) {
       if (!done) {
         ctrl.startTour();
       }
     });
+
 
     function init(isTheSameApp) {
       lastAppKey = inspectedApp.getKey();
@@ -60,17 +65,20 @@ angular.module('ngDependencyGraph')
 
       var appNode = _.find(modulesGraph.nodes, {name: rawData.apps[0]});
 
-      if (isTheSameApp === false) {
+      console.log('is same:', isTheSameApp)
+      if (isTheSameApp) {
+        currentView.applyFilters();
+      } else {
         storage.loadCurrentView().then(function() {
           currentView.chooseNode(appNode);
-          currentView.setScope(Const.Scope.COMPONENTS);
+          currentView.scope = Const.Scope.COMPONENTS;
           // TODO meeeh not .setScope here... REFACTOR, setScope should just set scope, not initialise graph
           currentView.applyFilters();
         }, function() {
           currentView.chooseNode(appNode);
+          currentView.scope = Const.Scope.COMPONENTS;
+          currentView.applyFilters();
         });
-      } else {
-        currentView.applyFilters();
       }
     }
 

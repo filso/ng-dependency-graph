@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .factory('tour', function(storage) {
+  .factory('tour', function($rootScope, storage) {
     var tour = new Shepherd.Tour({
       defaults: {
         classes: 'shepherd-theme-default shepherd-element shepherd-open',
@@ -10,9 +10,14 @@ angular.module('ngDependencyGraph')
       }
     });
 
-    tour.on('complete', function() {
+    var onDone = function() {
       storage.saveTourDone();
-    });
+      $rootScope.$apply();
+    };
+
+    tour.on('complete', onDone);
+    tour.on('cancel', onDone);
+    tour.on('hide', onDone);
 
     var buttons = {
       step: [{
@@ -29,7 +34,7 @@ angular.module('ngDependencyGraph')
     var steps = {
 
       welcome: {
-        text: 'Welcome to AngularJS depedency graph browser.',
+        text: 'Welcome to AngularJS dependency graph browser.',
         buttons: buttons.step
       },
 
@@ -70,8 +75,13 @@ angular.module('ngDependencyGraph')
         buttons: buttons.step
       },
 
+      saving: {
+        text: 'The graph is automatically updated with dependencies as you work on your app and refresh the browser.<br/><br/>All options are saved for each of your projects.',
+        buttons: buttons.step
+      },
+
       finish: {
-        text: 'That\'s it! Hope you enjoy this plugin.<br/><br/>You can restart this tour by clicking \'Tutorial\' in bottom right corner.',
+        text: 'That\'s it! :) Hope you enjoy.<br/><br/>You can restart this tour by clicking \'Tutorial\' in the bottom right corner.',
         attachTo: '.search right',
         buttons: buttons.finish
       }
