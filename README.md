@@ -7,7 +7,7 @@ Implemented as a Chrome extension. Once you install the extension, you can acces
 
 ## Installing from the Web Store
 
-TODO - not in store yet
+https://chrome.google.com/webstore/detail/angularjs-dependency-grap/gghbihjmlhobaiedlbhcaellinkmlogj
 
 ### Installing from Source - development version
 
