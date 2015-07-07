@@ -93,7 +93,10 @@ angular.module('ngDependencyGraph')
       loadCurrentView: function() {
         var defer = $q.defer();
         var key = inspectedApp.getKey();
+        var dataLoaded = false;
+
         chromeSync.get(key, function(items) {
+          dataLoaded = true;
           var serialized = items[key];
 
           if (serialized) {
@@ -112,8 +115,18 @@ angular.module('ngDependencyGraph')
           }
 
           $rootScope.$apply();
-
         });
+
+        setTimeout(function() {
+          // HACK: chrome.sync for whatever reasons sometimes doesn't invoke the callback when inspector tab is horizontal
+          // Make sure that promise is rejected when this happens - wait 200 msec.
+          if (dataLoaded === false) {
+            console.log('Warning! syncing data doesn\'t seem to work!');
+            defer.reject();
+            $rootScope.$apply();
+          }
+        }, 300);
+
         return defer.promise;
       }
 
