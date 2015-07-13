@@ -1,6 +1,6 @@
 {
   "name": "AngularJS dependency graph",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "AngularJS dependency graph.",
   "background": {
     "page": "app/background.html"

@@ -1,7 +1,3 @@
-// TODO
-// - set up build (dist/)
-// - set up deployment
-
 var gulp = require('gulp');
 
 var concat = require('gulp-concat');
@@ -39,11 +35,14 @@ var options = {
   paths: paths
 };
 
-require('./gulp/versioning');
+require('./gulp/release-tasks');
+// require('./gulp/versioning');
+
 require('./gulp/styles')(options);
 require('./gulp/inject')(options);
 require('./gulp/server')(options);
 require('./gulp/unit-tests')(options);
+require('./gulp/changelog')(options);
 
 
 /**
