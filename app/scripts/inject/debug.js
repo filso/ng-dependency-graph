@@ -252,7 +252,7 @@ var inject = function() {
               addDeps(moduleData, compArgs[0], compArgs[1], 'directive');
               break;
             default:
-              disablePlugin('unknown dendency type', item[0]);
+              disablePlugin('unknown dependency type', item[0]);
               break;
           }
 
