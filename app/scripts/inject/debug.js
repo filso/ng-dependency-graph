@@ -1,7 +1,6 @@
 var inject = function() {
 
   document.head.appendChild((function() {
-
     var fn = function bootstrap(window) {
 
       if (!Array.prototype.find) {
@@ -192,16 +191,25 @@ var inject = function() {
 
       }
 
-      function addDeps(moduleData, name, fn, type) {
-        if (fn.constructor !== Function) {
+      function addDeps(moduleData, name, depsSrc, type) {
+        if (typeof depsSrc === 'function') {
           moduleData.components.push({
             name: name,
+            deps: annotate(depsSrc),
+            type: type
+          });
+          // Array or empty
+        } else if (Array.isArray(depsSrc)) {
+          var deps = depsSrc.slice();
+          deps.pop();
+          moduleData.components.push({
+            name: name,
+            deps: deps,
             type: type
           });
         } else {
           moduleData.components.push({
             name: name,
-            deps: annotate(fn),
             type: type
           });
         }
@@ -250,6 +258,9 @@ var inject = function() {
               }
 
               addDeps(moduleData, compArgs[0], compArgs[1], 'directive');
+              break;
+            case '$injector':
+              // invoke, ignore
               break;
             default:
               disablePlugin('unknown dependency type', item[0]);
