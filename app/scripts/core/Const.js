@@ -32,7 +32,7 @@ angular.module('ngDependencyGraph')
 
     FilterModules: {
       DEFAULT_FILTER: '',
-      DEFAULT_IGNORE: 'ngLocale, ui.*, template*',
+      DEFAULT_IGNORE: 'ngLocale, ui.*, *.html',
       DELIMITER: ','
     }
     
