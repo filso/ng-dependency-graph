@@ -6,7 +6,7 @@ angular.module('ngDependencyGraph')
     var lastAppKey;
     var componentsGraph;
     var modulesGraph;
-    
+
     $scope.currentView = currentView;
 
     ctrl.startTour = function() {
@@ -14,7 +14,7 @@ angular.module('ngDependencyGraph')
     };
 
     ctrl.isTourActive = function() {
-      return Shepherd.activeTour !== null && Shepherd.activeTour !== undefined;
+      return !!Shepherd.activeTour;
     };
 
     // Run this after DOM initialised... post-link directive???
@@ -31,7 +31,7 @@ angular.module('ngDependencyGraph')
 
       _.each(rawData.modules, function(module) {
           module.type = 'module';
-        
+
           _.each(module.components, function(com) {
               com._module = module;
           });
@@ -92,13 +92,8 @@ angular.module('ngDependencyGraph')
       }
     });
 
-    // TODO this seems architecturaly lame
-    $scope.$on(Const.Events.UPDATE_GRAPH, function() {
-      storage.saveCurrentView();
-    });
-
-    $scope.$on(Const.Events.CHOOSE_NODE, function() {
-      storage.saveCurrentView();
+    [Const.Events.UPDATE_GRAPH, Const.Events.UPDATE_GRAPH].forEach(function(event){
+      $scope.$on(event, storage.saveCurrentView)
     });
 
   });

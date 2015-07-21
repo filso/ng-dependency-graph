@@ -8,7 +8,7 @@ var inject = function() {
           if (this == null) {
             throw new TypeError('Array.prototype.find called on null or undefined');
           }
-          if (typeof predicate !== 'function') {
+          if (!_.isFunction(predicate)) {
             throw new TypeError('predicate must be a function');
           }
           var list = Object(this);
@@ -113,7 +113,7 @@ var inject = function() {
               argDecl,
               last;
 
-            if (typeof fn === 'function') {
+            if (_.isFunction(fn)) {
               if (!($inject = fn.$inject)) {
                 $inject = [];
                 fnText = fn.toString().replace(STRIP_COMMENTS, '');
@@ -192,14 +192,14 @@ var inject = function() {
       }
 
       function addDeps(moduleData, name, depsSrc, type) {
-        if (typeof depsSrc === 'function') {
+        if (_.isFunction(depsSrc)) {
           moduleData.components.push({
             name: name,
             deps: annotate(depsSrc),
             type: type
           });
           // Array or empty
-        } else if (Array.isArray(depsSrc)) {
+        } else if (_.isArray(depsSrc)) {
           var deps = depsSrc.slice();
           deps.pop();
           moduleData.components.push({
