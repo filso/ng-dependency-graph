@@ -28,7 +28,7 @@ angular.module('ngDependencyGraph')
       do {
         watchers += current.$$watchers && current.$$watchers.length;
         _.each(current.$$watchers, function(w) {
-          if (typeof(w.exp) === 'string') {
+          if (_.isString(w.exp)) {
             groups[w.exp] = groups[w.exp] || 0;
             groups[w.exp] += 1;
           }
@@ -87,8 +87,8 @@ angular.module('ngDependencyGraph')
       },
       clog: function(val) {
           var message = JSON.stringify(val).replace(/n/g, " ");
-          chrome.tabs.sendRequest(tabId, 
-              {"type": "consoleLog", "value": message}); 
+          chrome.tabs.sendRequest(tabId,
+              {"type": "consoleLog", "value": message});
       }
     };
 
