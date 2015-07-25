@@ -25,19 +25,18 @@ angular.module('ngDependencyGraph')
     function init() {
       appContext.getDebug(function(enabled) {
         if (enabled) {
-          // app enabled for this page
-          inspectedApp.loadInspectedAppData(function() {
+          // App enabled for this page.
+          inspectedApp.loadInspectedAppData().then(function() {
             if (ctrl.appTemplate !== templates.MAIN) {
               ctrl.appTemplate = templates.MAIN;
             } else {
               console.log(inspectedApp.getData());
               $scope.$broadcast(Const.Events.INIT_MAIN);
             }
-            $scope.$apply();
           });
         } else {
-          // cookie not set yet, check if Angular present
-          inspectedApp.getAngularVersion(function(version) {
+          // Cookie not set yet, so check if Angular is present.
+          inspectedApp.getAngularVersion().then(function(version) {
             ctrl.angularVersion = version && version.full;
             ctrl.appTemplate = templates.ABOUT;
             $scope.$apply();
@@ -47,13 +46,7 @@ angular.module('ngDependencyGraph')
     }
 
     if (chrome.extension) {
-      appContext.watchRefresh(function() {
-        // TODO use some polling to check if AngularJS is loaded
-        // in reality the inspected app should always be prioritised, but this is asking for trouble
-        setTimeout(function() {
-          init();
-        }, 500);
-      });
+      appContext.watchRefresh(init);
       init();
     } else {
       // just load sample app, not in a tab, development / test
