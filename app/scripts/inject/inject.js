@@ -220,7 +220,7 @@ var inject = function() {
         var moduleName = moduleData.name;
         var module = angular.module(moduleName);
 
-        // Old versions of AngularJS
+        // For old versions of AngularJS the property is called 'invokeQueue'
         var invokeQueue = module._invokeQueue || module.invokeQueue;
 
         angular.forEach(invokeQueue, function(item) {
@@ -235,10 +235,8 @@ var inject = function() {
 
                 default:
                   addDeps(moduleData, compArgs[0], compArgs[1], 'service');
-
                   break;
               }
-
               break;
 
             case '$filterProvider':
