@@ -10,7 +10,7 @@ angular.module('ngDependencyGraph')
      * - if it does, reuse, otherwise create new one
      * - drop otherwise
      * D3 identifies nodes / links by `_id` field;
-     * TODO(filip): make sure that memory for old, unused nodes + links doesn't leak 
+     * TODO(filip): make sure that memory for old, unused nodes + links doesn't leak
      */
     function createNodes(rawNodes, oldGraph) {
       var nodes = [];
@@ -20,14 +20,14 @@ angular.module('ngDependencyGraph')
         var node;
         if (oldGraph) {
           node = _.find(oldGraph.nodes, {name: rawNode.name});
-        } 
+        }
 
         if (node === undefined) {
           if (rawNode.type === 'module') {
             node = new Module(rawNode);
           } else {
             node = new Component(rawNode);
-          }  
+          }
         }
         nodes.push(node);
       });
@@ -50,7 +50,7 @@ angular.module('ngDependencyGraph')
         });
 
       });
-      
+
       return {
         nodes: nodes,
         links: links
