@@ -12,7 +12,7 @@ module.exports = function(config) {
       moduleName: 'gulpAngular'
     },
 
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
     plugins: [
       'karma-phantomjs-launcher',
