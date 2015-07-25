@@ -1,4 +1,4 @@
-var inject = function() {
+var injectCode = function() {
 
   document.head.appendChild((function() {
     var fn = function bootstrap(window) {
@@ -281,5 +281,5 @@ var inject = function() {
 
 // only inject if cookie is set
 if (document.cookie.indexOf('__ngDependencyGraph=true') !== -1) {
-  document.addEventListener('DOMContentLoaded', inject);
+  document.addEventListener('DOMContentLoaded', injectCode);
 }
