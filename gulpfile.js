@@ -48,7 +48,7 @@ require('./gulp/unit-tests')(options);
 /**
  * Development tasks
  */
-var developTasks = ['preprocess', 'watch', 'serve', 'test'];
+var developTasks = ['preprocess', 'watch', 'serve', 'test:auto'];
 gulp.task('develop', developTasks);
 
 gulp.task('no-karma', function() {
