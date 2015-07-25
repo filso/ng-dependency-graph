@@ -1,6 +1,15 @@
 {
   "name": "ng-dependency-graph",
   "version": "0.2.4",
+  "author": {
+    "name": "Filip Sobczak",
+    "email": "filsob@gmail.com",
+    "url": "http://filipsobczak.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/filso/ng-dependency-graph.git"
+  },
   "devDependencies": {
     "browser-sync": "^2.7.6",
     "browser-sync-spa": "^1.0.2",
