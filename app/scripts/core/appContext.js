@@ -1,5 +1,6 @@
 'use strict';
 
+/*jshint -W061 */
 // Service for running code in the context of the application being debugged
 angular.module('ngDependencyGraph')
   .factory('appContext', function(chromeExtension, Const) {
