@@ -65,7 +65,7 @@ angular.module('ngDependencyGraph')
 
       var appNode = _.find(modulesGraph.nodes, {name: rawData.apps[0]});
 
-      console.log('is same:', isTheSameApp)
+      console.log('is same:', isTheSameApp);
       if (isTheSameApp) {
         currentView.applyFilters();
       } else {
@@ -93,12 +93,8 @@ angular.module('ngDependencyGraph')
     });
 
     // TODO this seems architecturaly lame
-    $scope.$on(Const.Events.UPDATE_GRAPH, function() {
-      storage.saveCurrentView();
-    });
+    $scope.$on(Const.Events.UPDATE_GRAPH, storage.saveCurrentView);
 
-    $scope.$on(Const.Events.CHOOSE_NODE, function() {
-      storage.saveCurrentView();
-    });
+    $scope.$on(Const.Events.CHOOSE_NODE, storage.saveCurrentView);
 
   });
