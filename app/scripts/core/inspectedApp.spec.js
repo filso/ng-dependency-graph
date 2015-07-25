@@ -3,7 +3,7 @@
 describe('inspectedApp', function() {
 
   var data = {
-    apps: new Object()
+    apps: {}
   };
   var returnedData;
 
