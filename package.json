@@ -1,6 +1,6 @@
 {
   "name": "ng-dependency-graph",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "devDependencies": {
     "browser-sync": "^2.7.6",
     "browser-sync-spa": "^1.0.2",
