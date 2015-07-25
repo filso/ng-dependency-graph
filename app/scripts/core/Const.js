@@ -1,19 +1,21 @@
 'use strict';
 
 angular.module('ngDependencyGraph')
-  .value('Const', {
+  .constant('Const', {
     // loader.js required, first introduced in 1.0
     AngularVersionRequired: '1.0.0',
 
+    INJECTED_POLL_INTERVAL: 500,
+
     COOKIE_NAME: '__ngDependencyGraph',
     TOUR_KEY: 'tour_done',
-    
+
     Events: {
       UPDATE_GRAPH: 'updateGraph',
       CHOOSE_NODE: 'chooseNode',
       INIT_MAIN: 'initMain'
     },
-    
+
     ComponentType: {
       CONTROLLER: 'controller',
       DIRECTIVE: 'directive',
@@ -35,5 +37,5 @@ angular.module('ngDependencyGraph')
       DEFAULT_IGNORE: 'ngLocale, ui.*, *.html',
       DELIMITER: ','
     }
-    
+
   });
