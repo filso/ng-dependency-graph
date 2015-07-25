@@ -1,14 +1,14 @@
 'use strict';
 
+/*jshint -W061 */
 angular.module('ngDependencyGraph')
-  .factory('inspectedApp', function(appContext, chromeExtension, sampleAppData) {
+  .factory('inspectedApp', function($q, $timeout, appContext, chromeExtension, sampleAppData, Const) {
 
     var _data;
     var _versionCache = null;
 
-    // clear cache on page refresh
+    // TODO clear cache on page refresh
     // appContext.watchRefresh(function() {
-    //   _versionCache = null;
     //   _data = undefined;
     // });
 
@@ -16,21 +16,23 @@ angular.module('ngDependencyGraph')
       getKey: function() {
         return this.getData().host + '__' + this.apps[0];
       },
-      getAngularVersion: function(callback) {
+      getAngularVersion: function() {
+        var defer = $q.defer();
         if (_versionCache) {
           setTimeout(function() {
-            callback(_versionCache);
+            defer.resolve(_versionCache);
           }, 0);
         } else {
           chromeExtension.eval(function() {
             return window.angular.version;
           }, function(data) {
             _versionCache = data;
-            callback(_versionCache);
+            defer.resolve(_versionCache);
           });
         }
+        return defer.promise;
       },
-      // TODO(filip): I don't like this interface
+      // TODO(filip): I don't like this interface... remove getData, pass inspected data instead?
       _setData: function(data) {
         _data = data;
         this.apps = _data.apps;
@@ -41,22 +43,36 @@ angular.module('ngDependencyGraph')
       loadSampleData: function() {
         this._setData(sampleAppData);
       },
-      loadInspectedAppData: function(callback) {
-        // TODO add polling here
-        if (!chrome.extension) { // TODO do sth smarter... maybe load sample app?
-          callback(false);
-          return;
+      loadInspectedAppData: function() {
+        var defer = $q.defer();
+        // TODO do sth smarter... maybe load sample app?
+        if (!chromeExtension.isExtensionContext()) {
+          defer.reject();
+          return defer.promise;
         }
-        chromeExtension.eval(function(window) {
-            if (window.__ngDependencyGraph) {
-              // console.log('meta', window.__ngDependencyGraph.getMetadata());
-              return window.__ngDependencyGraph.getMetadata();
+
+        var injectedFn = function(window) {
+          if (window.__ngDependencyGraph) {
+            // console.log('meta', window.__ngDependencyGraph.getMetadata());
+            return window.__ngDependencyGraph.getMetadata();
+          }
+        };
+
+        function pollFn() {
+          chromeExtension.eval(injectedFn, function(data) {
+            if (data === undefined) {
+              $timeout(pollFn, 300);
+            } else {
+              service._setData(data);
+              defer.resolve(_data);
             }
-          },
-          function(data) {
-            service._setData(data);
-            callback(_data);
           });
+
+        }
+
+        pollFn();
+
+        return defer.promise;
       }
     };
 
