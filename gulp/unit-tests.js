@@ -18,16 +18,17 @@ module.exports = function(options) {
       'app/**/*.html'
     ];
 
-    // TODO: move vendor files to gulpfile.js 
+    // TODO: move vendor files to gulpfile.js
     var srcFiles = [
       'app/vendor/jquery-2.1.1.min.js',
       'app/vendor/angular.js',
       'app/vendor/angular-animate.js',
+      'app/vendor/angular-mocks.js',
       'app/vendor/d3.min.js',
       'app/vendor/lodash.js',
 
-      'app/**/*.js',
-      '!app/*.js'
+      'app/scripts/app.module.js',
+      'app/scripts/**/*.js',
     ].concat(specFiles.map(function(file) {
       return '!' + file;
     }));

@@ -42,12 +42,13 @@ require('./gulp/inject')(options);
 require('./gulp/server')(options);
 require('./gulp/unit-tests')(options);
 require('./gulp/changelog')(options);
+require('./gulp/unit-tests')(options);
 
 
 /**
  * Development tasks
  */
-var developTasks = ['preprocess', 'watch', 'serve'];
+var developTasks = ['preprocess', 'watch', 'serve', 'test'];
 gulp.task('develop', developTasks);
 
 gulp.task('no-karma', function() {
