@@ -13,7 +13,7 @@ var browserSync = require('browser-sync');
 
 
 var paths = {
-  testScripts: ['app/scripts/**/*.js', '!app/scripts/inject/debug.js', '!app/scripts/**/*.spec.js', '!app/scripts/app.js'],
+  testScripts: ['app/scripts/**/*.js', '!app/scripts/inject/inject.js', '!app/scripts/**/*.spec.js', '!app/scripts/app.js'],
   scripts: ['app/scripts/**/*.js'],
   scriptsWithoutTests: ['app/scripts/**/*.js', '!app/scripts/**/*.spec.js'],
   images: 'app/images/**/*',
