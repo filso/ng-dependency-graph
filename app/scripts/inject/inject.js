@@ -12,6 +12,7 @@ var inject = function() {
             throw new TypeError('predicate must be a function');
           }
           var list = Object(this);
+          /*jslint bitwise: true */
           var length = list.length >>> 0;
           var thisArg = arguments[1];
           var value;
