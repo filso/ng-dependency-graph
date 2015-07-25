@@ -13,9 +13,8 @@ var browserSync = require('browser-sync');
 
 
 var paths = {
-  testScripts: ['app/scripts/**/*.js', '!app/scripts/inject/inject.js', '!app/scripts/**/*.spec.js', '!app/scripts/app.js'],
   scripts: ['app/scripts/**/*.js'],
-  scriptsWithoutTests: ['app/scripts/**/*.js', '!app/scripts/**/*.spec.js'],
+  appScripts: ['app/scripts/**/*.js', '!app/scripts/**/*.spec.js', '!app/scripts/inject/inject.js'],
   images: 'app/images/**/*',
   html: 'app/**/*.html',
   styles: {
@@ -80,7 +79,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.scripts).on('change', browserSync.reload);
   gulp.watch(paths.html).on('change', browserSync.reload);
 
-  gulp.watch(paths.scriptsWithoutTests, function(event) {
+  gulp.watch(paths.appScripts, function(event) {
     if (event.type === 'added' || event.type === 'deleted') {
       gulp.start('inject');
     }

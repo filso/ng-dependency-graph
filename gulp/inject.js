@@ -4,13 +4,11 @@ var gulp = require('gulp');
 
 var $ = require('gulp-load-plugins')();
 
-var appStream = gulp.src([
-  './app/scripts/**/*.js',
-  '!./app/scripts/inject/inject.js', // TODO move this to gulpfile paths
-  '!./app/scripts/**/*.spec.js'
-]);
+
 
 module.exports = function(options) {
+
+  var appStream = gulp.src(options.paths.appScripts);
 
   gulp.task('inject', [], function () {
     var injectScripts = appStream
