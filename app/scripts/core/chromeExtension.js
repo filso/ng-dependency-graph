@@ -9,6 +9,10 @@ angular.module('ngDependencyGraph').value('chromeExtension', {
     }, cb || function() {});
   },
 
+  isExtensionContext: function() {
+    return window.chrome !== undefined && window.chrome.extension !== undefined;
+  },
+
   /**
    * @btford:
    * written because I don't like the API for chrome.devtools.inspectedWindow.eval;
