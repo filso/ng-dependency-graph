@@ -18,8 +18,8 @@ angular.module('ngDependencyGraph')
       ctrl.appTemplate = templates.MAIN;
     };
 
-    ctrl.insertCookieAndRefresh = function() {
-      appContext.setDebug(true);
+    ctrl.insertCookieAndRefresh = function(val) {
+      appContext.setDebug(val);
     };
 
     function init() {

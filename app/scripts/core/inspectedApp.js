@@ -60,8 +60,8 @@ angular.module('ngDependencyGraph')
 
         function pollFn() {
           chromeExtension.eval(injectedFn, function(data) {
-            if (data === undefined) {
-              $timeout(pollFn, 300);
+            if (data === undefined || data.apps.length === 0) {
+              $timeout(pollFn, Const.INJECTED_POLL_INTERVAL);
             } else {
               service._setData(data);
               defer.resolve(_data);

@@ -81,5 +81,17 @@ $dg-graph-width: calc(100% - #{$info-panel-width} - 30px);
     right: 10px;
   }
 
+
+  .disable-graph {
+    cursor: pointer;
+    text-decoration: underline;
+    color: white;
+    position: absolute;
+    display: inline-block;
+    font-size: 0.8em;
+    top: 5px;
+    right: 10px;
+  }
+
 }
 
