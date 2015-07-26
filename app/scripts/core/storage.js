@@ -47,7 +47,7 @@ angular.module('ngDependencyGraph')
         chromeSync.get(key, function(items) {
           defer.resolve(items[key]);
           $rootScope.$apply();
-        })
+        });
         return defer.promise;
       },
       set: function(key, val) {
