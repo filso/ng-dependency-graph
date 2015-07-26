@@ -16,20 +16,26 @@ angular.module('ngDependencyGraph')
       getKey: function() {
         return this.getData().host + '__' + this.apps[0];
       },
-      getAngularVersion: function() {
+      getAppsInfo: function() {
         var defer = $q.defer();
-        if (_versionCache) {
-          setTimeout(function() {
-            defer.resolve(_versionCache);
-          }, 0);
-        } else {
-          chromeExtension.eval(function() {
-            return window.angular.version;
-          }, function(data) {
-            _versionCache = data;
-            defer.resolve(_versionCache);
+
+        chromeExtension.eval(function() {
+
+          var appElms = document.querySelectorAll('[ng-app]');
+          var appNames = [];
+          angular.forEach(appElms, function(elm) {
+            var appName = elm.getAttribute('ng-app');
+            appNames.push(appName);
           });
-        }
+
+          return {
+            angularVersion: window.angular.version,
+            appNames: appNames
+          };
+
+        }, function(data) {
+          defer.resolve(data);
+        });
         return defer.promise;
       },
       // TODO(filip): I don't like this interface... remove getData, pass inspected data instead?
@@ -43,7 +49,7 @@ angular.module('ngDependencyGraph')
       loadSampleData: function() {
         this._setData(sampleAppData);
       },
-      loadInspectedAppData: function() {
+      loadInspectedAppData: function(appName) {
         var defer = $q.defer();
         // TODO do sth smarter... maybe load sample app?
         if (!chromeExtension.isExtensionContext()) {
@@ -51,15 +57,16 @@ angular.module('ngDependencyGraph')
           return defer.promise;
         }
 
-        var injectedFn = function(window) {
+        var injectedFn = function(window, appName) {
           if (window.__ngDependencyGraph) {
+            console.log('inside', appName);
             // console.log('meta', window.__ngDependencyGraph.getMetadata());
             return window.__ngDependencyGraph.getMetadata();
           }
         };
 
         function pollFn() {
-          chromeExtension.eval(injectedFn, function(data) {
+          chromeExtension.eval(injectedFn, appName, function(data) {
             if (data === undefined || data.apps.length === 0) {
               $timeout(pollFn, Const.INJECTED_POLL_INTERVAL);
             } else {

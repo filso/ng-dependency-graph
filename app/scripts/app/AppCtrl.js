@@ -18,15 +18,15 @@ angular.module('ngDependencyGraph')
       ctrl.appTemplate = templates.MAIN;
     };
 
-    ctrl.insertCookieAndRefresh = function(val) {
-      appContext.setDebug(val);
+    ctrl.insertCookieAndRefresh = function(appName) {
+      appContext.setDebug(appName);
     };
 
     function init() {
-      appContext.getDebug(function(enabled) {
-        if (enabled) {
+      appContext.getDebug(function(appName) {
+        if (appName !== undefined) {
           // App enabled for this page.
-          inspectedApp.loadInspectedAppData().then(function() {
+          inspectedApp.loadInspectedAppData(appName).then(function() {
             if (ctrl.appTemplate !== templates.MAIN) {
               ctrl.appTemplate = templates.MAIN;
             } else {
@@ -36,8 +36,10 @@ angular.module('ngDependencyGraph')
           });
         } else {
           // Cookie not set yet, so check if Angular is present.
-          inspectedApp.getAngularVersion().then(function(version) {
-            ctrl.angularVersion = version && version.full;
+          inspectedApp.getAppsInfo().then(function(data) {
+            ctrl.angularVersion = data.angularVersion.full;
+            ctrl.appName = data.appNames[0];
+            console.log(data);
             ctrl.appTemplate = templates.ABOUT;
             $scope.$apply();
           });
