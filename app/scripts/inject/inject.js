@@ -32,7 +32,6 @@ var injectCode = function() {
         console.log(reason);
       }
 
-      var angular = window.angular;
 
       // Helper to determine if the root 'ng' module has been loaded
       // window.angular may be available if the app is bootstrapped asynchronously, but 'ng' might
@@ -72,6 +71,9 @@ var injectCode = function() {
         }());
         return;
       }
+
+      var angular = window.angular;
+
 
       // do not patch twice
       if (window.__ngDependencyGraph) {
@@ -151,20 +153,20 @@ var injectCode = function() {
         host: window.location.host
       };
 
-      var appElms = document.querySelectorAll('[ng-app]');
-      if (appElms.length > 0) {
-        angular.forEach(appElms,
-          function(elm) {
-            var appName = elm.getAttribute('ng-app');
-            if (metadata.apps.indexOf(appName) === -1) {
-              metadata.apps.push(appName);
-              createModule(appName);
-            }
-          });
-      } else {
-        metadata.apps.push('app');
-        createModule('app');
-      }
+      // Patch angular.bootstrap
+      // This works only because we patch right after AngularJS script is injected, so
+      // that no other scripts can run
+      var origBootstrapFn = angular.bootstrap;
+      angular.bootstrap = function(element, modules) {
+        var i = 0;
+        for (i = 0; typeof modules[i] !== 'string'; i++) {}
+        var appName = modules[i];
+        console.log('find module', appName);
+        metadata.apps.push(appName);
+        createModule(appName);
+        origBootstrapFn.apply(this, arguments);
+      };
+
 
       function createModule(name) {
         var exist = metadata.modules.find(function(mod) {
