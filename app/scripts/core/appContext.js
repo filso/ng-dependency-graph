@@ -13,23 +13,23 @@ angular.module('ngDependencyGraph')
           window.document.location.reload();
         }, cb);
       },
-      // takes a bool
-      setDebug: function(setting) {
-        if (setting === true) {
-          chromeExtension.eval(function(window) {
-            window.document.cookie = '__ngDependencyGraph=true;';
-            window.document.location.reload();
-          });
-        } else {
-          chromeExtension.eval(function(window) {
-            window.document.cookie = '__ngDependencyGraph=false;';
-            window.document.location.reload();
-          });
-        }
+      /**
+       * Takes app name. If '', deletes the cookie
+       */
+      setCookie: function(appName) {
+        chromeExtension.eval(function(window, args) {
+          if (args.value === '') {
+            document.cookie = '__ngDependencyGraph=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+          } else {
+            document.cookie = '__ngDependencyGraph=' + encodeURIComponent(args.value) + ';';
+          }
+          window.location = window.location;
+        }, {value: appName});
       },
-      getDebug: function(cb) {
+      getCookie: function(cb) {
         chromeExtension.eval(function(window) {
-          return document.cookie.indexOf('__ngDependencyGraph=true') !== -1;
+          var sKey = '__ngDependencyGraph';
+          return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
         }, cb);
       },
 

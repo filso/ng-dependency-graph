@@ -5,7 +5,6 @@ angular.module('ngDependencyGraph')
   .factory('inspectedApp', function($q, $timeout, appContext, chromeExtension, sampleAppData, Const) {
 
     var _data;
-    var _versionCache = null;
 
     // TODO clear cache on page refresh
     // appContext.watchRefresh(function() {
@@ -13,6 +12,7 @@ angular.module('ngDependencyGraph')
     // });
 
     var service = {
+      waitingForAppData: false,
       getKey: function() {
         return this.getData().host + '__' + this.apps[0];
       },
@@ -21,12 +21,13 @@ angular.module('ngDependencyGraph')
 
         chromeExtension.eval(function() {
 
-          var appElms = document.querySelectorAll('[ng-app]');
+          var appElms = document.querySelectorAll('[ng-app], [data-ng-app], [x-ng-app]');
           var appNames = [];
-          angular.forEach(appElms, function(elm) {
-            var appName = elm.getAttribute('ng-app');
+          for (var i = 0; i < appElms.length; ++i) {
+            var elm = appElms[i];
+            var appName = elm.getAttribute('ng-app') || elm.getAttribute('data-ng-app') || elm.getAttribute('x-ng-app');
             appNames.push(appName);
-          });
+          }
 
           return {
             angularVersion: window.angular.version,
@@ -49,7 +50,7 @@ angular.module('ngDependencyGraph')
       loadSampleData: function() {
         this._setData(sampleAppData);
       },
-      loadInspectedAppData: function(appName) {
+      loadInspectedAppData: function(appNames) {
         var defer = $q.defer();
         // TODO do sth smarter... maybe load sample app?
         if (!chromeExtension.isExtensionContext()) {
@@ -57,26 +58,26 @@ angular.module('ngDependencyGraph')
           return defer.promise;
         }
 
-        var injectedFn = function(window, appName) {
+        var injectedFn = function(window, appNames) {
           if (window.__ngDependencyGraph) {
-            console.log('inside', appName);
-            // console.log('meta', window.__ngDependencyGraph.getMetadata());
-            return window.__ngDependencyGraph.getMetadata();
+            return window.__ngDependencyGraph.getMetadata(appNames);
           }
         };
 
         function pollFn() {
-          chromeExtension.eval(injectedFn, appName, function(data) {
-            if (data === undefined || data.apps.length === 0) {
+          chromeExtension.eval(injectedFn, appNames, function(data) {
+            if ((data === undefined || data.apps.length === 0) && service.waitingForAppData === true) {
               $timeout(pollFn, Const.INJECTED_POLL_INTERVAL);
             } else {
               service._setData(data);
+              service.waitingForAppData = false;
               defer.resolve(_data);
             }
           });
 
         }
 
+        service.waitingForAppData = true;
         pollFn();
 
         return defer.promise;
