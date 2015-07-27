@@ -2,17 +2,30 @@
   <img src="img/webstore-icon.png"/>
   <div>
     <h3>AngularJS Dependency Graph browser</h3>
-    <div ng-if="!app.angularVersion">
-      No AngularJS app detected. Please open in a tab with AngularJS app.
-      <a class="open-graph sample" ng-click="app.loadSampleApp()">Open sample app</a>
+
+    <div ng-if="app.isLoading" class="loading">Loading, please wait...</div>
+
+    <div ng-if="!app.isLoading && !app.inspectedApp.waitingForAppData">
+      <div ng-if="!app.appsInfo.angularVersion">
+        No AngularJS app detected. Please open in a tab with AngularJS app.
+        <a class="open-graph sample" ng-click="app.loadSampleApp()">Open sample app</a>
+      </div>
+
+      <div ng-if="app.appsInfo.angularVersion">Detected AngularJS version <strong>{{ app.appsInfo.angularVersion.full }}</strong> &nbsp;
+        <a ng-if="app.appsInfo.appNames[0]" class="open-graph current" ng-click="app.insertCookieAndRefresh(app.appsInfo.appNames[0])">
+          Open '{{ app.appsInfo.appNames[0] }}'
+        </a>
+
+        <div ng-if="!app.appsInfo.appNames[0]">
+          <br/>It looks like you don't use [ng-app] tag.<br/>
+          Please enter app name: <input type="text" placeholder="Insert app name..." ng-model="app.inputAppName"/>
+          <button ng-click="app.insertCookieAndRefresh(app.inputAppName)" class="">Open</button>
+        </div>
+      </div>
     </div>
 
-    <div ng-if="app.angularVersion">Detected AngularJS version <strong>{{ app.angularVersion }}</strong> &nbsp;
-      <a ng-if="app.appName" class="open-graph current" ng-click="app.insertCookieAndRefresh(app.appName)">Open '{{ app.appName }}'</a>
-
-      <div ng-if="!app.appName">
-        <input ng-click="app.insertCookieAndRefresh(appName)" type="text" placeholder="Insert app name..." />
-      </div>
+    <div ng-if="!app.isLoading && app.inspectedApp.waitingForAppData">
+      Waiting for app '{{ app.appName }}' to load... <a class="cancel" ng-click="app.insertCookieAndRefresh('')">Cancel</a>
     </div>
 
     <div>
