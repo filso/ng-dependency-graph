@@ -16,14 +16,13 @@ https://chrome.google.com/webstore/detail/angularjs-dependency-grap/gghbihjmlhob
 4.  Open the directory you just cloned (should open with Chrome, otherwise try dragging/dropping the file into Chrome) and follow the prompts to install.
 
 ### Features
-- update graph on development cycle
+- components and modules view
+- update graph on reload
+- ignore and filter modules
 - sticky nodes
-
-### Todo
-
-### Alternatives
-
-gulp-ng-graph - generate static graph only
+- zooming and panning
+- filtering by component type
+- works for apps loaded asynchronously (`angular.bootstrap`)
 
 ### Other
 This app uses semantic versioning: http://semver.org/
