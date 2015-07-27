@@ -3,32 +3,37 @@
 // TODO(filip): refactor this mess ;)
 angular.module('ngDependencyGraph')
   .controller('AppCtrl', function($rootScope, $scope, inspectedApp, Const, storage, appContext, currentView) {
-    var ctrl = this;
+    var _this = this;
 
     var templates = {
       ABOUT: 'scripts/about/about.html',
-      MAIN: 'scripts/main/main.html',
-      LOADING: 'scripts/about/loading.html'
+      MAIN: 'scripts/main/main.html'
     };
 
-    ctrl.appTemplate = templates.LOADING;
+    _this.appTemplate = templates.LOADING;
 
-    ctrl.loadSampleApp = function() {
+    _this.loadSampleApp = function() {
       inspectedApp.loadSampleData();
-      ctrl.appTemplate = templates.MAIN;
+      _this.appTemplate = templates.MAIN;
     };
 
-    ctrl.insertCookieAndRefresh = function(appName) {
-      appContext.setDebug(appName);
+    _this.insertCookieAndRefresh = function(appName) {
+      appContext.setCookie(appName);
     };
+
+    _this.inspectedApp = inspectedApp;
 
     function init() {
-      appContext.getDebug(function(appName) {
-        if (appName !== undefined) {
+      inspectedApp.waitingForAppData = false;
+
+      appContext.getCookie(function(appName) {
+        if (appName !== null && appName !== 'true') {
           // App enabled for this page.
-          inspectedApp.loadInspectedAppData(appName).then(function() {
-            if (ctrl.appTemplate !== templates.MAIN) {
-              ctrl.appTemplate = templates.MAIN;
+          _this.appTemplate = templates.ABOUT;
+          _this.appName = appName;
+          inspectedApp.loadInspectedAppData([appName]).then(function() {
+            if (_this.appTemplate !== templates.MAIN) {
+              _this.appTemplate = templates.MAIN;
             } else {
               console.log(inspectedApp.getData());
               $scope.$broadcast(Const.Events.INIT_MAIN);
@@ -37,11 +42,8 @@ angular.module('ngDependencyGraph')
         } else {
           // Cookie not set yet, so check if Angular is present.
           inspectedApp.getAppsInfo().then(function(data) {
-            ctrl.angularVersion = data.angularVersion.full;
-            ctrl.appName = data.appNames[0];
-            console.log(data);
-            ctrl.appTemplate = templates.ABOUT;
-            $scope.$apply();
+            _this.appsInfo = data;
+            _this.appTemplate = templates.ABOUT;
           });
         }
       });
@@ -52,7 +54,7 @@ angular.module('ngDependencyGraph')
       init();
     } else {
       // just load sample app, not in a tab, development / test
-      ctrl.loadSampleApp();
+      _this.loadSampleApp();
       $scope.$broadcast('initMain');
     }
 
