@@ -14,7 +14,7 @@
     margin: 0;
   }
 
-  & > div {
+  & > div > div {
     margin-top: 25px;
   }
 
@@ -37,6 +37,17 @@
 
   a {
     color: white;
+  }
+
+  input[type="text"] {
+    margin: 10px;
+  }
+
+  .cancel {
+    vertical-align: middle;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 1.2em;
   }
 
 }
