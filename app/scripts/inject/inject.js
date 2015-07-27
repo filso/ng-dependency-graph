@@ -3,36 +3,10 @@ var injectCode = function() {
   document.head.appendChild((function() {
     var fn = function bootstrap(window) {
 
-      if (!Array.prototype.find) {
-        Array.prototype.find = function(predicate) {
-          if (this == null) {
-            throw new TypeError('Array.prototype.find called on null or undefined');
-          }
-          if (typeof predicate !== 'function') {
-            throw new TypeError('predicate must be a function');
-          }
-          var list = Object(this);
-          /*jslint bitwise: true */
-          var length = list.length >>> 0;
-          var thisArg = arguments[1];
-          var value;
-
-          for (var i = 0; i < length; i++) {
-            value = list[i];
-            if (predicate.call(thisArg, value, i, list)) {
-              return value;
-            }
-          }
-          return undefined;
-        };
-      }
-
       function disablePlugin(reason) {
         console.log(arguments);
         console.log(reason);
       }
-
-      var angular = window.angular;
 
       // Helper to determine if the root 'ng' module has been loaded
       // window.angular may be available if the app is bootstrapped asynchronously, but 'ng' might
@@ -48,7 +22,6 @@ var injectCode = function() {
         }
         return true;
       }
-
 
       if (!ngLoaded()) {
         (function() {
@@ -78,6 +51,7 @@ var injectCode = function() {
         return;
       }
 
+      var angular = window.angular;
 
       // helper to extract dependencies from function arguments
       // not all versions of AngularJS expose annotate
@@ -138,12 +112,6 @@ var injectCode = function() {
         }());
       }
 
-      window.__ngDependencyGraph = {
-        getMetadata: function() {
-          return metadata;
-        }
-      };
-
       var metadata = {
         angularVersion: angular.version,
         apps: [],
@@ -151,25 +119,25 @@ var injectCode = function() {
         host: window.location.host
       };
 
-      var appElms = document.querySelectorAll('[ng-app]');
-      if (appElms.length > 0) {
-        angular.forEach(appElms,
-          function(elm) {
-            var appName = elm.getAttribute('ng-app');
-            if (metadata.apps.indexOf(appName) === -1) {
-              metadata.apps.push(appName);
-              createModule(appName);
-            }
+      window.__ngDependencyGraph = {
+        getMetadata: function(appNames) {
+
+          appNames.forEach(function(appName) {
+            metadata.apps.push(appName);
+            createModule(appName);
           });
-      } else {
-        metadata.apps.push('app');
-        createModule('app');
-      }
+
+          return metadata;
+        }
+      };
 
       function createModule(name) {
-        var exist = metadata.modules.find(function(mod) {
-          return mod.name === name;
-        });
+        var exist = false;
+        for (var i; i < metadata.modules.length; i++) {
+          if (metadata.modules[i].name === name) {
+            exist = true;
+          }
+        }
 
         if (exist || name === undefined) {
           return;
@@ -280,6 +248,6 @@ var injectCode = function() {
 };
 
 // only inject if cookie is set
-if (document.cookie.indexOf('__ngDependencyGraph=true') !== -1) {
+if (document.cookie.indexOf('__ngDependencyGraph') !== -1) {
   document.addEventListener('DOMContentLoaded', injectCode);
 }
