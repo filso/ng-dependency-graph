@@ -6,7 +6,7 @@ angular.module('ngDependencyGraph')
     var lastAppKey;
     var componentsGraph;
     var modulesGraph;
-    
+
     $scope.currentView = currentView;
 
     ctrl.startTour = function() {
@@ -31,7 +31,7 @@ angular.module('ngDependencyGraph')
 
       _.each(rawData.modules, function(module) {
           module.type = 'module';
-        
+
           _.each(module.components, function(com) {
               com._module = module;
           });
@@ -65,7 +65,6 @@ angular.module('ngDependencyGraph')
 
       var appNode = _.find(modulesGraph.nodes, {name: rawData.apps[0]});
 
-      console.log('is same:', isTheSameApp);
       if (isTheSameApp) {
         currentView.applyFilters();
       } else {

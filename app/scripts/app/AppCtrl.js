@@ -35,7 +35,6 @@ angular.module('ngDependencyGraph')
             if (_this.appTemplate !== templates.MAIN) {
               _this.appTemplate = templates.MAIN;
             } else {
-              console.log(inspectedApp.getData());
               $scope.$broadcast(Const.Events.INIT_MAIN);
             }
           });
