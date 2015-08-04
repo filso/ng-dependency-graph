@@ -123,8 +123,10 @@ var injectCode = function() {
         getMetadata: function(appNames) {
 
           appNames.forEach(function(appName) {
-            metadata.apps.push(appName);
-            createModule(appName);
+            if (metadata.apps.indexOf(appName) === -1) {
+              metadata.apps.push(appName);
+              createModule(appName);
+            }
           });
 
           return metadata;
@@ -133,9 +135,10 @@ var injectCode = function() {
 
       function createModule(name) {
         var exist = false;
-        for (var i; i < metadata.modules.length; i++) {
+        for (var i = 0; i < metadata.modules.length; i++) {
           if (metadata.modules[i].name === name) {
             exist = true;
+            break;
           }
         }
 
