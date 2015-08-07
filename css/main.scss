@@ -5,7 +5,8 @@
 
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
-        "normalize",
         "github-light",
-        "stylesheet"
+        "variables",
+        "mixins",
+        "creative"
 ;

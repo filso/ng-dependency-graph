@@ -2,20 +2,173 @@
 
 ---
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en">
+{% include head.html %}
 
-  {% include head.html %}
+<body id="page-top">
 
-  <body>
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">AngularJS Graph</a>
+            </div>
 
-    {% include header.html %}
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#screenshots">Screenshots</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#features">Features</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#github">Github</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
 
-    <section class="main-content">
-      {{ content }}
+    <header id="about">
+        <div class="header-content">
+            <div class="header-content-inner">
 
-    {% include footer.html %}
+                <h1>AngularJS Dependency Graph</h1>
+                <hr>
+                <p>A Chrome extension for browsing AngularJS dependency graph</p>
+                <a href="https://chrome.google.com/webstore/detail/angularjs-dependency-grap/gghbihjmlhobaiedlbhcaellinkmlogj" class="btn btn-primary btn-xl page-scroll">App in Chrome Web Store</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-dark" id="screenshots">
+      <div class="container text-center">
+        <h2>Screenshots</h2>
+        <p><img src="https://cloud.githubusercontent.com/assets/875141/8272524/aa0b08c4-183d-11e5-9f1e-566a68172e58.png" alt="Modules">
+        <img src="https://cloud.githubusercontent.com/assets/875141/8272517/7dca7b78-183d-11e5-92dc-d3688bdc0adb.png" alt="Components"></p>
+      </div>
     </section>
 
-  </body>
+
+    <section id="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Features</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-refresh wow bounceIn text-primary"></i>
+                        <h3>Update on reload</h3>
+                        <p class="text-muted">Graph is automatically reloaded as you develop your app</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-dot-circle-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
+                        <h3>Sticky nodes</h3>
+                        <p class="text-muted">You can stick nodes where you want them to be.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-heart wow bounceIn text-primary" data-wow-delay=".3s"></i>
+                        <h3>Made with Love</h3>
+                        <p class="text-muted">This app is meant to look nice!</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center" >
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-search-plus wow bounceIn text-primary" data-wow-delay=".4s"></i>
+                        <h3>Zoom and pan</h3>
+                        <p class="text-muted">You can zoom and pan.</p>
+                    </div>
+                </div>
+               <!--  <div class="col-lg-3 col-md-6 text-center" >
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-diamond wow bounceIn text-primary" data-wow-delay=".4s"></i>
+                        <h3>Sturdy app</h3>
+                        <p class="text-muted">We remove bugs as they are detected.</p>
+                    </div>
+                </div> -->
+
+
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-primary" id="github">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+
+                    <h2 class="section-heading">Github code. ng-dependency-graph</h2>
+                    <hr class="light">
+
+                    <a href="https://github.com/filso/ng-dependency-graph" class="btn btn-default btn-xl wow tada">View on GitHub</a>
+                    <a href="https://github.com/filso/ng-dependency-graph/zipball/master" class="btn btn-default">Download .zip</a>
+                    <a href="https://github.com/filso/ng-dependency-graph/tarball/master" class="btn btn-default">Download .tar.gz</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Contact</h2>
+                    <hr class="primary">
+                    <p><a href='http://filso.net'>Filip Sobczak</a> (<a href='http://github.com/filso'>@filso</a>)</p>
+                    <p>If you'd like to share some feedback, or just say hi.</p>
+                </div>
+                <div class="col-lg-12 text-center">
+                    <a href="mailto:filsob@gmail.com">
+                    <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
+                    <p>Send e-mail</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/jquery.fittext.js"></script>
+    <script src="js/wow.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/creative.js"></script>
+
+</body>
 
 </html>
