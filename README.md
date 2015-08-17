@@ -3,7 +3,7 @@
 AngularJS dependency graph browser.
 Implemented as a [Chrome extension](https://chrome.google.com/webstore/detail/angularjs-dependency-grap/gghbihjmlhobaiedlbhcaellinkmlogj). Once you install the extension, you can access the graph in Chrome inspector panel.
 
-http://filso.github.io/ng-dependency-graph
+http://angularjs-graph.org
 
 ## Installing from Chrome web store
 https://chrome.google.com/webstore/detail/angularjs-dependency-grap/gghbihjmlhobaiedlbhcaellinkmlogj
