@@ -152,12 +152,24 @@ aside {
 // Homepage Header
 
 header {
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0px; left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-image: url('https://cloud.githubusercontent.com/assets/875141/8272517/7dca7b78-183d-11e5-92dc-d3688bdc0adb.png');
+        // filter: blur(20px);
+        -webkit-filter: blur(3px);
+        filter: blur(3px);
+    }
     position: relative;
     width: 100%;
     min-height: auto;
     @include background-cover;
     background-position: center;
-    background-image: url('../img/header.jpg');
+    // background-image: url('../img/header.jpg');
     text-align: center;
     color: white;
     .header-content {

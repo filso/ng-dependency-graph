@@ -10,3 +10,20 @@
         "mixins",
         "creative"
 ;
+
+.navbar-header iframe {
+  position: relative;
+  top: 15px;
+}
+
+.header-content iframe {
+  position: relative;
+  top: 10px;
+  left: 10px;
+}
+
+.header-content {
+  img {
+    max-width: 500px;
+  }
+}
