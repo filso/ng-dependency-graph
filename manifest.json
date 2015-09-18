@@ -1,12 +1,13 @@
 {
-  "name": "AngularJS dependency graph",
-  "version": "0.2.6",
+  "name": "AngularJS Graph",
+  "version": "0.2.7",
   "description": "AngularJS dependency graph.",
   "background": {
     "page": "app/background.html"
   },
   "devtools_page": "app/devtoolsBackground.html",
   "options_page": "app/index.html",
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
   "manifest_version": 2,
   "icons": {
     "500": "app/img/square-500.png"

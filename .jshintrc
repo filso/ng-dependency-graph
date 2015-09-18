@@ -59,6 +59,8 @@
     "d3": true,
     "chrome": true,
     "Shepherd": true,
-    "angular": true
+    "angular": true,
+
+    "ga": false
   }
 }

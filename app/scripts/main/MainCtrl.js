@@ -10,6 +10,7 @@ angular.module('ngDependencyGraph')
     $scope.currentView = currentView;
 
     ctrl.startTour = function() {
+      ga('send', 'event', 'flow', 'action', 'Start tour');
       tour.start();
     };
 
@@ -26,6 +27,8 @@ angular.module('ngDependencyGraph')
 
 
     function init(isTheSameApp) {
+      ga('send', 'event', 'flow', 'action', 'init ctrl');
+
       lastAppKey = inspectedApp.getKey();
       var rawData = inspectedApp.getData();
 
@@ -93,7 +96,6 @@ angular.module('ngDependencyGraph')
 
     // TODO this seems architecturaly lame
     $scope.$on(Const.Events.UPDATE_GRAPH, storage.saveCurrentView);
-
     $scope.$on(Const.Events.CHOOSE_NODE, storage.saveCurrentView);
 
   });
