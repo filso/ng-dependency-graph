@@ -2,9 +2,9 @@
 title: AngularJS Dependency Graph
 email: filsob@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  AngularJS Graph is a Chrome extension tool that allows you to browse
+  dependency graph of your AngularJS modules and components inside Chrome inspector.
+  JavaScript application architecture tool.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://angularjs-graph.org" # the base hostname & protocol for your site
 # twitter_username: jekyllrb
