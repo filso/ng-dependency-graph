@@ -13,7 +13,7 @@ describe('inspectedApp', function() {
     isExtensionContext: function() {
       return true;
     },
-    eval: function(injectedFn, callback) {
+    eval: function(injectedFn, appNames, callback) {
       callback(returnedData);
     }
   };
