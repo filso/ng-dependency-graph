@@ -81,7 +81,8 @@ angular.module('ngDependencyGraph')
       },
 
       finish: {
-        text: 'That\'s it! :) Hope you enjoy.<br/><br/>You can restart this tour by clicking \'Tutorial\' in the bottom right corner.',
+        text: 'That\'s it! :) Hope you enjoy.<br/><br/>You can restart this tour by clicking \'Tutorial\' in the bottom right corner.<br/><br/>Please star if you like it:<br/><br/>' +
+          '<iframe src="https://ghbtns.com/github-btn.html?user=filso&repo=ng-dependency-graph&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>',
         attachTo: '.search right',
         buttons: buttons.finish
       }
