@@ -217,6 +217,7 @@ header {
   background-size: cover;
   -o-background-size: cover;
   background-position: center;
+  background: rgba(0, 0, 0, 0.3);
   text-align: center;
   color: white; }
   header:before {
@@ -228,8 +229,9 @@ header {
     height: 100%;
     z-index: -1;
     background-image: url("https://cloud.githubusercontent.com/assets/875141/8272517/7dca7b78-183d-11e5-92dc-d3688bdc0adb.png");
-    -webkit-filter: blur(3px);
-    filter: blur(3px); }
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+    opacity: 0.8; }
   header .header-content {
     position: relative;
     text-align: center;
