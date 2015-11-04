@@ -1,5 +1,7 @@
 ## AngularJS dependency graph
 
+[![Join the chat at https://gitter.im/filso/ng-dependency-graph](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/filso/ng-dependency-graph?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 AngularJS dependency graph browser.
 Implemented as a [Chrome extension](https://chrome.google.com/webstore/detail/angularjs-dependency-grap/gghbihjmlhobaiedlbhcaellinkmlogj). Once you install the extension, you can access the graph in Chrome inspector panel.
 
