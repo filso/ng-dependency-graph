@@ -22,11 +22,11 @@ module.exports = function(options) {
         module: 'ngDependencyGraph',
         root: '/'
       }))
-      .pipe(gulp.dest(options.assets));
+      .pipe(gulp.dest(options.dist));
   });
 
   gulp.task('html', ['inject'], function() {
-    var partialsInjectFile = gulp.src(options.assets + '/templateCacheHtml.js', { read: false });
+    var partialsInjectFile = gulp.src(options.dist + '/templateCacheHtml.js', { read: false });
     var partialsInjectOptions = {
       starttag: '<!-- inject:partials -->',
       ignorePath: options.tmp + '/partials',
