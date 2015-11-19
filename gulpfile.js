@@ -45,6 +45,7 @@ require('./gulp/server')(options);
 require('./gulp/unit-tests')(options);
 require('./gulp/changelog')(options);
 require('./gulp/unit-tests')(options);
+require('./gulp/build')(options);
 
 
 /**
