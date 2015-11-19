@@ -17,6 +17,8 @@ var paths = {
   appScripts: ['app/scripts/**/*.js', '!app/scripts/**/*.spec.js', '!app/scripts/inject/inject.js'],
   images: 'app/images/**/*',
   html: 'app/**/*.html',
+  dist: 'dist',
+  assets: 'assets/',
   styles: {
     sass: 'app/styles/**/*.scss',
     css: 'app/styles/*.css'

@@ -4,6 +4,23 @@ var gulp = require('gulp');
 
 module.exports = function(options) {
 
+  gulp.task('partials', function() {
+    return gulp.src([
+        'app/**/*.html',
+        '!app/index.html',
+      ], {base: 'app'})
+      .pipe($.minifyHtml({
+        empty: true,
+        spare: true,
+        quotes: true
+      }))
+      .pipe($.angularTemplatecache('templateCacheHtml.js', {
+        module: 'ngDependencyGraph',
+        root: '/'
+      }))
+      .pipe(gulp.dest(options.assets));
+  });
+
   gulp.task('build', function() {
 
     gulp.task('html', ['inject'], function() {
@@ -30,9 +47,9 @@ module.exports = function(options) {
         })).on('error', options.errorHandler('Uglify'))
         .pipe(jsFilter.restore())
         .pipe(cssFilter)
-        .pipe($.replace('../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/', '../fonts/'))
-        .pipe($.replace('/assets/images', '/fr/assets/images'))
-        .pipe($.replace(options.presentation.replace('.', '') + '/styles/fonts/', '/' + options.aws.dir + '/styles/fonts/'))
+        // .pipe($.replace('../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/', '../fonts/'))
+        // .pipe($.replace('/assets/images', '/fr/assets/images'))
+        // .pipe($.replace(options.presentation.replace('.', '') + '/styles/fonts/', '/' + options.aws.dir + '/styles/fonts/'))
         .pipe($.csso())
         .pipe(cssFilter.restore())
         .pipe(assets.restore())
