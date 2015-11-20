@@ -37,8 +37,8 @@ module.exports = function(options) {
     browserSyncInit('./app');
   });
 
-  gulp.task('serve:dist', ['build'], function () {
-    browserSyncInit(options.dist);
+  gulp.task('serve:dist', [], function () {
+    browserSyncInit('.');
   });
 
   gulp.task('serve:e2e', ['inject'], function () {

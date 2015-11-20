@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles/lib/shepherd/shepherd-theme-default.css">
   <!-- endbuild -->
 
-  <!-- build:js(app) /dist/app.js -->
+  <!-- build:js({app,.}) /dist/app.js -->
   <script src="vendor/jquery-2.1.1.min.js"></script>
   <script src="vendor/typeahead.jquery.js"></script>
   <script src="vendor/angular.js"></script>
@@ -20,8 +20,8 @@
   <!-- inject:js -->
   <script src="scripts/app.module.js"></script>
   <script src="scripts/util/util.js"></script>
-  <script src="scripts/tour/tour.js"></script>
   <script src="scripts/triggerComponents/TriggerComponentsCtrl.js"></script>
+  <script src="scripts/tour/tour.js"></script>
   <script src="scripts/models/models.module.js"></script>
   <script src="scripts/models/Node.js"></script>
   <script src="scripts/models/ModuleStats.js"></script>
@@ -34,6 +34,8 @@
   <script src="scripts/infoPanel/InfoPanelCtrl.js"></script>
   <script src="scripts/main/MainCtrl.js"></script>
   <script src="scripts/graph/dgGraph.js"></script>
+  <script src="scripts/controls/dgSearchNode.js"></script>
+  <script src="scripts/controls/controls.module.js"></script>
   <script src="scripts/core/storage.js"></script>
   <script src="scripts/core/nodeFactory.js"></script>
   <script src="scripts/core/inspectedApp.js"></script>
@@ -43,8 +45,6 @@
   <script src="scripts/core/appContext.js"></script>
   <script src="scripts/core/Graph.js"></script>
   <script src="scripts/core/Const.js"></script>
-  <script src="scripts/controls/dgSearchNode.js"></script>
-  <script src="scripts/controls/controls.module.js"></script>
   <script src="scripts/app/AppCtrl.js"></script>
   <script src="scripts/about/sampleAppData.js"></script>
   <script src="scripts/about/AboutCtrl.js"></script>
@@ -60,5 +60,8 @@
 <body>
   <div class="app" ng-controller="AppCtrl as app" ng-include="app.appTemplate">
   </div>
+
+  <!-- build:websiteInfo -->
+  <!-- endbuild -->
 </body>
 </html>
