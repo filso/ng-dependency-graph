@@ -28,7 +28,7 @@ module.exports = function(options) {
       .pipe(gulp.dest(paths.dist));
   });
 
-  gulp.task('html', ['inject', 'partials'], function() {
+  gulp.task('html', ['partials'], function() {
     var partialsInjectFile = gulp.src(paths.dist + '/templateCacheHtml.js');
     var partialsInjectOptions = {
       starttag: '<!-- inject:partials -->',
