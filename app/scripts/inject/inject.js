@@ -221,6 +221,15 @@ var injectCode = function() {
               addDeps(moduleData, compArgs[0], compArgs[1], 'controller');
               break;
             case '$compileProvider':
+              if (item[1] === 'component') {
+                if (compArgs[1].controller) {
+                  addDeps(moduleData, compArgs[0], compArgs[1].controller, 'controller');
+                } else {
+                  addDeps(moduleData, compArgs[0], [], 'controller');
+                }
+                break;
+              }
+
               if (compArgs[1].constructor === Object) {
                 angular.forEach(compArgs[1], function(key, value) {
                   addDeps(moduleData, key, value, 'directive');
