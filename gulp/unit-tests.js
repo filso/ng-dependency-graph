@@ -36,7 +36,7 @@ module.exports = function(options) {
 
     gulp.src(srcFiles)
       .pipe(concat(function(files) {
-        callback(_.pluck(files, 'path')
+        callback(_.map(files, 'path')
           .concat(htmlFiles)
           .concat(specFiles));
       }));
