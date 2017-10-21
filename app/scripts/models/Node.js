@@ -12,12 +12,6 @@ angular.module('ngDependencyGraph')
       this.provides = [];
     }
 
-    Object.defineProperty(Node.prototype, 'cssClass', {
-      get: function() {
-        return 'FIX THIS';
-      }
-    });
-
     _.assign(Node.prototype, {
       linkDep: function(node) {
         this.deps.push(node);
