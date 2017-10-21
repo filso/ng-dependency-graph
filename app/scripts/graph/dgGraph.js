@@ -106,7 +106,7 @@ angular.module('ngDependencyGraph')
           tmp.attr('transform',
             'translate(' + d3.event.translate + ') ' +
             ' scale(' + d3.event.scale + ')');
-        }   
+        }
 
 
         scope.$on(Const.Events.CHOOSE_NODE, function(event, d, translate) {
@@ -149,13 +149,13 @@ angular.module('ngDependencyGraph')
          * Sticky nodes callbacks
          */
         function dblclick(d) {
-          d3.select(this).classed("fixed", d.fixed = false);
+          d3.select(this).classed('fixed', d.fixed = false);
           d3.event.stopImmediatePropagation();
         }
 
         function dragstart(d) {
           if (currentView.options.stickyNodesEnabled) {
-            d3.select(this).classed("fixed", d.fixed = true);
+            d3.select(this).classed('fixed', d.fixed = true);
           }
         }
 
