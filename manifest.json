@@ -1,6 +1,6 @@
 {
   "name": "AngularJS Graph",
-  "version": "0.2.8",
+  "version": "0.2.10",
   "description": "AngularJS dependency graph.",
   "background": {
     "page": "app/background.html"
@@ -12,11 +12,7 @@
   "icons": {
     "500": "app/img/square-500.png"
   },
-  "permissions": [
-    "storage",
-    "tabs",
-    "<all_urls>"
-  ],
+  "permissions": ["storage", "<all_urls>"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

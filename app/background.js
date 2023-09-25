@@ -1,13 +1,12 @@
-
 // notify of page refreshes
-chrome.extension.onConnect.addListener(function(port) {
+chrome.extension.onConnect.addListener(function (port) {
   port.onMessage.addListener(function (msg) {
-    if (msg.action === 'register') {
+    if (msg.action === "register") {
       var respond = function (tabId, changeInfo, tab) {
         if (tabId !== msg.inspectedTabId) {
           return;
         }
-        port.postMessage({action: 'refresh', changeInfo: changeInfo});
+        port.postMessage({ action: "refresh", changeInfo: changeInfo });
       };
 
       chrome.tabs.onUpdated.addListener(respond);
