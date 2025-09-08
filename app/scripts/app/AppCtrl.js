@@ -45,7 +45,7 @@ angular.module('ngDependencyGraph')
       });
     }
 
-    if (chrome.extension) {
+    if (chrome.runtime) {
       appContext.watchRefresh(init);
       init();
     } else {

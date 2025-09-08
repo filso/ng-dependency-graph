@@ -3,16 +3,19 @@
   "version": "0.2.10",
   "description": "AngularJS dependency graph.",
   "background": {
-    "page": "app/background.html"
+    "service_worker": "app/background.js"
   },
   "devtools_page": "app/devtoolsBackground.html",
   "options_page": "app/index.html",
-  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
-  "manifest_version": 2,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
+  },
+  "manifest_version": 3,
   "icons": {
     "500": "app/img/square-500.png"
   },
-  "permissions": ["storage", "<all_urls>"],
+  "permissions": ["storage"],
+  "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -20,5 +23,5 @@
       "run_at": "document_start"
     }
   ],
-  "minimum_chrome_version": "22"
+  "minimum_chrome_version": "88"
 }

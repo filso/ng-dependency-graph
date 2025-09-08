@@ -3,14 +3,14 @@
 // abstraction layer for Chrome Extension APIs
 angular.module('ngDependencyGraph').value('chromeExtension', {
   sendRequest: function(requestName, cb) {
-    chrome.extension.sendRequest({
+    chrome.runtime.sendMessage({
       script: requestName,
       tab: chrome.devtools.inspectedWindow.tabId
     }, cb || function() {});
   },
 
   isExtensionContext: function() {
-    return window.chrome !== undefined && window.chrome.extension !== undefined;
+    return window.chrome !== undefined && window.chrome.runtime !== undefined;
   },
 
   /**

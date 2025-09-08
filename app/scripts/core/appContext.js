@@ -50,7 +50,7 @@ angular.module('ngDependencyGraph')
 
       // TODO: move to chromeExtension?
       watchRefresh: function(cb) {
-        var port = chrome.extension.connect();
+        var port = chrome.runtime.connect();
         port.postMessage({
           action: 'register',
           inspectedTabId: chrome.devtools.inspectedWindow.tabId

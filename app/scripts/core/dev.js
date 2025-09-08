@@ -87,7 +87,7 @@ angular.module('ngDependencyGraph')
       },
       clog: function(val) {
           var message = JSON.stringify(val).replace(/n/g, " ");
-          chrome.tabs.sendRequest(tabId, 
+          chrome.tabs.sendMessage(tabId, 
               {"type": "consoleLog", "value": message}); 
       }
     };
