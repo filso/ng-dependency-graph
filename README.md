@@ -25,6 +25,21 @@ https://chrome.google.com/webstore/detail/angularjs-dependency-grap/gghbihjmlhob
 - zooming and panning
 - filtering by component type
 - works for apps loaded asynchronously (`angular.bootstrap`)
+- **export graph data as JSON** - Export the current dependency graph and view state as a JSON file for further analysis
+
+### JSON Export
+The extension now supports exporting the dependency graph data as a JSON file. Click the "Export as JSON" button in the Options section to download a file containing:
+
+- **Graph data**: All nodes (modules/components) with their dependencies and relationships
+- **Current view state**: Active filters, scope (modules/components), and selected node
+- **Metadata**: Export timestamp, version, and graph statistics
+- **Node positions**: Current layout positions for recreation of the visual state
+
+The exported JSON can be used for:
+- Data analysis and processing with external tools
+- Backup of current graph state
+- Integration with other development workflows
+- Documentation and reporting purposes
 
 ### Other
 This app uses semantic versioning: http://semver.org/
