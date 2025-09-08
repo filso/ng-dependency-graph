@@ -113,4 +113,27 @@
     }
   }
 
+  .export-button {
+    background: #4CAF50;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 100%;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background: #45a049;
+    }
+
+    &:active {
+      background: #3e8e41;
+    }
+  }
+
 }
