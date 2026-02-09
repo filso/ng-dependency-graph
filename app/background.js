@@ -1,5 +1,5 @@
 // notify of page refreshes
-chrome.extension.onConnect.addListener(function (port) {
+chrome.runtime.onConnect.addListener(function (port) {
   port.onMessage.addListener(function (msg) {
     if (msg.action === "register") {
       var respond = function (tabId, changeInfo, tab) {
