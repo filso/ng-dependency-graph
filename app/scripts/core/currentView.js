@@ -1,104 +1,84 @@
 'use strict';
 
 /**
- * TODO this is doing too much: extract filters, serialisation
- *
- * Responsibilities:
- * - singleton holding currentView
- * - filtering of modules / components
+ * Singleton holding the current view state:
+ * selected node, modules/components scope, filters and options.
  */
-angular.module('ngDependencyGraph')
-  .factory('currentView', function($rootScope, Const, util) {
-
-    var service = {
-      selectedNode: undefined,
-      scope: Const.Scope.MODULES,
-      filters: {
-        filterModules: Const.FilterModules.DEFAULT_FILTER,
-        ignoreModules: Const.FilterModules.DEFAULT_IGNORE,
-        componentsVisible: {
-          service: true,
-          controller: true
-        }
+angular.module('ngDependencyGraph').factory('currentView', function ($rootScope, Const, util) {
+  const service = {
+    selectedNode: undefined,
+    scope: Const.Scope.MODULES,
+    filters: {
+      filterModules: Const.FilterModules.DEFAULT_FILTER,
+      ignoreModules: Const.FilterModules.DEFAULT_IGNORE,
+      componentsVisible: {
+        service: true,
+        controller: true,
       },
-      options: {
-        stickyNodesEnabled: false
-      },
-      setGraphs: function(modulesGraph, componentsGraph) {
-        this.modulesGraph = modulesGraph;
-        this.componentsGraph = componentsGraph;
-      },
-      setScope: function(scope) {
-        this.scope = scope;
-      },
-      chooseNode: function(node, translate) {
-        if (node.isModule === true) {
-          this.setScope(Const.Scope.MODULES);
-        } else {
-          this.setScope(Const.Scope.COMPONENTS);
-        }
-        
-        this.selectedNode = node;
-        $rootScope.$broadcast(Const.Events.CHOOSE_NODE, node, translate);
-      },
-      applyFilters: _.throttle(function() {
-        service._applyFilters();
-      }, 200),
-      _applyFilters: function() {
-        if (!this.componentsGraph || !this.modulesGraph) {
-          return; // not initialised
-        }
+    },
+    options: {
+      stickyNodesEnabled: false,
+    },
 
-        this.graph = (this.scope === Const.Scope.COMPONENTS ? this.componentsGraph : this.modulesGraph);
+    setGraphs(modulesGraph, componentsGraph) {
+      this.modulesGraph = modulesGraph;
+      this.componentsGraph = componentsGraph;
+    },
 
-        var masks;
-        this.componentsGraph.resetFilter();
-        this.modulesGraph.resetFilter();
+    setScope(scope) {
+      this.scope = scope;
+    },
 
-        if (this.filters.componentsVisible && this.scope === 'components') {
-          this.componentsGraph.filterNodes(function(node) {
-            var val = service.filters.componentsVisible[node.type];
-            return val === true;
-          });
-        }
+    chooseNode(node, translate) {
+      this.setScope(node.isModule === true ? Const.Scope.MODULES : Const.Scope.COMPONENTS);
+      this.selectedNode = node;
+      $rootScope.$broadcast(Const.Events.CHOOSE_NODE, node, translate);
+    },
 
-        // Apply ignore and filter masks to modules
-        if (this.filters.ignoreModules) {
-          masks = util.extractMasks(this.filters.ignoreModules);
-
-          masks.forEach(function(mask) {
-            service.modulesGraph.filterNodes(function(node) {
-              return mask.test(node.name) === false;
-            });
-          });
-        }
-
-        if (this.filters.filterModules) {
-          masks = util.extractMasks(this.filters.filterModules);
-          
-          masks.forEach(function(mask) {
-            service.modulesGraph.filterNodes(function(node) {
-              return mask.test(node.name);
-            });
-          });
-        }
-
-        // Now filter all components of excluded modules 
-        this.componentsGraph.filterNodes(function(node) {
-          return (service.modulesGraph.nodes.indexOf(node.module) !== -1);
-        });
-
-        $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
+    _applyFilters() {
+      if (!this.componentsGraph || !this.modulesGraph) {
+        return; // not initialised
       }
-    };
 
-    function updateView(newVal, oldVal) {
-      service.applyFilters();
-    }
+      this.graph = this.scope === Const.Scope.COMPONENTS ? this.componentsGraph : this.modulesGraph;
 
-    $rootScope.$watch('currentView.filters', updateView, true);
-    $rootScope.$watch('currentView.scope', updateView, true);
+      this.componentsGraph.resetFilter();
+      this.modulesGraph.resetFilter();
 
-    return service;
+      if (this.filters.componentsVisible && this.scope === Const.Scope.COMPONENTS) {
+        this.componentsGraph.filterNodes((node) => service.filters.componentsVisible[node.type] === true);
+      }
 
-  });
+      // Apply ignore and filter masks to modules
+      if (this.filters.ignoreModules) {
+        util.extractMasks(this.filters.ignoreModules).forEach((mask) => {
+          service.modulesGraph.filterNodes((node) => mask.test(node.name) === false);
+        });
+      }
+
+      if (this.filters.filterModules) {
+        util.extractMasks(this.filters.filterModules).forEach((mask) => {
+          service.modulesGraph.filterNodes((node) => mask.test(node.name));
+        });
+      }
+
+      // Hide components whose module has been filtered out
+      this.componentsGraph.filterNodes((node) => service.modulesGraph.nodes.includes(node.module));
+
+      $rootScope.$broadcast(Const.Events.UPDATE_GRAPH);
+    },
+  };
+
+  service.applyFilters = util.throttle(function () {
+    service._applyFilters();
+  }, 200);
+
+  function updateView() {
+    service.applyFilters();
+  }
+
+  $rootScope.$watch('currentView.filters', updateView, true);
+  $rootScope.$watch('currentView.scope', updateView, true);
+
+  return service;
+});

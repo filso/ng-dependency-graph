@@ -1,69 +1,56 @@
 'use strict';
 
-angular.module('ngDependencyGraph')
-  .directive('dgSearchNode', function(currentView, Const, $rootScope) {
+// Typeahead search over all modules and components.
+angular.module('ngDependencyGraph').directive('dgSearchNode', function (currentView, Const, $rootScope) {
+  return {
+    scope: true,
+    link(scope, elm) {
+      let allNodes;
+      const inputElm = $('input', elm);
 
-    return {
-      scope: true,
-      link: function(scope, elm) {
+      function updateNodes() {
+        allNodes = currentView.modulesGraph.nodes.concat(currentView.componentsGraph.nodes);
+      }
 
-        var allNodes;
-        var inputElm = $('input', elm);
+      function findMatches(q, cb) {
+        const substrRegex = new RegExp(q, 'i');
+        cb(allNodes.filter((node) => substrRegex.test(node.name)));
+      }
 
-        function updateNodes() {
-          allNodes = currentView.modulesGraph.nodes.concat(currentView.componentsGraph.nodes);
-        }
+      function suggestionTemplateFn(node) {
+        return '<div class="' + node.type + '">' + node.name + '<span class="type">' + node.type + '</span></div>';
+      }
 
-        function findMatches(q, cb) {
-          var substrRegex = new RegExp(q, 'i');
-          var arr = _.filter(allNodes, function(node) {
-            return substrRegex.test(node.name);
-          });
-          cb(arr);
-        }
+      function clearInput() {
+        inputElm.typeahead('val', '');
+      }
 
-        function suggestionTemplateFn(node) {
-          return '<div class="' + node.type + '">' + node.name + '<span class="type">' + node.type + '</span></div>';
-        }
+      scope.$on(Const.Events.UPDATE_GRAPH, updateNodes);
+      updateNodes();
 
-        function clearInput() {
-          inputElm.typeahead('val', '');
-        }
-
-        scope.$on(Const.Events.UPDATE_GRAPH, function() {
-          updateNodes();
-        });
-
-        updateNodes();
-
-
-        inputElm.typeahead({
+      inputElm.typeahead(
+        {
           hint: true,
           highlight: true,
-          minLength: 1
+          minLength: 1,
         },
         {
           display: 'name',
           source: findMatches,
           templates: {
-            suggestion: suggestionTemplateFn
-          }
+            suggestion: suggestionTemplateFn,
+          },
+        },
+      );
+
+      inputElm.bind('typeahead:select', function (ev, node) {
+        $rootScope.$apply(function () {
+          currentView.chooseNode(node, true);
         });
+        clearInput();
+      });
 
-        inputElm.bind('typeahead:select', function(ev, node) {
-          $rootScope.$apply(function() {
-            currentView.chooseNode(node, true);
-          });
-          clearInput();
-        });
-
-        inputElm.bind('focus', function() {
-          clearInput();
-        });
-
-
-      }
-    };
-
-
-  });
+      inputElm.bind('focus', clearInput);
+    },
+  };
+});

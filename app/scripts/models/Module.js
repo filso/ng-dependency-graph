@@ -1,15 +1,12 @@
 'use strict';
 
-angular.module('ngDependencyGraph')
-  .factory('Module', function(Node) {
-
-    function Module(_data) {
-      Node.apply(this, arguments);
+angular.module('ngDependencyGraph').factory('Module', function (Node) {
+  class Module extends Node {
+    constructor(data) {
+      super(data);
       this.isModule = true;
     }
+  }
 
-    Module.prototype = Object.create(Node.prototype);
-
-    return Module;
-
-  });
+  return Module;
+});

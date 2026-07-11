@@ -1,60 +1,62 @@
-<div ng-controller="InfoPanelCtrl as infoPanel" class="info-panel">
+<div class="info-panel">
   <div ng-if="currentView.selectedNode && currentView.selectedNode.type !== 'module'">
-    
     <div class="info">
       <span class="node-title" ng-bind="currentView.selectedNode.name"></span>
       <span>&#10142;</span>
-
-      <a class="node-module-name choose-node" ng-bind="currentView.selectedNode.module.name" ng-click="currentView.chooseNode(currentView.selectedNode.module, true)"></a>
+      <a
+        class="node-module-name choose-node"
+        ng-bind="currentView.selectedNode.module.name"
+        ng-click="currentView.chooseNode(currentView.selectedNode.module, true)"
+      ></a>
     </div>
 
     <div dg-info-panel-list="currentView.selectedNode.deps" title="Dependencies"></div>
     <div dg-info-panel-list="currentView.selectedNode.provides" title="Required by"></div>
-
   </div>
-
 
   <div ng-if="currentView.selectedNode && currentView.selectedNode.type === 'module'">
     <div class="info">
       <span class="node-title" ng-bind="currentView.selectedNode.name"></span>
-      <a class="node-module-name choose-node" ng-bind="currentView.selectedNode.module.name" ng-click="currentView.chooseNode(currentView.selectedNode.module, true)"></a>
     </div>
 
     <div dg-info-panel-list="currentView.selectedNode.deps" title="Dependencies"></div>
     <div dg-info-panel-list="currentView.selectedNode.provides" title="Required by"></div>
 
-    <div class="service" dg-info-panel-list="currentView.selectedNode.componentsByType['service']" title="Services"></div>
-    <div class="controller" dg-info-panel-list="currentView.selectedNode.componentsByType['controller']" title="Controllers"></div>
-    <div class="directive" dg-info-panel-list="currentView.selectedNode.componentsByType['directive']" title="Directives"></div>
+    <div
+      class="service"
+      dg-info-panel-list="currentView.selectedNode.componentsByType['service']"
+      title="Services"
+    ></div>
+    <div
+      class="controller"
+      dg-info-panel-list="currentView.selectedNode.componentsByType['controller']"
+      title="Controllers"
+    ></div>
+    <div
+      class="directive"
+      dg-info-panel-list="currentView.selectedNode.componentsByType['directive']"
+      title="Directives"
+    ></div>
     <div class="filter" dg-info-panel-list="currentView.selectedNode.componentsByType['filter']" title="Filters"></div>
-
   </div>
 
-  <div class="options" ng-controller="OptionsCtrl as options">
-    <div class="title">
-      Options
-    </div>
+  <div class="options">
+    <div class="title">Options</div>
     <div class="options__sticky-nodes">
-      <label><input type="checkbox" ng-model="currentView.options.stickyNodesEnabled"></input>
-      Sticky nodes</label>
+      <label><input type="checkbox" ng-model="currentView.options.stickyNodesEnabled" /> Sticky nodes</label>
     </div>
-    <div class="title">
-      Show modules
-    </div>
+    <div class="title">Show modules</div>
     <div class="options__ignore">
       <label>
-      <span>Ignore:</span>
-      <input type="text" ng-model="currentView.filters.ignoreModules"></input>
+        <span>Ignore:</span>
+        <input type="text" ng-model="currentView.filters.ignoreModules" />
       </label>
     </div>
     <div class="options__filter">
       <label>
-      <span>Filter:</span>
-      <input type="text" ng-model="currentView.filters.filterModules"></input>
+        <span>Filter:</span>
+        <input type="text" ng-model="currentView.filters.filterModules" />
       </label>
     </div>
-
   </div>
-
-
 </div>

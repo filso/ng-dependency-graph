@@ -1,0 +1,528 @@
+/**
+ * AngularJS dependency graph — devtools panel styles.
+ *
+ * Node type colors are defined once as custom properties:
+ *   --c-<type>       base color
+ *   --c-<type>-soft  lighter accent (badges, gradients, list headers)
+ *   --c-<type>-pale  lightest accent (fixed/selected nodes)
+ */
+
+:root {
+  --c-module: #ff4136;
+  --c-module-soft: #ff7169;
+  --c-module-pale: #ffa19c;
+
+  --c-service: #279aff;
+  --c-service-soft: #5ab2ff;
+  --c-service-pale: #8dcaff;
+
+  --c-controller: #62c096;
+  --c-controller-soft: #87cfaf;
+  --c-controller-pale: #abdec7;
+
+  --c-directive: #ff851b;
+  --c-directive-soft: #ffa04e;
+  --c-directive-pale: #ffbc81;
+
+  --c-filter: #f2d30d;
+  --c-filter-soft: #f5dc3d;
+  --c-filter-pale: #f7e46e;
+
+  --c-value: #dd49f3;
+  --c-value-soft: #e679f6;
+  --c-value-pale: #efa9f9;
+
+  --c-link: #0074d9;
+  --c-graph-bg: #333;
+  --info-panel-width: 300px;
+  --font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
+
+/**
+ * Base layout
+ */
+
+html {
+  font-family: var(--font-family);
+  margin: 0;
+  font-size: 14px;
+  background: var(--c-graph-bg);
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+html,
+body,
+.app,
+.about,
+.main {
+  height: 100%;
+}
+
+/**
+ * Graph area
+ */
+
+.dg-graph {
+  margin-right: var(--info-panel-width);
+  position: relative;
+  height: 100%;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.55);
+  background: var(--c-graph-bg);
+  color: white;
+}
+
+.dg-graph svg {
+  width: 100%;
+  height: 100%;
+  cursor: move;
+}
+
+.dg-graph svg text {
+  fill: white;
+  font-family: var(--font-family);
+}
+
+.dg-graph .node {
+  cursor: pointer;
+}
+
+.dg-graph .legend {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+
+.dg-graph .reset-tour {
+  cursor: pointer;
+  text-decoration: underline;
+  color: white;
+  position: absolute;
+  display: inline-block;
+  bottom: 10px;
+  right: 10px;
+}
+
+.dg-graph .disable-graph {
+  cursor: pointer;
+  text-decoration: underline;
+  color: white;
+  position: absolute;
+  display: inline-block;
+  font-size: 0.8em;
+  top: 5px;
+  right: 10px;
+}
+
+/**
+ * Graph nodes and links
+ */
+
+.link {
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+svg > g {
+  transition: all 0.3s;
+}
+
+.node.module > circle {
+  fill: var(--c-module);
+}
+.node.module.fixed > circle {
+  fill: var(--c-module-pale);
+}
+.node.service > circle {
+  fill: var(--c-service);
+}
+.node.service.fixed > circle {
+  fill: var(--c-service-pale);
+}
+.node.controller > circle {
+  fill: var(--c-controller);
+}
+.node.controller.fixed > circle {
+  fill: var(--c-controller-pale);
+}
+.node.directive > circle {
+  fill: var(--c-directive);
+}
+.node.directive.fixed > circle {
+  fill: var(--c-directive-pale);
+}
+.node.filter > circle {
+  fill: var(--c-filter);
+}
+.node.filter.fixed > circle {
+  fill: var(--c-filter-pale);
+}
+.node.value > circle {
+  fill: var(--c-value);
+}
+.node.value.fixed > circle {
+  fill: var(--c-value-pale);
+}
+
+.node circle {
+  stroke: #fff;
+  stroke-width: 1px;
+  r: 8;
+  transition: all 0.3s;
+}
+
+.node.fixed circle {
+  r: 11;
+}
+
+.node:hover circle {
+  r: 10;
+}
+
+.node.selected circle {
+  r: 12;
+  stroke-width: 2px;
+  stroke: #fff;
+}
+
+.node.selected.module circle {
+  r: 12;
+  stroke-width: 2px;
+  fill: var(--c-module-pale);
+}
+
+text {
+  cursor: pointer;
+  font: 12px sans-serif;
+  pointer-events: none;
+  paint-order: stroke;
+  stroke: #000000;
+  stroke-width: 4px;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  font-weight: 800;
+}
+
+/**
+ * Top controls: search + scope switch
+ */
+
+.controls {
+  margin-bottom: 5px;
+  padding: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.controls > div {
+  margin-right: 10px;
+}
+
+.choose-scope {
+  border-radius: 3px;
+  display: inline-block;
+  background: black;
+  background-image: linear-gradient(to bottom, #217dbb, #2c84ba);
+}
+
+.choose-scope > div {
+  display: inline-block;
+  padding: 8px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.choose-scope > div.active,
+.choose-scope > div:hover {
+  border-radius: 3px;
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+}
+
+/**
+ * Search (typeahead.js)
+ */
+
+.search {
+  display: inline-flex;
+  align-items: center;
+}
+
+.search label {
+  margin-right: 5px;
+}
+
+.tt-dataset {
+  background: white;
+  min-width: 400px;
+}
+
+.tt-menu {
+  z-index: 10000 !important;
+  border: 1px solid #444;
+}
+
+.tt-suggestion {
+  color: #444;
+  padding: 5px;
+  border-bottom: 1px solid #aaa;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.tt-suggestion.tt-cursor {
+  background: #ddd;
+}
+
+.tt-suggestion .type {
+  margin-left: 5px;
+  font-style: italic;
+  font-size: 0.8em;
+  padding: 3px;
+  border-radius: 3px;
+  color: white;
+}
+
+.tt-suggestion.module .type {
+  background: var(--c-module-soft);
+}
+.tt-suggestion.service .type {
+  background: var(--c-service-soft);
+}
+.tt-suggestion.controller .type {
+  background: var(--c-controller-soft);
+}
+.tt-suggestion.directive .type {
+  background: var(--c-directive-soft);
+}
+.tt-suggestion.filter .type {
+  background: var(--c-filter-soft);
+}
+.tt-suggestion.value .type {
+  background: var(--c-value-soft);
+}
+
+/**
+ * Bottom left: legend + component type filters
+ */
+
+.mouse-instructions {
+  padding: 5px;
+}
+
+.trigger-components label {
+  cursor: pointer;
+  padding: 2px;
+  display: block;
+}
+
+.trigger-components > div {
+  font-size: 0.9em;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-style: italic;
+}
+
+.trigger-components > .module {
+  background: linear-gradient(to right, var(--c-module), var(--c-module-soft));
+}
+.trigger-components > .service {
+  background: linear-gradient(to right, var(--c-service), var(--c-service-soft));
+}
+.trigger-components > .controller {
+  background: linear-gradient(to right, var(--c-controller), var(--c-controller-soft));
+}
+.trigger-components > .directive {
+  background: linear-gradient(to right, var(--c-directive), var(--c-directive-soft));
+}
+.trigger-components > .filter {
+  background: linear-gradient(to right, var(--c-filter), var(--c-filter-soft));
+}
+.trigger-components > .value {
+  background: linear-gradient(to right, var(--c-value), var(--c-value-soft));
+}
+
+/**
+ * Info panel (right side)
+ */
+
+.info-panel-wrapper {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: var(--info-panel-width);
+  height: 100%;
+  background: white;
+}
+
+.info-panel {
+  height: calc(100% - 70px);
+  color: #444;
+  overflow-y: scroll;
+  font-size: 13px;
+}
+
+.info-panel .info {
+  margin: 5px 0px;
+  display: flex;
+  align-items: center;
+}
+
+.info-panel .info > span {
+  vertical-align: middle;
+  padding: 5px;
+}
+
+.info-panel .info .node-module-name {
+  color: var(--c-module);
+}
+
+.info-panel .node-title {
+  font-weight: bold;
+  font-size: 1.2em;
+  padding: 5px;
+}
+
+.info-panel .title {
+  background: #eee;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ddd;
+}
+
+.info-panel .info-panel-list > div {
+  padding: 3px;
+  margin-bottom: 3px;
+}
+
+.info-panel .info-panel-list.module > .title {
+  background: var(--c-module-soft);
+  color: white;
+}
+.info-panel .info-panel-list.service > .title {
+  background: var(--c-service-soft);
+  color: white;
+}
+.info-panel .info-panel-list.controller > .title {
+  background: var(--c-controller-soft);
+  color: white;
+}
+.info-panel .info-panel-list.directive > .title {
+  background: var(--c-directive-soft);
+  color: white;
+}
+.info-panel .info-panel-list.filter > .title {
+  background: var(--c-filter-soft);
+  color: white;
+}
+.info-panel .info-panel-list.value > .title {
+  background: var(--c-value-soft);
+  color: white;
+}
+
+.info-panel .choose-node {
+  cursor: pointer;
+  color: var(--c-link);
+}
+
+.info-panel .choose-node:hover {
+  color: #73beff;
+}
+
+/**
+ * Options (bottom of info panel)
+ */
+
+.options {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background: white;
+  width: var(--info-panel-width);
+}
+
+.options .title {
+  padding: 5px;
+  font-weight: bold;
+}
+
+.options > div {
+  padding: 5px;
+}
+
+.options > div label {
+  display: flex;
+  align-items: center;
+}
+
+.options > div span {
+  width: 50px;
+}
+
+.options > div input[type='checkbox'] {
+  margin-right: 8px;
+}
+
+.options > div input[type='text'] {
+  font-size: 12px;
+  flex: 1;
+  vertical-align: middle;
+}
+
+/**
+ * About / landing screen
+ */
+
+.about {
+  margin: 10px;
+  color: #ddd;
+  display: flex;
+  font-size: 14px;
+}
+
+.about img {
+  width: 128px;
+  height: 128px;
+}
+
+.about h3 {
+  color: white;
+  margin: 0;
+}
+
+.about > div > div {
+  margin-top: 25px;
+}
+
+.about a {
+  color: white;
+}
+
+.about a.open-graph {
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px;
+  margin: 8px 0px;
+  border-radius: 5px;
+  background: linear-gradient(to right, #dd1b16, #a6120d);
+  border: 2px solid #b6b6b6;
+}
+
+.about a.open-graph.current {
+  padding: 10px;
+  font-size: 1.2em;
+}
+
+.about input[type='text'] {
+  margin: 10px;
+}
+
+.about .cancel {
+  vertical-align: middle;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 1.2em;
+}

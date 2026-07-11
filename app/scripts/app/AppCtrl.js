@@ -1,57 +1,54 @@
 'use strict';
 
-// TODO(filip): refactor this mess ;)
-angular.module('ngDependencyGraph')
-  .controller('AppCtrl', function($rootScope, $scope, inspectedApp, Const, storage, appContext, currentView) {
-    var _this = this;
+angular.module('ngDependencyGraph').controller('AppCtrl', function ($scope, inspectedApp, Const, appContext) {
+  const ctrl = this;
 
-    var templates = {
-      ABOUT: 'scripts/about/about.html',
-      MAIN: 'scripts/main/main.html'
-    };
+  const templates = {
+    ABOUT: 'scripts/about/about.html',
+    MAIN: 'scripts/main/main.html',
+  };
 
-    _this.loadSampleApp = function() {
-      inspectedApp.loadSampleData();
-      _this.appTemplate = templates.MAIN;
-    };
+  ctrl.loadSampleApp = function () {
+    inspectedApp.loadSampleData();
+    ctrl.appTemplate = templates.MAIN;
+  };
 
-    _this.insertCookieAndRefresh = function(appName) {
-      appContext.setCookie(appName);
-    };
+  ctrl.insertCookieAndRefresh = function (appName) {
+    appContext.setCookie(appName);
+  };
 
-    _this.inspectedApp = inspectedApp;
+  ctrl.inspectedApp = inspectedApp;
 
-    function init() {
-      inspectedApp.waitingForAppData = false;
+  function init() {
+    inspectedApp.waitingForAppData = false;
 
-      appContext.getCookie(function(appName) {
-        if (appName !== null && appName !== 'true') {
-          // App enabled for this page.
-          _this.appName = appName;
-          inspectedApp.loadInspectedAppData([appName]).then(function() {
-            if (_this.appTemplate !== templates.MAIN) {
-              _this.appTemplate = templates.MAIN;
-            } else {
-              $scope.$broadcast(Const.Events.INIT_MAIN);
-            }
-          });
-        } else {
-          // Cookie not set yet, so check if Angular is present.
-          inspectedApp.getAppsInfo().then(function(data) {
-            _this.appsInfo = data;
-            _this.appTemplate = templates.ABOUT;
-          });
-        }
-      });
-    }
+    appContext.getCookie(function (appName) {
+      if (appName !== null && appName !== 'true') {
+        // Graph enabled for this page
+        ctrl.appName = appName;
+        inspectedApp.loadInspectedAppData([appName]).then(function () {
+          if (ctrl.appTemplate !== templates.MAIN) {
+            ctrl.appTemplate = templates.MAIN;
+          } else {
+            $scope.$broadcast(Const.Events.INIT_MAIN);
+          }
+        });
+      } else {
+        // Cookie not set yet — check if AngularJS is present on the page
+        inspectedApp.getAppsInfo().then(function (data) {
+          ctrl.appsInfo = data;
+          ctrl.appTemplate = templates.ABOUT;
+        });
+      }
+    });
+  }
 
-    if (chrome.runtime) {
-      appContext.watchRefresh(init);
-      init();
-    } else {
-      // just load sample app, not in a tab, development / test
-      _this.loadSampleApp();
-      $scope.$broadcast(Const.Events.INIT_MAIN);
-    }
-
-  });
+  if (window.chrome && window.chrome.runtime) {
+    appContext.watchRefresh(init);
+    init();
+  } else {
+    // Not running as an extension: development / demo mode
+    ctrl.loadSampleApp();
+    $scope.$broadcast(Const.Events.INIT_MAIN);
+  }
+});

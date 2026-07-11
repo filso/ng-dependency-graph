@@ -1,35 +1,22 @@
 'use strict';
 
-// abstraction layer for Chrome Extension APIs
+// Abstraction layer over Chrome DevTools extension APIs.
 angular.module('ngDependencyGraph').value('chromeExtension', {
-  sendRequest: function(requestName, cb) {
-    chrome.runtime.sendMessage({
-      script: requestName,
-      tab: chrome.devtools.inspectedWindow.tabId
-    }, cb || function() {});
-  },
-
-  isExtensionContext: function() {
+  isExtensionContext() {
     return window.chrome !== undefined && window.chrome.runtime !== undefined;
   },
 
   /**
-   * @btford:
-   * written because I don't like the API for chrome.devtools.inspectedWindow.eval;
-   * passing strings instead of functions are gross.
+   * Runs `fn(window, args)` in the context of the inspected page.
+   * Nicer API than passing code strings to chrome.devtools.inspectedWindow.eval.
    */
-  eval: function(fn, args, cb) {
-    // with two args
+  eval(fn, args, cb) {
     if (!cb && typeof args === 'function') {
       cb = args;
       args = {};
     } else if (!args) {
       args = {};
     }
-    chrome.devtools.inspectedWindow.eval('(' +
-      fn.toString() +
-      '(window, ' +
-      JSON.stringify(args) +
-      '));', cb);
-  }
+    chrome.devtools.inspectedWindow.eval('(' + fn.toString() + '(window, ' + JSON.stringify(args) + '));', cb);
+  },
 });

@@ -1,265 +1,203 @@
-var injectCode = function() {
+'use strict';
 
-  document.head.appendChild((function() {
-    var fn = function bootstrap(window) {
+/**
+ * Content script. When the opt-in cookie is set, injects `instrumentPage`
+ * into the inspected page, where it exposes AngularJS dependency metadata
+ * on `window.__ngDependencyGraph` for the devtools panel to poll.
+ */
 
-      function disablePlugin(reason) {
-        console.log(arguments);
-        console.log(reason);
+// Runs in the context of the inspected page (serialized via toString()).
+// Must be self-contained: no references to the content script scope.
+function instrumentPage(window) {
+  var NG_POLL_INTERVAL = 250;
+  var NG_POLL_TIMEOUT = 30000;
+
+  // window.angular may exist while the core 'ng' module is still loading
+  // (apps bootstrapped asynchronously via angular.bootstrap).
+  function ngLoaded() {
+    if (!window.angular) {
+      return false;
+    }
+    try {
+      window.angular.module('ng');
+    } catch {
+      return false;
+    }
+    return true;
+  }
+
+  if (!ngLoaded()) {
+    // Poll until AngularJS shows up (async bootstrap), then instrument.
+    var waited = 0;
+    var poll = setInterval(function () {
+      waited += NG_POLL_INTERVAL;
+      if (ngLoaded()) {
+        clearInterval(poll);
+        instrumentPage(window);
+      } else if (waited >= NG_POLL_TIMEOUT) {
+        clearInterval(poll);
       }
+    }, NG_POLL_INTERVAL);
+    return;
+  }
 
-      // Helper to determine if the root 'ng' module has been loaded
-      // window.angular may be available if the app is bootstrapped asynchronously, but 'ng' might
-      // finish loading later.
-      function ngLoaded() {
-        if (!window.angular) {
-          return false;
-        }
-        try {
-          window.angular.module('ng');
-        } catch (e) {
-          return false;
-        }
-        return true;
-      }
+  // do not instrument twice
+  if (window.__ngDependencyGraph) {
+    return;
+  }
 
-      if (!ngLoaded()) {
-        (function() {
-          var isAngularLoaded = function(ev) {
+  var angular = window.angular;
 
-            if (ev.srcElement.tagName === 'SCRIPT') {
-              var oldOnload = ev.srcElement.onload;
-              ev.srcElement.onload = function() {
-                if (ngLoaded()) {
+  // Extract dependency names from a function's arguments or an array
+  // annotation. Not all versions of AngularJS expose injector().annotate.
+  var annotate = (function () {
+    var FN_ARGS = /^function\s*[^(]*\(\s*([^)]*)\)/m;
+    var FN_ARG_SPLIT = /,/;
+    var FN_ARG = /^\s*(_?)(.+?)\1\s*$/;
+    var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
 
-                  document.removeEventListener('DOMNodeInserted', isAngularLoaded);
-                  bootstrap(window);
-                }
-                if (oldOnload) {
-                  oldOnload.apply(this, arguments);
-                }
-              };
-            }
-          };
-          document.addEventListener('DOMNodeInserted', isAngularLoaded);
-        }());
-        return;
-      }
+    return function (fn) {
+      var $inject, fnText, argDecl;
 
-      // do not patch twice
-      if (window.__ngDependencyGraph) {
-        return;
-      }
-
-      var angular = window.angular;
-
-      // helper to extract dependencies from function arguments
-      // not all versions of AngularJS expose annotate
-      var annotate; // = angular.injector().annotate;
-      if (!annotate) {
-        annotate = (function() {
-
-          var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
-          var FN_ARG_SPLIT = /,/;
-          var FN_ARG = /^\s*(_?)(.+?)\1\s*$/;
-          var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
-
-          // TODO: should I keep these assertions?
-          function assertArg(arg, name, reason) {
-            if (!arg) {
-              throw new Error("Argument '" + (name || '?') + "' is " + (reason || "required"));
-            }
-            return arg;
+      if (typeof fn === 'function') {
+        if (!($inject = fn.$inject)) {
+          $inject = [];
+          fnText = fn.toString().replace(STRIP_COMMENTS, '');
+          argDecl = fnText.match(FN_ARGS);
+          if (argDecl) {
+            argDecl[1].split(FN_ARG_SPLIT).forEach(function (arg) {
+              arg.replace(FN_ARG, function (all, underscore, name) {
+                $inject.push(name);
+              });
+            });
           }
-
-          function assertArgFn(arg, name, acceptArrayAnnotation) {
-            if (acceptArrayAnnotation && angular.isArray(arg)) {
-              arg = arg[arg.length - 1];
-            }
-
-            assertArg(angular.isFunction(arg), name, 'not a function, got ' +
-              (arg && typeof arg === 'object' ? arg.constructor.name || 'Object' : typeof arg));
-            return arg;
-          }
-
-          return function(fn) {
-            var $inject,
-              fnText,
-              argDecl,
-              last;
-
-            if (typeof fn === 'function') {
-              if (!($inject = fn.$inject)) {
-                $inject = [];
-                fnText = fn.toString().replace(STRIP_COMMENTS, '');
-                argDecl = fnText.match(FN_ARGS);
-                argDecl[1].split(FN_ARG_SPLIT).forEach(function(arg) {
-                  arg.replace(FN_ARG, function(all, underscore, name) {
-                    $inject.push(name);
-                  });
-                });
-                fn.$inject = $inject;
-              }
-            } else if (angular.isArray(fn)) {
-              last = fn.length - 1;
-              assertArgFn(fn[last], 'fn');
-              $inject = fn.slice(0, last);
-            } else {
-              assertArgFn(fn, 'fn', true);
-            }
-            return $inject;
-          };
-        }());
-      }
-
-      var metadata = {
-        angularVersion: angular.version,
-        apps: [],
-        modules: [],
-        host: window.location.host
-      };
-
-      window.__ngDependencyGraph = {
-        getMetadata: function(appNames) {
-
-          appNames.forEach(function(appName) {
-            if (metadata.apps.indexOf(appName) === -1) {
-              metadata.apps.push(appName);
-              createModule(appName);
-            }
-          });
-
-          return metadata;
+          fn.$inject = $inject;
         }
-      };
-
-      function createModule(name) {
-        var exist = false;
-        for (var i = 0; i < metadata.modules.length; i++) {
-          if (metadata.modules[i].name === name) {
-            exist = true;
-            break;
-          }
-        }
-
-        if (exist || name === undefined) {
-          return;
-        }
-
-        var module = angular.module(name);
-
-        var moduleData = {
-          name: name,
-          deps: module.requires,
-          components: []
-        };
-
-        processModule(moduleData);
-        metadata.modules.push(moduleData);
-
-        angular.forEach(module.requires, function(mod) {
-          createModule(mod);
-        });
-
+      } else if (Array.isArray(fn)) {
+        $inject = fn.slice(0, fn.length - 1);
+      } else {
+        $inject = [];
       }
+      return $inject;
+    };
+  })();
 
-      function addDeps(moduleData, name, depsSrc, type) {
-        if (typeof depsSrc === 'function') {
-          moduleData.components.push({
-            name: name,
-            deps: annotate(depsSrc),
-            type: type
-          });
-          // Array or empty
-        } else if (Array.isArray(depsSrc)) {
-          var deps = depsSrc.slice();
-          deps.pop();
-          moduleData.components.push({
-            name: name,
-            deps: deps,
-            type: type
-          });
-        } else {
-          moduleData.components.push({
-            name: name,
-            type: type
-          });
+  var metadata = {
+    angularVersion: angular.version,
+    apps: [],
+    modules: [],
+    host: window.location.host,
+  };
+
+  window.__ngDependencyGraph = {
+    getMetadata: function (appNames) {
+      appNames.forEach(function (appName) {
+        if (metadata.apps.indexOf(appName) === -1) {
+          metadata.apps.push(appName);
+          collectModule(appName);
         }
+      });
+
+      return metadata;
+    },
+  };
+
+  function collectModule(name) {
+    if (name === undefined) {
+      return;
+    }
+    for (var i = 0; i < metadata.modules.length; i++) {
+      if (metadata.modules[i].name === name) {
+        return; // already collected
       }
+    }
 
+    var module;
+    try {
+      module = angular.module(name);
+    } catch {
+      return; // module not registered (yet)
+    }
 
-      function processModule(moduleData) {
-        var moduleName = moduleData.name;
-        var module = angular.module(moduleName);
-
-        // For old versions of AngularJS the property is called 'invokeQueue'
-        var invokeQueue = module._invokeQueue || module.invokeQueue;
-
-        angular.forEach(invokeQueue, function(item) {
-          var compArgs = item[2];
-          switch (item[0]) {
-            case '$provide':
-              switch (item[1]) {
-                case 'value':
-                case 'constant':
-                  addDeps(moduleData, compArgs[0], compArgs[1], 'value');
-                  break;
-
-                default:
-                  addDeps(moduleData, compArgs[0], compArgs[1], 'service');
-                  break;
-              }
-              break;
-
-            case '$filterProvider':
-              addDeps(moduleData, compArgs[0], compArgs[1], 'filter');
-              break;
-            case '$animateProvider':
-              addDeps(moduleData, compArgs[0], compArgs[1], 'animation');
-              break;
-            case '$controllerProvider':
-              addDeps(moduleData, compArgs[0], compArgs[1], 'controller');
-              break;
-            case '$compileProvider':
-              if (item[1] === 'component') {
-                if (compArgs[1].controller) {
-                  addDeps(moduleData, compArgs[0], compArgs[1].controller, 'controller');
-                } else {
-                  addDeps(moduleData, compArgs[0], [], 'controller');
-                }
-                break;
-              }
-
-              if (compArgs[1].constructor === Object) {
-                angular.forEach(compArgs[1], function(key, value) {
-                  addDeps(moduleData, key, value, 'directive');
-                });
-              }
-
-              addDeps(moduleData, compArgs[0], compArgs[1], 'directive');
-              break;
-            case '$injector':
-              // invoke, ignore
-              break;
-            default:
-              disablePlugin('unknown dependency type', item[0]);
-              break;
-          }
-
-        });
-
-      }
+    var moduleData = {
+      name: name,
+      deps: module.requires,
+      components: [],
     };
 
-    // Return a script element with the above code embedded in it
-    var script = window.document.createElement('script');
-    script.innerHTML = '(' + fn.toString() + '(window))';
+    collectComponents(moduleData);
+    metadata.modules.push(moduleData);
 
-    return script;
-  }()));
-};
+    module.requires.forEach(collectModule);
+  }
 
-// only inject if cookie is set
+  function addComponent(moduleData, name, depsSrc, type) {
+    if (typeof depsSrc === 'function') {
+      moduleData.components.push({ name: name, deps: annotate(depsSrc), type: type });
+    } else if (Array.isArray(depsSrc)) {
+      moduleData.components.push({ name: name, deps: depsSrc.slice(0, -1), type: type });
+    } else {
+      moduleData.components.push({ name: name, type: type });
+    }
+  }
+
+  function collectComponents(moduleData) {
+    var module = angular.module(moduleData.name);
+
+    // In old versions of AngularJS the property is called 'invokeQueue'
+    var invokeQueue = module._invokeQueue || module.invokeQueue;
+
+    angular.forEach(invokeQueue, function (item) {
+      var provider = item[0];
+      var method = item[1];
+      var compArgs = item[2];
+
+      switch (provider) {
+        case '$provide':
+          addComponent(
+            moduleData,
+            compArgs[0],
+            compArgs[1],
+            method === 'value' || method === 'constant' ? 'value' : 'service',
+          );
+          break;
+
+        case '$filterProvider':
+          addComponent(moduleData, compArgs[0], compArgs[1], 'filter');
+          break;
+
+        case '$animateProvider':
+          addComponent(moduleData, compArgs[0], compArgs[1], 'animation');
+          break;
+
+        case '$controllerProvider':
+          addComponent(moduleData, compArgs[0], compArgs[1], 'controller');
+          break;
+
+        case '$compileProvider':
+          if (method === 'component') {
+            addComponent(moduleData, compArgs[0], compArgs[1].controller || [], 'controller');
+          } else {
+            addComponent(moduleData, compArgs[0], compArgs[1], 'directive');
+          }
+          break;
+
+        default:
+          // $injector.invoke and unknown providers - nothing to collect
+          break;
+      }
+    });
+  }
+}
+
+function injectInstrumentation() {
+  var script = document.createElement('script');
+  script.textContent = '(' + instrumentPage.toString() + '(window))';
+  document.head.appendChild(script);
+  script.remove();
+}
+
+// Only instrument pages that opted in via the devtools panel.
 if (document.cookie.indexOf('__ngDependencyGraph') !== -1) {
-  document.addEventListener('DOMContentLoaded', injectCode);
+  document.addEventListener('DOMContentLoaded', injectInstrumentation);
 }

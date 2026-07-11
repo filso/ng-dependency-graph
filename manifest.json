@@ -1,6 +1,6 @@
 {
   "name": "AngularJS Graph",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "AngularJS dependency graph.",
   "background": {
     "service_worker": "app/background.js"
@@ -12,7 +12,9 @@
   },
   "manifest_version": 3,
   "icons": {
-    "500": "app/img/square-500.png"
+    "16": "app/img/icon-16.png",
+    "48": "app/img/icon-48.png",
+    "128": "app/img/icon-128.png"
   },
   "permissions": ["storage"],
   "host_permissions": ["<all_urls>"],

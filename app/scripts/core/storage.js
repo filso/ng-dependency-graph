@@ -1,136 +1,108 @@
 'use strict';
 
 /**
- * Responsibilities:
- * - saving / loading currentView with serialisation
- *
- * Persist per project:
- * - module / component switch
- * - focused node
- * - ignore + filter modules fields (filters)
- * - component types visibility (filters)
+ * Persists the current view (scope, filters, options) per inspected app,
+ * using chrome.storage.sync — or localStorage outside the extension.
  */
-angular.module('ngDependencyGraph')
-  .factory('storage', function($q, $rootScope, currentView, inspectedApp, Const) {
+angular.module('ngDependencyGraph').factory('storage', function ($q, $rootScope, currentView, inspectedApp, Const) {
+  const serializedProps = ['filters', 'options', 'scope'];
 
-    var serializedProps = ['filters', 'options', 'scope'];
+  // Same API as chrome.storage.sync, for development outside the extension.
+  const localStorageAdapter = {
+    get(key, cb) {
+      // Run cb outside AngularJS context to mimic chrome.storage behaviour
+      setTimeout(() => cb({ [key]: localStorage.getItem(key) }));
+    },
+    set(obj, cb) {
+      Object.entries(obj).forEach(([key, val]) => localStorage.setItem(key, val));
+      setTimeout(cb);
+    },
+  };
 
+  const backend = window.chrome && window.chrome.storage ? window.chrome.storage.sync : localStorageAdapter;
 
-    // this has the same API as StorageArea chrome.sync
-    var localStorageAdapter = {
-      get: function(key, cb) {
-        // Note: run cb outside AngularJS context to mimic chrome.sync behaviour
-        setTimeout(function() {
-          var items = {}; items[key] = localStorage.getItem(key);
-          cb(items);
-        });
-      },
-      set: function(obj, cb) {
-        _.each(obj, function(val, key) {
-          localStorage.setItem(key, val);
-        });
-        // Note: run cb outside AngularJS context to mimic chrome.sync behaviour
-        setTimeout(cb);
+  const singleValueAccessor = {
+    get(key) {
+      const defer = $q.defer();
+      backend.get(key, (items) => {
+        defer.resolve(items[key]);
+        $rootScope.$apply();
+      });
+      return defer.promise;
+    },
+    set(key, val) {
+      const defer = $q.defer();
+      backend.set({ [key]: val }, () => {
+        defer.resolve();
+        $rootScope.$apply();
+      });
+      return defer.promise;
+    },
+  };
+
+  return {
+    saveTourDone() {
+      singleValueAccessor.set(Const.TOUR_KEY, true);
+    },
+
+    getTourDone() {
+      return singleValueAccessor.get(Const.TOUR_KEY);
+    },
+
+    saveCurrentView() {
+      const defer = $q.defer();
+
+      const key = inspectedApp.getKey();
+      const obj = {};
+      serializedProps.forEach((prop) => {
+        obj[prop] = currentView[prop];
+      });
+      if (currentView.selectedNode) {
+        obj.selectedNode = currentView.selectedNode.name;
       }
-    };
 
-    var chromeSync;
-    if (!chrome.storage) {
-      chromeSync = localStorageAdapter;
-    } else {
-      chromeSync = chrome.storage.sync;
-    }
+      backend.set({ [key]: angular.toJson(obj) }, () => {
+        defer.resolve();
+        $rootScope.$apply();
+      });
 
-    var singleValueAccessor = {
-      get: function(key) {
-        var defer = $q.defer();
-        chromeSync.get(key, function(items) {
-          defer.resolve(items[key]);
-          $rootScope.$apply();
-        });
-        return defer.promise;
-      },
-      set: function(key, val) {
-        var defer = $q.defer();
-        var items = {}; items[key] = val;
-        chromeSync.set(items, function() {
+      return defer.promise;
+    },
+
+    loadCurrentView() {
+      const defer = $q.defer();
+      const key = inspectedApp.getKey();
+      let dataLoaded = false;
+
+      backend.get(key, (items) => {
+        dataLoaded = true;
+        const serialized = items[key];
+
+        if (serialized) {
+          const obj = angular.fromJson(serialized);
+          serializedProps.forEach((prop) => {
+            if (obj[prop]) {
+              currentView[prop] = obj[prop];
+            }
+          });
           defer.resolve();
-          $rootScope.$apply();
-        });
-        return defer.promise;
-      }
-    };
-
-    var service = {
-
-      saveTourDone: function() {
-        singleValueAccessor.set(Const.TOUR_KEY, true);
-      },
-
-      getTourDone: function() {
-        return singleValueAccessor.get(Const.TOUR_KEY);
-      },
-
-      saveCurrentView: function() {
-        var defer = $q.defer();
-
-        var key = inspectedApp.getKey();
-        var obj = _.pick(currentView, serializedProps);
-        if (currentView.selectedNode) {
-          obj.selectedNode = currentView.selectedNode.name;
+        } else {
+          defer.reject();
         }
 
-        var data = angular.toJson(obj);
-        var items = {}; items[key] = data;
-        chromeSync.set(items, function() {
-          defer.resolve();
+        $rootScope.$apply();
+      });
+
+      setTimeout(() => {
+        // HACK: chrome.storage.sync sometimes never invokes the callback when
+        // the inspector is docked horizontally — reject after a timeout.
+        if (dataLoaded === false) {
+          defer.reject();
           $rootScope.$apply();
-        });
+        }
+      }, 300);
 
-        return defer.promise;
-      },
-
-      loadCurrentView: function() {
-        var defer = $q.defer();
-        var key = inspectedApp.getKey();
-        var dataLoaded = false;
-
-        chromeSync.get(key, function(items) {
-          dataLoaded = true;
-          var serialized = items[key];
-
-          if (serialized) {
-            var obj = angular.fromJson(serialized);
-
-            _.each(serializedProps, function(key) {
-              if (obj[key]) {
-                currentView[key] = obj[key];
-              }
-            });
-            defer.resolve();
-
-            // TODO set previously selected node
-          } else {
-            defer.reject();
-          }
-
-          $rootScope.$apply();
-        });
-
-        setTimeout(function() {
-          // HACK: chrome.sync for whatever reasons sometimes doesn't invoke the callback when inspector tab is horizontal
-          // Make sure that promise is rejected when this happens - wait 200 msec.
-          if (dataLoaded === false) {
-            console.log('Warning! syncing data doesn\'t seem to work!');
-            defer.reject();
-            $rootScope.$apply();
-          }
-        }, 300);
-
-        return defer.promise;
-      }
-
-    };
-
-    return service;
-  });
+      return defer.promise;
+    },
+  };
+});

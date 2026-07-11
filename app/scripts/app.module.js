@@ -1,5 +1,5 @@
-angular.module('ngDependencyGraph', ['ngDependencyGraph.infoPanel'])
-  .run(function($rootScope, dev, currentView) {
-    dev.exposeGlobalObject();
-    $rootScope.currentView = currentView;
-  });
+'use strict';
+
+angular.module('ngDependencyGraph', []).run(function ($rootScope, currentView) {
+  $rootScope.currentView = currentView;
+});
